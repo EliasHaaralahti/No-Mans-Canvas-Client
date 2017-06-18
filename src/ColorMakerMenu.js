@@ -16,7 +16,7 @@ class ColorMakerMenu extends React.Component {
   // TODO: Create a separate color select component (?)
   render() {
     return (
-      <div className="menu">
+      <div className="colorMakerMenu">
       Pick a color!<br/>
       <input type="radio" value="color1" name="color1" />
       <input type="radio" name="color1" value="color1" />

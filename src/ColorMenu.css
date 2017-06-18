@@ -1,4 +1,4 @@
-.menu {
+.colorMenu {
   background-color: turquoise;
   z-index: 2;
   position: fixed;
@@ -37,11 +37,11 @@
   outline: 2px solid black;
 }
 
-button[type="button"]{
+button[type="button"] {
   margin-left: 150px;
 }
 
-progress{
+progress {
   text-align: center;
   line-height: 30px;
   background-color: #4CAF50;
