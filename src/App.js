@@ -6,6 +6,7 @@ import AppReducer from './AppReducer';
 import * as actions from './AppActions';
 import Grid from './Canvas';
 import ColorMenu from './ColorMenu';
+import ColorMakerMenu from './ColorMakerMenu';
 import MessageBox from './MessageBox';
 
 const url = 'ws://localhost:8080';
@@ -33,6 +34,7 @@ let App = props => {
     <div>
       <Grid/>
       <ColorMenu/>
+      <ColorMakerMenu/>
     </div>
   )
 }

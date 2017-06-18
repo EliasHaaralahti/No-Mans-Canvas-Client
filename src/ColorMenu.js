@@ -18,9 +18,11 @@ class ColorMenu extends React.Component {
     return (
       <div className="menu">
         Color menu!
-        <input type="radio" name="color1" value="color1" /> Color1
-        <input type="radio" name="color1" value="color1" /> Color2
-        <input type="radio" name="color1" value="color1" /> Color3
+        <input type="radio" value="color1" name="color1" />
+        <input type="radio" name="color1" value="color1" />
+        <input type="radio" name="color1" value="color1" />
+        <button type="button">Get Colours</button>
+        <progress value="14" max="100">"Ladadii"</progress>
       </div>
     )
   }
