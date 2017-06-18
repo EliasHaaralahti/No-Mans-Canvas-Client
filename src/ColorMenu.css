@@ -1,0 +1,12 @@
+.menu {
+  background-color: darkgrey;
+  z-index: 2;
+  position: fixed;
+  height: 5%;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  color: red;
+  font-size: 150%;
+}
