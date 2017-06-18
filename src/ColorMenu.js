@@ -17,22 +17,25 @@ class ColorMenu extends React.Component {
   render() {
     return (
       <div className="colorMenu">
-        <p>Color menu!</p>
-        <div className="colorSelect">
-        <input type="radio" id="color1" name="color" value="color1" />
-        <label htmlFor="color1"></label>
-        </div>
-        <div className="colorSelect">
-        <input type="radio" id="color2" name="color" value="color2" />
-        <label htmlFor="color2"></label>
-        </div>
-        <div className="colorSelect">
-        <input type="radio" id="color3" name="color" value="color3" />
-        <label htmlFor="color3"></label>
-        </div>
+        <div className="offset">
+          <p>Your Colors</p>
+          <div className="colorSelect">
+            <input type="radio" id="color1" name="color" value="color1" />
+            <label htmlFor="color1" style={{backgroundColor:"red"}}></label>
+          </div>
+          <div className="colorSelect">
+            <input type="radio" id="color2" name="color" value="color2" />
+            <label htmlFor="color2" style={{backgroundColor:"green"}}></label>
+          </div>
+          <div className="colorSelect">
+            <input type="radio" id="color3" name="color" value="color3" />
+            <label htmlFor="color3" style={{backgroundColor:"blue"}}></label>
+          </div> <br/>
 
-        <button type="button">Get Colours</button>
-        <progress value="14" max="100">"Ladadii"</progress>
+          <progress value="14" max="100">Ladadii</progress>
+
+          <button type="button" className="getColorsBtn">Get more!</button> <br/>
+        </div>
       </div>
     )
   }
