@@ -12,8 +12,11 @@ export const initialState = fromJS({
 export default(state = initialState, action) => {
   switch (action.type) {
     case 'setUserID': {
-      return;
+      return state;
       // return state.set('user').('id', action.userID); invalid syntax
+    }
+    default: {
+      return state;
     }
   }
 }

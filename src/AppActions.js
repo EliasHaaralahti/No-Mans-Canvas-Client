@@ -1,4 +1,4 @@
-export const setUserID = (userID) => {
+export const setUserID = (userID) => ({
   type: 'setUserID',
   userID
-}
+});
