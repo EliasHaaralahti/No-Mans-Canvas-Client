@@ -1,4 +1,5 @@
 import React from 'react';
+import './Canvas.css';
 
 class Pixel extends React.Component {
     constructor(props) {
@@ -37,22 +38,22 @@ class Grid extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // -3 due to padding, not optimal solution
+            // TODO:  Instead of -3 and -4, find optimal solution
             x: Math.floor(window.innerWidth / 12) - 3,
-            y: Math.floor(window.innerHeight / 12) - 3
+            y: Math.floor(window.innerHeight / 12) - 4
         }
     }
 
     render() {
       return (
-        // also props here?
+        // TODO: Use props
         <div style={{
             display: "inline-block",
             height: window.innerHeight,
             width: window.innerWidth
         }}>{
             Array(this.state.y).fill().map((_, i) => {
-                // TODO: Use props?
+                // TODO: Use props
                 return <Row height={12} //This also defines pixel size
                             width={window.innerWidth}
                             count={this.state.x}
