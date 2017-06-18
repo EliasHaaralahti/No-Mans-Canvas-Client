@@ -1,5 +1,6 @@
 import React from 'react';
 import './Canvas.css';
+// import { socket } from './App';
 
 class Pixel extends React.Component {
     constructor(props) {
@@ -7,6 +8,13 @@ class Pixel extends React.Component {
         this.state = {
             color: "#ffffff",
         }
+
+        this.onClick = this.onClick.bind(this);
+    }
+
+    onClick(e) {
+      this.setState({color: "#ffff00"})
+      // socket.send(JSON.stringify({"requestType": "initialAuth"}))
     }
 
     render() {
@@ -15,7 +23,7 @@ class Pixel extends React.Component {
             background: this.state.color,
             height: this.props.size,
             width: this.props.size,
-        }} onClick={()=> this.setState({color: "#ffff00"})}/>;
+        }} onClick={()=> this.onClick()}/>;
     }
 }
 

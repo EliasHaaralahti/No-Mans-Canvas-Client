@@ -6,9 +6,10 @@
   width: 300px;
   bottom: 0;
   left: 0;
-  text-align: center;
+  text-align: left;
   color: red;
   font-size: 12px;
+  border-radius: 10px;
 }
 
 .colorSelect {
@@ -34,4 +35,14 @@
 
 .colorSelect input[type=radio]:checked + label {
   outline: 2px solid black;
+}
+
+button[type="button"]{
+  margin-left: 150px;
+}
+
+progress{
+  text-align: center;
+  line-height: 30px;
+  background-color: #4CAF50;
 }

@@ -30,6 +30,9 @@ class ColorMenu extends React.Component {
         <input type="radio" id="color3" name="color" value="color3" />
         <label htmlFor="color3"></label>
         </div>
+
+        <button type="button">Get Colours</button>
+        <progress value="14" max="100">"Ladadii"</progress>
       </div>
     )
   }
