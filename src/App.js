@@ -9,36 +9,42 @@ import ColorMenu from './ColorMenu';
 import MessageBox from './MessageBox';
 
 const url = 'ws://localhost:8080/canvas';
+export var socket = null;
 
-var msg = {
-  "requestType": "initialAuth"
-}
+class App extends React.Component {
+  componentWillMount() {
+    try {
+      socket = new WebSocket(url)
+      socket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+          console.log(JSON.stringify(data))
+      }
+      socket.onopen = function(e) {
+        console.log("Websocket: Connected");
+        socket.send(JSON.stringify({"requestType": "initialAuth"}))
+      }
+    } catch(exception) {
+      console.log("Websocket: Unable to connect!")
+    }
+  }
 
-try {
-  var socket = new WebSocket(url)
-  socket.onopen = function(e) {
-    console.log("Websocket: Connected");
-    socket.send(JSON.stringify(msg))
+  componentWillUnmount() {
+    if(socket != null){
+      socket.close();
+    }
   }
-  socket.onmessage = function(e) {
-    const data = JSON.parse(e.data);
-      console.log("Websocket data received, printing....")
-      console.log(JSON.stringify(data))
-  }
-} catch(exception) {
-  console.log("Websocket: Unable to connect!")
-}
 
-let App = props => {
-  if(socket == null) {
-    return <MessageBox message="No response from server!" warning="True" />
+  render() {
+    if(socket == null) {
+      return <MessageBox message="No response from server!" warning="True" />
+    }
+    return (
+      <div>
+        <Grid/>
+        <ColorMenu/>
+      </div>
+    )
   }
-  return (
-    <div>
-      <Grid/>
-      <ColorMenu/>
-    </div>
-  )
 }
 
 export const store = createStore(AppReducer);
