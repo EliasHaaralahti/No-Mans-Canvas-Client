@@ -15,7 +15,7 @@ class ColorMakerMenu extends React.Component {
 
   render() {
     // Functional but currently doesn't re-render the component when state changes
-    //if(!this.props.visible) return null;
+    if(!this.props.visible) return null;
 
     return (
       <div className="colorMakerMenu">
