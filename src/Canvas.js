@@ -18,16 +18,17 @@ class Canvas extends React.Component {
   }
   // c usually refers to context when using canvas
   componentDidMount() {
-    this.c.fillRect(0, 0, this.props.pixelSize, this.props.pixelSize);
-    this.c.fillRect(20, 20, this.props.pixelSize, this.props.pixelSize);
-    this.c.fillRect(20, 40, this.props.pixelSize, this.props.pixelSize);
-    this.c.fillRect(40, 60, this.props.pixelSize, this.props.pixelSize);
+
   }
 
   onClick(e) {
     // TODO: 'Snap' coordinates to grid according to pixelSize
     var mouseX = parseInt(e.clientX, 10);
     var mouseY = parseInt(e.clientY, 10);
+
+    mouseX = Math.floor(mouseX/this.props.pixelSize) * this.props.pixelSize;
+    mouseY = Math.floor(mouseY/this.props.pixelSize) * this.props.pixelSize;
+
     this.c.fillRect(mouseX, mouseY, this.props.pixelSize, this.props.pixelSize);
 
     console.log("sending message!")
