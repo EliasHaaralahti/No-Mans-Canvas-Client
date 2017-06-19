@@ -18,7 +18,19 @@ class Canvas extends React.Component {
   }
   // c usually refers to context when using canvas
   componentDidMount() {
-    // TODO: Here draw the initial canvas
+    // Here draw the initial canvas
+    for (var y = 0; y < 5; y++) {
+      for (var x = 0; x < 5; x++) {
+        // this.c.fillRect(dataX, dataY, this.props.pixelSize, this.props.pixelSize);
+      }
+    }
+  }
+
+  componentDidUpdate() {
+    // This will be called when store state changes (?)
+    // TODO: Get reducer update pixel data
+    // this.c.fillRect(dataX, dataY, this.props.pixelSize, this.props.pixelSize);
+    // Set reducer updatePixel to default value!
   }
 
   onClick(e) {
@@ -29,14 +41,8 @@ class Canvas extends React.Component {
     mouseX = Math.floor(mouseX/this.props.pixelSize) * this.props.pixelSize;
     mouseY = Math.floor(mouseY/this.props.pixelSize) * this.props.pixelSize;
 
-    this.c.fillRect(mouseX, mouseY, this.props.pixelSize, this.props.pixelSize);
-
-    console.log("sending message!")
-    socket.send(JSON.stringify({"requestType": "postTile",
-                                "userID": 1,
-                                "X": mouseX,
-                                "Y": mouseY,
-                                "colorID": 1}))
+    socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
+                                "X": "50", "Y": "50", "colorID": "1"}))
   }
 
   onMove(e) {
