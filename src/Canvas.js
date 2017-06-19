@@ -18,7 +18,7 @@ class Canvas extends React.Component {
   }
   // c usually refers to context when using canvas
   componentDidMount() {
-
+    // TODO: Here draw the initial canvas
   }
 
   onClick(e) {
@@ -40,9 +40,9 @@ class Canvas extends React.Component {
   }
 
   onMove(e) {
-    var mouseX = parseInt(e.clientX, 10);
-    var mouseY = parseInt(e.clientY, 10);
-    console.log("Mouse X: " + mouseX + " Y: " + mouseY)
+    // var mouseX = parseInt(e.clientX, 10);
+    // var mouseY = parseInt(e.clientY, 10);
+    // console.log("Mouse X: " + mouseX + " Y: " + mouseY)
   }
 
   render() {
