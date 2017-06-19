@@ -2,7 +2,7 @@
 ### Client for No Man's Canvas
 
 ### Backend
-A link for the backended developed for this project can be found at:
+A link for the backend developed for this project can be found at:
 https://github.com/VKoskiv/NoMansCanvas
 
 ### To launch
