@@ -14,16 +14,38 @@ export var socket = null;
 
 export const store = createStore(AppReducer);
 
+// TODO: save user ID
 class App extends React.Component {
   componentWillMount() {
     try {
       socket = new WebSocket(url)
       socket.onmessage = function(e) {
+        console.log("MESSAGE RECEIVED")
         const data = JSON.parse(e.data);
-          console.log(JSON.stringify(data))
+
+        switch (data[0].responseType) {
+          case "authSuccessful":
+            console.log(JSON.stringify(data))
+            break;
+          case "colorList":
+            console.log(JSON.stringify(data))
+            break;
+          case "fullCanvas":
+            console.log(JSON.stringify(data))
+            break;
+          default:
+            console.log("socket onmessage default case!")
+        }
       }
       socket.onopen = function(e) {
         socket.send(JSON.stringify({"requestType": "initialAuth"}))
+        socket.send(JSON.stringify({"requestType": "getColors"}))
+        // socket.send(JSON.stringify({"requestType": "getCanvas"}))
+        socket.send(JSON.stringify({"requestType": "postTile",
+                                    "userID": "1",
+                                    "X": "50",
+                                    "Y": "50",
+                                    "colorID": "1"}))
       }
     } catch(exception) {
       console.log("Websocket: Unable to connect!")
