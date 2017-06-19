@@ -4,7 +4,8 @@ import { createStore } from 'redux'
 import './App.css'
 import AppReducer from './AppReducer';
 // import * as actions from './AppActions';
-import Grid from './Canvas';
+// import Canvas from './Canvas';
+import Grid from './Grid';
 import ColorMenu from './ColorMenu';
 import MessageBox from './MessageBox';
 
