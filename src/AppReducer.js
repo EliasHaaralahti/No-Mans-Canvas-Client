@@ -6,14 +6,15 @@ export const initialState = fromJS({
     name: ''
   },
   colors: [0, 1, 2, 3],
-  canvas: []
+  canvas: [],
+  showColorPicker: true,
 })
 
 export default(state = initialState, action) => {
   switch (action.type) {
-    case 'setUserID': {
-      return state;
-      // return state.set('user').('id', action.userID); invalid syntax
+    case 'SET_COLOR_PICKER_VISIBLE': {
+      // TODO: Component is not updated with new state
+      return state.set('showColorPicker', action.visible)
     }
     default: {
       return state;

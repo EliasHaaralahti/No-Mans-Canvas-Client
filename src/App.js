@@ -13,6 +13,8 @@ import MessageBox from './MessageBox';
 const url = 'ws://localhost:8080/canvas';
 export var socket = null;
 
+export const store = createStore(AppReducer);
+
 class App extends React.Component {
   componentWillMount() {
     try {
@@ -22,20 +24,17 @@ class App extends React.Component {
           console.log(JSON.stringify(data))
       }
       socket.onopen = function(e) {
-        console.log("Websocket: Connected");
         socket.send(JSON.stringify({"requestType": "initialAuth"}))
       }
     } catch(exception) {
       console.log("Websocket: Unable to connect!")
     }
   }
-
   componentWillUnmount() {
     if(socket != null){
       socket.close();
     }
   }
-
   render() {
     if(socket == null) {
       return <MessageBox message="No response from server!" warning="True" />
@@ -43,14 +42,14 @@ class App extends React.Component {
 
     return (
       <div>
-        <Grid/>
+        <Grid />
         <ColorMenu/>
-        <ColorMakerMenu/>
+        <ColorMakerMenu visible={this.props.colorPickerVisible}/>
       </div>
     )
   }
 }
 
-export const store = createStore(AppReducer);
+// TODO: Connect app with store (react-redux package already installed)
 
 export default App
