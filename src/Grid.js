@@ -1,11 +1,16 @@
 import React from 'react';
 import './Canvas.css';
 
+// Temporary for testing
+let randColor = function() {
+    return '#'+Math.floor(Math.random()*16777215).toString(16);
+}
+
 class Pixel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      colorID: "#ffffff",
+      color: randColor(),
       x: this.props.x,
       y: this.props.y
     }
@@ -15,15 +20,16 @@ class Pixel extends React.Component {
   onClick(e) {
     console.log("click!")
     console.log("pixel x: " + this.state.x + " y: " + this.state.y)
-    this.setState({colorID: "#ff0000"})
+    this.setState({color: "#ff0000"})
+    // TODO: Send data to backend
   }
 
   render() {
     return (
       <div style={{
         display: "inline-block",
-        "border-size": "0px",
-        background: this.state.colorID,
+        // borderSize: "0px",
+        background: this.state.color,
         height: this.props.height,
         width: this.props.width
       }} onClick={() => this.onClick()}/>
@@ -51,7 +57,7 @@ class Grid extends React.Component {
     super(props)
     this.state = {
       columns: 100,
-      rows: 100,
+      rows: 50,
     }
   }
 
