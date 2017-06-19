@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStore } from 'redux'
 import { connect, Provider } from 'react-redux';
+import {render} from 'react-dom';
 
 import './App.css';
 import AppReducer from './AppReducer';
@@ -27,7 +28,6 @@ export default connect(
 )(RootContainer);
 */
 
-// TODO: Save user ID in app state
 let App = props => {
   try {
     socket = new WebSocket(url)
@@ -44,7 +44,7 @@ let App = props => {
           break;
         case "fullCanvas":
           // console.log(JSON.stringify(data))
-          actions.getCanvas(data)
+          actions.drawCanvas(data)
           break;
         case "tileUpdate":
           // console.log(JSON.stringify(data))
@@ -66,6 +66,7 @@ let App = props => {
     return <MessageBox message="No response from server!" warning="True" />
   }
 
+  // TODO: Pass canvas rows and columns as props and use them
   return (
     <div>
       <Canvas pixelSize={20} />
@@ -75,17 +76,38 @@ let App = props => {
   )
 }
 
+
+const mapStateToProps = state => {
+  return {
+    // showColorPicker: state.get('showColorPicker')
+    test: state
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  // actions.colorPickerVisible(true)
+  actions.colorPickerVisible
+}
+
+/*
+App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
+*/
+
 /*
 App = connect(state => ({
   showColorPicker: state.app.get('showColorPicker'), }), {},
 )(App);
 */
-
 /*
 export default(
   <Provider store={store}>
     <App />
-  </Provider>
+  </Provider>,
 )*/
+
+// render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
 export default App
