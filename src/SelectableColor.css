@@ -1,0 +1,23 @@
+.colorSelect {
+  display: inline-block;
+}
+
+.colorSelect label {
+  width: 20px;
+  height: 20px;
+  margin-left: -6px;
+  display: inline-block;
+}
+
+.colorSelect label:hover {
+  cursor: pointer;
+}
+
+.colorSelect input[type=radio] {
+  visibility: hidden;
+  width: 0;
+}
+
+.colorSelect input[type=radio]:checked + label {
+  outline: 2px solid black;
+}
