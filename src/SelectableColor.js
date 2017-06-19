@@ -14,9 +14,9 @@ class SelectableColor extends React.Component {
   render() {
     return (
       <div className="colorSelect">
-        <input type="radio" id={this.props.rgb} name="colorSelect"
+        <input type="radio" id={this.props.rgb+this.props.group} name={this.props.group}
           value={this.props.rgb} onChange={this.handleSelectionChange} />
-        <label htmlFor={this.props.rgb} style={{backgroundColor:this.props.rgb}}></label>
+        <label htmlFor={this.props.rgb+this.props.group} style={{backgroundColor:this.props.rgb}}></label>
       </div>
     )
   }

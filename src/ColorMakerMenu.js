@@ -1,5 +1,6 @@
 import React from 'react';
 import './ColorMakerMenu.css';
+import SelectableColor from './SelectableColor';
 
 class ColorMakerMenu extends React.Component {
   constructor(props) {
@@ -22,18 +23,9 @@ class ColorMakerMenu extends React.Component {
         <div className="offset">
           Pick a color!<br/>
           <p>Your Colors</p>
-          <div className="colorMakerSelect">
-            <input type="radio" id="color1" name="color" value="color1" />
-            <label htmlFor="color1" style={{backgroundColor:"pink"}}></label>
-          </div>
-          <div className="colorMakerSelect">
-            <input type="radio" id="color2" name="color" value="color2" />
-            <label htmlFor="color2" style={{backgroundColor:"teal"}}></label>
-          </div>
-          <div className="colorMakerSelect">
-            <input type="radio" id="color3" name="color" value="color3" />
-            <label htmlFor="color3" style={{backgroundColor:"brown"}}></label>
-          </div>
+          <SelectableColor rgb="#FF0000" group="colorMaker"/>
+          <SelectableColor rgb="#00FF00" group="colorMaker"/>
+          <SelectableColor rgb="#0000FF" group="colorMaker"/>
           <br/>
           Or make your own one with RGB-values! <br/>
           <form>
@@ -44,11 +36,8 @@ class ColorMakerMenu extends React.Component {
           B:
           <input type="text" name="blue"/>
           <br/>
-          <div className="colorMakerSelect">
-            <input type="radio" id="colorX" name="color" value="colorX" />
-            <label htmlFor="colorX" style={{backgroundColor:"lime"}}>Preview:</label>
-          </div>
           </form>
+          <SelectableColor rgb="#FF00FF" group="colorMaker"/>
           <div className="buttons">
             <button type="button">Cancel</button>
             <button type="button">Create</button>

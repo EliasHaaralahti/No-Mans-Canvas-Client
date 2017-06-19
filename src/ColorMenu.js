@@ -31,7 +31,8 @@ class ColorMenu extends React.Component {
   render() {
     var colors = [];
     for (var i = 0; i < this.state.colors.length; ++i) {
-      colors.push(<SelectableColor rgb={this.state.colors[i]} onSelectionChanged={this.onColorSelected}/>)
+      colors.push(<SelectableColor rgb={this.state.colors[i]}
+        group="colorSelect" onSelectionChanged={this.onColorSelected}/>)
     }
 
     var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 + "%";

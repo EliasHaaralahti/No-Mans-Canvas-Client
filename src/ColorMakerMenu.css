@@ -4,13 +4,14 @@
   position: fixed;
   height: 250px;
   width: 500px;
-  bottom: 500px;
-  left: 200px;
+  top: 20%;
+  left: 30%;
   text-align: center;
   font-size: 100%;
   border-radius: 10px;
   font-weight: bold;
 }
+
 input[type="radio"]{
   margin-top: 10px
 }
