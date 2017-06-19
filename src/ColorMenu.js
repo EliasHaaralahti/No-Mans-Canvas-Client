@@ -34,6 +34,8 @@ class ColorMenu extends React.Component {
       colors.push(<SelectableColor rgb={this.state.colors[i]} onSelectionChanged={this.onColorSelected}/>)
     }
 
+    var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 + "%";
+
     return (
       <div className="colorMenu">
         <div className="offset">
@@ -42,8 +44,8 @@ class ColorMenu extends React.Component {
           {colors}
 
           <div className="progressContainer">
-            <p className="progressInfo">To next level: 15/50</p>
-            <div className="progressBar" style={{width:"30%"}} />
+            <p className="progressInfo">To next level: {this.props.expCollected}/{this.props.expToNext}</p>
+            <div className="progressBar" style={{width:progressBarLength}} />
           </div>
 
           <button type="button" onClick={this.onOpenPicker}
