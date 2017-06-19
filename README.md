@@ -2,8 +2,7 @@
 ### Client for No Man's Canvas
 
 ### Backend
-A link for the backend developed for this project can be found at:
-https://github.com/VKoskiv/NoMansCanvas
+A link for the backend developed for this project can be found [here](https://github.com/VKoskiv/NoMansCanvas)
 
 ### To launch
 * git clone https://github.com/EliasHaaralahti/No-Mans-Canvas-Client.git - Clones the project.
@@ -13,5 +12,5 @@ https://github.com/VKoskiv/NoMansCanvas
 ### Contributions
 * Elias Haaralahti
 * Valtteri Koskivuori
-* Jonne Pitkänen
+* Jonni Pitkänen
 * Mikael Myyrä
