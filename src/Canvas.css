@@ -1,4 +1,6 @@
 div {
   /* Hides blinking cursor */
-  color: transparent
+  /*width: 12px;
+  height: 12px;
+  color: transparent;*/
 }
