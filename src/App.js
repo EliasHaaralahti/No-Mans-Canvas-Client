@@ -4,8 +4,7 @@ import { createStore } from 'redux'
 import './App.css'
 import AppReducer from './AppReducer';
 // import * as actions from './AppActions';
-// import Canvas from './Canvas';
-import Grid from './Grid';
+import Canvas from './Canvas';
 import ColorMenu from './ColorMenu';
 import ColorMakerMenu from './ColorMakerMenu';
 import MessageBox from './MessageBox';
@@ -42,7 +41,7 @@ class App extends React.Component {
 
     return (
       <div>
-        <Grid />
+        <Canvas pixelSize={20}/>
         <ColorMenu/>
         <ColorMakerMenu visible={this.props.colorPickerVisible}/>
       </div>
