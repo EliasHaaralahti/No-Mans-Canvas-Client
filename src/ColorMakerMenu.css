@@ -12,10 +12,6 @@
   font-weight: bold;
 }
 
-input[type="radio"]{
-  margin-top: 10px
-}
-
 input[type="text"]{
   width: 50px;
 }
@@ -31,9 +27,7 @@ input[type="text"]{
 }
 
 .offset {
-  margin-left: 20px;
-  margin-right: 12px;
-  margin-bottom: 20px;
+  margin: 20px;
 }
 
 .colorMakerSelect {

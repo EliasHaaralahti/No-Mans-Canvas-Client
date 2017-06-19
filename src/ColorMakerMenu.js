@@ -7,11 +7,61 @@ class ColorMakerMenu extends React.Component {
     // Give available colors as props
     super(props);
     this.state = {
-      // Example states
-      color1: "#ff0000",
-      color2: "#ffff00",
-      color3: "#000000"
+      customRed: 255,
+      customGreen: 255,
+      customBlue: 255
     }
+    this.getCustomRGB = this.getCustomRGB.bind(this);
+    this.onRedChanged = this.onRedChanged.bind(this);
+    this.onGreenChanged = this.onGreenChanged.bind(this);
+    this.onBlueChanged = this.onBlueChanged.bind(this);
+    this.parseColor = this.parseColor.bind(this);
+  }
+
+  getCustomRGB() {
+    var red = this.state.customRed.toString(16);
+    if (red.length < 2) red = '0' + red;
+    var green = this.state.customGreen.toString(16);
+    if (green.length < 2) green = '0' + green;
+    var blue = this.state.customBlue.toString(16);
+    if (blue.length < 2) blue = '0' + blue;
+    var color = '#'+red+green+blue;
+    console.log(color);
+    return color;
+  }
+
+  parseColor(color) {
+    var value;
+    if (color === "") value = 0;
+    else value = parseInt(color, 10);
+    if (value < 0) value = 0;
+    else if (value > 255) value = 255;
+
+    return value;
+  }
+
+  onRedChanged(e) {
+    var value = this.parseColor(e.target.value);
+    this.setState({
+      customRed: value
+    });
+    console.log("Setting red to "+value);
+  }
+
+  onGreenChanged(e) {
+    var value = this.parseColor(e.target.value);
+    this.setState({
+      customGreen: value
+    });
+    console.log("Setting green to "+value);
+  }
+
+  onBlueChanged(e) {
+    var value = this.parseColor(e.target.value);
+    this.setState({
+      customBlue: value
+    });
+    console.log("Setting blue to "+value);
   }
 
   render() {
@@ -21,23 +71,22 @@ class ColorMakerMenu extends React.Component {
     return (
       <div className="colorMakerMenu">
         <div className="offset">
-          Pick a color!<br/>
-          <p>Your Colors</p>
+          <p>Pick a color!</p><br/>
           <SelectableColor rgb="#FF0000" group="colorMaker"/>
           <SelectableColor rgb="#00FF00" group="colorMaker"/>
           <SelectableColor rgb="#0000FF" group="colorMaker"/>
-          <br/>
+          <br/><br/>
           Or make your own one with RGB-values! <br/>
           <form>
           R:
-          <input type="text" name="red"/>
+          <input type="text" name="red" onChange={this.onRedChanged}/>
           G:
-          <input type="text" name="green"/>
+          <input type="text" name="green" onChange={this.onGreenChanged}/>
           B:
-          <input type="text" name="blue"/>
-          <br/>
+          <input type="text" name="blue" onChange={this.onBlueChanged}/>
+          <br/><br/>
           </form>
-          <SelectableColor rgb="#FF00FF" group="colorMaker"/>
+          <SelectableColor rgb={this.getCustomRGB()} group="colorMaker"/>
           <div className="buttons">
             <button type="button">Cancel</button>
             <button type="button">Create</button>
