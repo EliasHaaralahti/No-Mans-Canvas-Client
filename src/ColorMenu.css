@@ -1,12 +1,80 @@
-.menu {
-  background-color: darkgrey;
+.colorMenu {
+  background-color: turquoise;
   z-index: 2;
   position: fixed;
-  height: 5%;
+  height: 120px;
+  width: 300px;
+  bottom: -8px;
+  left: -8px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.offset {
+  margin-left: 20px;
+  margin-right: 12px;
+  margin-bottom: 20px;
+}
+
+p {
+  margin: 10px 5px 5px 0;
+}
+
+.getColorsBtn {
+  display: inline-block;
+  background-color: yellow;
+  position: absolute;
+  width: 80px;
+  height: 25px;
+  left: 150px;
+  top: 8px;
+}
+
+.colorSelect {
+  display: inline-block;
+}
+
+.colorSelect label {
+  width: 20px;
+  height: 20px;
+  margin-left: -6px;
+  display: inline-block;
+}
+
+.colorSelect label:hover {
+  cursor: pointer;
+}
+
+.colorSelect input[type=radio] {
+  visibility: hidden;
+  width: 0;
+}
+
+.colorSelect input[type=radio]:checked + label {
+  outline: 2px solid black;
+}
+
+.progressContainer {
   width: 100%;
-  bottom: 0;
-  left: 0;
-  text-align: center;
-  color: red;
-  font-size: 150%;
+  margin-top: 10px;
+  padding: 0;
+  height: 20px;
+  background-color: white;
+}
+
+.progressBar {
+  margin: 0;
+  height: inherit;
+  position: absolute;
+  background-color: lime;
+}
+
+.progressInfo {
+  z-index: 3;
+  position: absolute;
+  margin: 2px 0 0 3px;
+  font-size: 12px;
+  margin-left: 2px;
 }

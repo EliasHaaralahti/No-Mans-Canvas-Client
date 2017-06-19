@@ -7,6 +7,7 @@ import AppReducer from './AppReducer';
 // import Canvas from './Canvas';
 import Grid from './Grid';
 import ColorMenu from './ColorMenu';
+import ColorMakerMenu from './ColorMakerMenu';
 import MessageBox from './MessageBox';
 
 const url = 'ws://localhost:8080/canvas';
@@ -39,10 +40,12 @@ class App extends React.Component {
     if(socket == null) {
       return <MessageBox message="No response from server!" warning="True" />
     }
+
     return (
       <div>
         <Grid/>
         <ColorMenu/>
+        <ColorMakerMenu/>
       </div>
     )
   }
