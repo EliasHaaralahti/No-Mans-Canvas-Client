@@ -1,6 +1,7 @@
 import React from 'react';
 import './ColorMenu.css';
 import { colorPickerVisible } from './AppActions';
+import { setActiveColor } from './AppActions';
 import SelectableColor from './SelectableColor';
 
 class ColorMenu extends React.Component {
@@ -17,9 +18,7 @@ class ColorMenu extends React.Component {
 
   onColorSelected(color) {
     console.log("color selected: " + color);
-    this.setState({
-      selectedColor: color
-    })
+    setActiveColor(color);
   }
 
   onOpenPicker(e) {
@@ -31,7 +30,8 @@ class ColorMenu extends React.Component {
   render() {
     var colors = [];
     for (var i = 0; i < this.state.colors.length; ++i) {
-      colors.push(<SelectableColor rgb={this.state.colors[i]} onSelectionChanged={this.onColorSelected}/>)
+      colors.push(<SelectableColor rgb={this.state.colors[i]} key={i}
+        group="colorSelect" onSelectionChanged={this.onColorSelected}/>)
     }
 
     var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 + "%";
