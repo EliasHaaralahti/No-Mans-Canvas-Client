@@ -6,15 +6,17 @@ class ColorMakerMenu extends React.Component {
     // Give available colors as props
     super(props);
     this.state = {
+      // Example states
       color1: "#ff0000",
       color2: "#ffff00",
       color3: "#000000"
     }
   }
 
-  // TODO: Properly set text in css
-  // TODO: Create a separate color select component (?)
   render() {
+    // Functional but currently doesn't re-render the component when state changes
+    if(!this.props.visible) return null;
+
     return (
       <div className="colorMakerMenu">
       Pick a color!<br/>

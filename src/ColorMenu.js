@@ -1,5 +1,6 @@
 import React from 'react';
 import './ColorMenu.css';
+import { colorPickerVisible } from './AppActions';
 
 class ColorMenu extends React.Component {
   constructor(props) {
@@ -10,6 +11,12 @@ class ColorMenu extends React.Component {
       color2: "#ffff00",
       color3: "#000000"
     }
+    this.onOpenPicker = this.onOpenPicker.bind(this);
+  }
+
+  onOpenPicker(e) {
+    console.log("click")
+    colorPickerVisible(true);
   }
 
   // TODO: Properly set text in css
@@ -38,7 +45,8 @@ class ColorMenu extends React.Component {
             <div className="progressBar" style={{width:"30%"}} />
           </div>
 
-          <button type="button" className="getColorsBtn">Get more!</button> <br/>
+          <button type="button" onClick={this.onOpenPicker}
+            className="getColorsBtn">Get more!</button> <br/>
 
         </div>
       </div>
