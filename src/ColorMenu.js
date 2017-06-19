@@ -18,6 +18,7 @@ class ColorMenu extends React.Component {
     return (
       <div className="colorMenu">
         <div className="offset">
+
           <p>Your Colors</p>
           <div className="colorSelect">
             <input type="radio" id="color1" name="color" value="color1" />
@@ -32,9 +33,13 @@ class ColorMenu extends React.Component {
             <label htmlFor="color3" style={{backgroundColor:"blue"}}></label>
           </div> <br/>
 
-          <progress value="14" max="100">Ladadii</progress>
+          <div className="progressContainer">
+            <p className="progressInfo">To next level: 15/50</p>
+            <div className="progressBar" style={{width:"30%"}} />
+          </div>
 
           <button type="button" className="getColorsBtn">Get more!</button> <br/>
+
         </div>
       </div>
     )
