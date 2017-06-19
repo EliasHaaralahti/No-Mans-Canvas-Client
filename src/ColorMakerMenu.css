@@ -2,14 +2,14 @@
   background-color: turquoise;
   z-index: 2;
   position: fixed;
-  height: 500px;
+  height: 250px;
   width: 500px;
-  bottom: 200px;
+  bottom: 500px;
   left: 200px;
   text-align: center;
-  color: red;
   font-size: 100%;
   border-radius: 10px;
+  font-weight: bold;
 }
 input[type="radio"]{
   margin-top: 10px
@@ -22,7 +22,46 @@ input[type="text"]{
 .sample{
   background-color: green;
   z-index: 3;
-  height: 10px;
-  width: 10px;
-  margin-left: 360px;
+  height: 18px;
+  width: 18px;
+  position: absolute;
+  right: 100px;
+  text-indent: -100px
+}
+
+.offset {
+  margin-left: 20px;
+  margin-right: 12px;
+  margin-bottom: 20px;
+}
+
+.colorMakerSelect {
+  display: inline-block;
+
+}
+.colorMakerSelect label {
+  width: 20px;
+  height: 20px;
+  margin-left: -6px;
+  display: inline-block;
+  text-indent: -100px;
+}
+
+.colorMakerSelect label:hover {
+  cursor: pointer;
+}
+
+.colorMakerSelect input[type=radio] {
+  visibility: hidden;
+  width: 0;
+}
+
+.colorMakerSelect input[type=radio]:checked + label {
+  outline: 2px solid black;
+}
+
+.buttons {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }

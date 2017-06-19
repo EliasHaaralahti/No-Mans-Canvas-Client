@@ -15,29 +15,45 @@ class ColorMakerMenu extends React.Component {
 
   render() {
     // Functional but currently doesn't re-render the component when state changes
-    if(!this.props.visible) return null;
+    //if(!this.props.visible) return null;
 
     return (
       <div className="colorMakerMenu">
-      Pick a color!<br/>
-      <input type="radio" value="color1" name="color1" />
-      <input type="radio" name="color1" value="color1" />
-      <input type="radio" name="color1" value="color1" />
-      <input type="radio" value="color1" name="color1" />
-      <input type="radio" name="color1" value="color1" />
-      <input type="radio" name="color1" value="color1" /> <br/>
-      Or make your own one! <br/>
-      <form>
-      'R:'
-      <input type="text" name="red"/>
-      'G:'
-      <input type="text" name="green"/>
-      'B:'
-      <input type="text" name="blue"/>
-      </form>
-      <div className="sample"></div>
-      <button type="button">Create</button> <br/>
-      <button type="button">Cancel</button>
+        <div className="offset">
+          Pick a color!<br/>
+          <p>Your Colors</p>
+          <div className="colorMakerSelect">
+            <input type="radio" id="color1" name="color" value="color1" />
+            <label htmlFor="color1" style={{backgroundColor:"pink"}}></label>
+          </div>
+          <div className="colorMakerSelect">
+            <input type="radio" id="color2" name="color" value="color2" />
+            <label htmlFor="color2" style={{backgroundColor:"teal"}}></label>
+          </div>
+          <div className="colorMakerSelect">
+            <input type="radio" id="color3" name="color" value="color3" />
+            <label htmlFor="color3" style={{backgroundColor:"brown"}}></label>
+          </div>
+          <br/>
+          Or make your own one with RGB-values! <br/>
+          <form>
+          R:
+          <input type="text" name="red"/>
+          G:
+          <input type="text" name="green"/>
+          B:
+          <input type="text" name="blue"/>
+          <br/>
+          <div className="colorMakerSelect">
+            <input type="radio" id="colorX" name="color" value="colorX" />
+            <label htmlFor="colorX" style={{backgroundColor:"lime"}}>Preview:</label>
+          </div>
+          </form>
+          <div className="buttons">
+            <button type="button">Cancel</button>
+            <button type="button">Create</button>
+          </div>
+        </div>
       </div>
     )
   }
