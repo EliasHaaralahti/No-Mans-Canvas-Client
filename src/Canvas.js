@@ -1,76 +1,12 @@
 import React from 'react';
-import './Canvas.css';
-// import { socket } from './App';
 
-class Pixel extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            color: "#ffffff",
-        }
-
-        this.onClick = this.onClick.bind(this);
-    }
-
-    onClick(e) {
-      this.setState({color: "#ffff00"})
-      // socket.send(JSON.stringify({"requestType": "initialAuth"}))
-    }
-
-    render() {
-        return <div style={{
-            display: "inline-block",
-            background: this.state.color,
-            height: this.props.size,
-            width: this.props.size,
-        }} onClick={()=> this.onClick()}/>;
-    }
-}
-
-let Row = (props) => {
+// temporary file that may or may not be used later on
+class Canvas extends React.Component {
+  render() {
     return (
-      <div style={{
-          height: props.height,
-          width: props.width
-      }}>{
-          Array(props.count).fill().map((_, i) => {
-              return <Pixel size={props.height}
-                            key={i} />;
-          })
-        }
-      </div>
-  )
+      <canvas width={300} height={300} />
+    )
+  }
 }
 
-class Grid extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            // TODO:  Instead of -3 and -4, find optimal solution
-            x: Math.floor(window.innerWidth / 12) - 3,
-            y: Math.floor(window.innerHeight / 12) - 4
-        }
-    }
-
-    render() {
-      return (
-        // TODO: Use props
-        <div style={{
-            display: "inline-block",
-            height: window.innerHeight,
-            width: window.innerWidth
-        }}>{
-            Array(this.state.y).fill().map((_, i) => {
-                // TODO: Use props
-                return <Row height={12} //This also defines pixel size
-                            width={window.innerWidth}
-                            count={this.state.x}
-                            key={i} />;
-            })
-          }
-        </div>
-      )
-    }
-}
-
-export default Grid;
+export default Canvas;
