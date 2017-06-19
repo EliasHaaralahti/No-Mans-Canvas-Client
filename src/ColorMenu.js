@@ -1,48 +1,51 @@
 import React from 'react';
 import './ColorMenu.css';
 import { colorPickerVisible } from './AppActions';
+import SelectableColor from './SelectableColor';
 
 class ColorMenu extends React.Component {
   constructor(props) {
     // Give available colors as props
     super(props);
     this.state = {
-      color1: "#ff0000",
-      color2: "#ffff00",
-      color3: "#000000"
-    }
+      selectedColor: "#000000",
+      colors: ["#000000", "#FFFFFF", "#ff0000", "#0000FF", "#ffff00"]
+    };
+    this.onColorSelected = this.onColorSelected.bind(this);
     this.onOpenPicker = this.onOpenPicker.bind(this);
   }
 
+  onColorSelected(color) {
+    console.log("color selected: " + color);
+    this.setState({
+      selectedColor: color
+    })
+  }
+
   onOpenPicker(e) {
-    console.log("click")
+    console.log("click");
     colorPickerVisible(true);
   }
 
-  // TODO: Properly set text in css
-  // TODO: Create a separate color select component (?)
+  //TODO: Dynamic progress bar
   render() {
+    var colors = [];
+    for (var i = 0; i < this.state.colors.length; ++i) {
+      colors.push(<SelectableColor rgb={this.state.colors[i]} onSelectionChanged={this.onColorSelected}/>)
+    }
+
+    var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 + "%";
+
     return (
       <div className="colorMenu">
         <div className="offset">
 
           <p>Your Colors</p>
-          <div className="colorSelect">
-            <input type="radio" id="color1" name="color" value="color1" />
-            <label htmlFor="color1" style={{backgroundColor:"red"}}></label>
-          </div>
-          <div className="colorSelect">
-            <input type="radio" id="color2" name="color" value="color2" />
-            <label htmlFor="color2" style={{backgroundColor:"green"}}></label>
-          </div>
-          <div className="colorSelect">
-            <input type="radio" id="color3" name="color" value="color3" />
-            <label htmlFor="color3" style={{backgroundColor:"blue"}}></label>
-          </div> <br/>
+          {colors}
 
           <div className="progressContainer">
-            <p className="progressInfo">To next level: 15/50</p>
-            <div className="progressBar" style={{width:"30%"}} />
+            <p className="progressInfo">To next level: {this.props.expCollected}/{this.props.expToNext}</p>
+            <div className="progressBar" style={{width:progressBarLength}} />
           </div>
 
           <button type="button" onClick={this.onOpenPicker}

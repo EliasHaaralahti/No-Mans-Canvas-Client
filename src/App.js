@@ -64,7 +64,7 @@ class App extends React.Component {
     return (
       <div>
         <Canvas pixelSize={20}/>
-        <ColorMenu/>
+        <ColorMenu expCollected={13} expToNext={80} />
         <ColorMakerMenu visible={this.props.colorPickerVisible}/>
       </div>
     )
