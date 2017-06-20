@@ -76,7 +76,7 @@ class Canvas extends React.Component {
                   this.c = c.getContext('2d')}
                 }
               }
-              width={100} height={100}
+              width={1000} height={1000}
               onClick={this.onClick} onMouseMove={this.onMove} />
     )
   }
