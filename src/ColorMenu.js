@@ -5,6 +5,8 @@ import { colorPickerVisible } from './AppActions';
 import { setActiveColor } from './AppActions';
 import SelectableColor from './SelectableColor';
 
+import { socketSend } from './App';
+
 class ColorMenu extends React.Component {
   constructor(props) {
     // Give available colors as props

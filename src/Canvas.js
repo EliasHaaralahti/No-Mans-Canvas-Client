@@ -1,6 +1,7 @@
 import React from 'react';
 import './Canvas.css';
 import { setPixel } from './AppActions';
+import { socketSend, sendTile } from './App';
 
 class Canvas extends React.Component {
   constructor(props) {
@@ -30,6 +31,7 @@ class Canvas extends React.Component {
   }
 
   onClick(e) {
+    e.preventDefault();
     var mouseX = parseInt(e.clientX, 10);
     var mouseY = parseInt(e.clientY, 10);
 
@@ -38,9 +40,7 @@ class Canvas extends React.Component {
 
     console.log("mouse position X: " + mouseX + " Y: " + mouseY)
 
-    // TODO:
-    // this.props.socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
-    //                             "X": mouseX, "Y": mouseY, "colorID": "1"}))
+    sendTile( mouseX, mouseY)
   }
 
   componentDidUpdate() {
@@ -48,12 +48,9 @@ class Canvas extends React.Component {
      console.log("CANVAS DRAWING: ")
      console.log(JSON.stringify(this.props.updatePixel))
      const pixel = this.props.updatePixel;
-     var x = pixel[0].X;
-     var y = pixel[0].Y;
-     console.log("X: " + x  +" Y: " + y)
 
      this.c.fillStyle= this.props.activeColor
-     this.c.fillRect(x, y, this.props.pixelSize, this.props.pixelSize);
+     this.c.fillRect(pixel[0].X, pixel[0].Y, this.props.pixelSize, this.props.pixelSize);
      // Sets update pixel back to none
      setPixel(null)
     }
@@ -100,7 +97,7 @@ class Canvas extends React.Component {
                   this.c = c.getContext('2d')}
                 }
               }
-              width={window.innerWidth} height={window.innerHeight}
+              width={1000} height={1000}
               onClick={this.onClick} onMouseMove={this.onMouseMove} />
     )
   }
