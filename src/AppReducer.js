@@ -4,8 +4,8 @@ import { fromJS } from 'immutable'
 export const initialState = fromJS({
   userID: -1,
   userExp: 0,
-  rows: 100,
-  columns: 100,
+  rows: 0,
+  columns: 0,
   colors: {},
   canvas: [],
   updatePixel: null,
@@ -27,6 +27,9 @@ export default(state = initialState, action) => {
     }
     case 'DRAW_CANVAS': {
       return state.set('canvas', action.data).set('canvasDraw', true)
+    }
+    case 'SET_DRAW_CANVAS': {
+      return state.set('canvasDraw', action.bool)
     }
     case 'SET_COLORS': {
       return state.set('colors', action.colors)
