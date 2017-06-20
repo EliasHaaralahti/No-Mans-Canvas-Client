@@ -42,6 +42,9 @@ socket.onmessage = function(e) {
       console.log(JSON.stringify(data))
       actions.setPixel(data)
       break;
+    case "error":
+      console.log(JSON.stringify(data))
+      break;
     default:
       console.log("socket onMessage default case!")
   }
@@ -49,8 +52,8 @@ socket.onmessage = function(e) {
 socket.onopen = function(e) {
   socket.send(JSON.stringify({"requestType": "initialAuth"}))
   socket.send(JSON.stringify({"requestType": "getColors"}))
+  socket.send(JSON.stringify({"requestType": "dunGoofd"}))
   // socket.send(JSON.stringify({"requestType": "getCanvas"}))
-
   socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
                               "X": 1, "Y": 1, "colorID": "1"}))
 }
