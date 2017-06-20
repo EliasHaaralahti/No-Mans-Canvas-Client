@@ -13,7 +13,7 @@ import MessageBox from './MessageBox';
 export const store = createStore(AppReducer);
 
 var socket = null;
-const url = 'ws://localhost:8080/canvas';
+const url = 'ws://localhost/canvas';
 
 if(socket == null) {
   try {
@@ -24,6 +24,7 @@ if(socket == null) {
 }
 
 socket.onmessage = function(e) {
+  console.log("message received from websocket")
   const data = JSON.parse(e.data);
   switch (data[0].responseType) {
     case "authSuccessful":
@@ -35,6 +36,7 @@ socket.onmessage = function(e) {
       actions.setColors(data)
       break;
     case "fullCanvas":
+      console.log("full canvas retrieved!")
       actions.drawCanvas(data)
       break;
     case "tileUpdate":
@@ -50,7 +52,7 @@ socket.onmessage = function(e) {
 socket.onopen = function(e) {
   socket.send(JSON.stringify({"requestType": "initialAuth"}))
   socket.send(JSON.stringify({"requestType": "getColors"}))
-  socket.send(JSON.stringify({"requestType": "getCanvas"}))
+  socket.send(JSON.stringify({"requestType": "getCanvas", "userID": "1"})) //TODO: proper user ID
 }
 
 let App = props => {

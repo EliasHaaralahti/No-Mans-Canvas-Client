@@ -85,7 +85,6 @@ class Canvas extends React.Component {
         this.clearCanvas();
 
         this.c.translate(-moveX, -moveY);
-        this.c.fillRect(50,50,100,100);
 
         //TODO: redraw canvas
 
@@ -125,7 +124,6 @@ class Canvas extends React.Component {
     this.c.translate(-transX, -transY);
 
     this.clearCanvas();
-    this.c.fillRect(50,50,100,100); //DEBUG
 
     this.setState({
       scale: this.state.scale * factor
@@ -140,7 +138,7 @@ class Canvas extends React.Component {
                   this.canvas = c;
                 }}
               }
-              width={this.props.columns} height={this.props.rows}
+              width={window.innerWidth} height={window.innerHeight}
               onMouseMove={this.onMouseMove} onMouseDown={this.onMouseDown}
               onMouseUp={this.onMouseUp} onWheel={this.onMouseWheel} />
     )
