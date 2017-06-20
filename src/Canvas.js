@@ -1,6 +1,6 @@
 import React from 'react';
 import './Canvas.css';
-import { setPixel } from './AppActions';
+import { setPixel, setDrawCanvas } from './AppActions';
 import { sendTile, getColor } from './App';
 
 class Canvas extends React.Component {
@@ -43,13 +43,14 @@ class Canvas extends React.Component {
 
   componentDidUpdate() {
     if(this.props.canvasDraw) {
-      console.log(this.props.canvas[2].colorID)
-      for (var i = 1; i < this.props.canvas.length - 1; i++) {
+      console.log("Drawing canvas!");
+      for (var i = 1; i < this.props.canvas.length; i++) {
         this.c.fillStyle=getColor(this.props.canvas[i].colorID);
         var pixelX = this.props.canvas[i].X * this.props.pixelSize;
         var pixelY = this.props.canvas[i].Y * this.props.pixelSize;
         this.c.fillRect(pixelX, pixelY, this.props.pixelSize, this.props.pixelSize);
       }
+      setDrawCanvas(false);
     }
 
 
@@ -91,7 +92,7 @@ class Canvas extends React.Component {
 
         this.c.translate(-moveX, -moveY);
 
-        //TODO: redraw canvas
+        setDrawCanvas(true);
 
         this.setState({
           canvasX: this.state.canvasX - moveX,
@@ -129,6 +130,9 @@ class Canvas extends React.Component {
     this.c.translate(-transX, -transY);
 
     this.clearCanvas();
+
+    setDrawCanvas(true);
+    this.forceUpdate();
 
     this.setState({
       scale: this.state.scale * factor

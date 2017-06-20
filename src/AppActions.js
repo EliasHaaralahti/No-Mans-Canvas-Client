@@ -49,6 +49,14 @@ export function drawCanvas(data) {
   store.dispatch(action)
 }
 
+export function setDrawCanvas(bool) {
+  const action = {
+    type: "SET_DRAW_CANVAS",
+    bool
+  }
+  store.dispatch(action)
+}
+
 export function setDimensions(dimension) {
   const action = {
     type: "SET_COLUMNS",
