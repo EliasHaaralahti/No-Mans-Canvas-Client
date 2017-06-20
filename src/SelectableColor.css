@@ -13,11 +13,11 @@
   cursor: pointer;
 }
 
-.colorSelect input[type=radio] {
+.colorSelect input[type=checkbox] {
   visibility: hidden;
   width: 0;
 }
 
-.colorSelect input[type=radio]:checked + label {
+.colorSelect input[type=checkbox]:checked + label {
   outline: 2px solid black;
 }

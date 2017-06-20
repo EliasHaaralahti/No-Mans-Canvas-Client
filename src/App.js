@@ -78,7 +78,8 @@ let App = props => {
               canvas={props.canvas} canvasDraw={props.canvasDraw}
               socket={socket}/>
 
-      <ColorMenu expCollected={13} expToNext={80} colors={props.colors} />
+      <ColorMenu expCollected={13} expToNext={80}
+              colors={props.userColors} activeColor={props.activeColor} />
       <ColorMakerMenu visible={props.visible}/>
     </div>
   )
