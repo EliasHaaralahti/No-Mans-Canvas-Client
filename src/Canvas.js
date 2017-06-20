@@ -31,12 +31,14 @@ class Canvas extends React.Component {
     var mouseX = parseInt(e.clientX, 10) - this.state.canvasX;
     var mouseY = parseInt(e.clientY, 10) - this.state.canvasY;
 
-    mouseX = Math.floor(mouseX/this.props.pixelSize) * this.props.pixelSize;
-    mouseY = Math.floor(mouseY/this.props.pixelSize) * this.props.pixelSize;
+    var pixelX = Math.floor(mouseX/this.props.pixelSize);
+    mouseX = pixelX * this.props.pixelSize;
+    var pixelY = Math.floor(mouseY/this.props.pixelSize);
+    mouseY = pixelY * this.props.pixelSize;
 
     console.log("Clicked at " + mouseX + ", " + mouseY)
 
-    sendTile( mouseX, mouseY, this.props.activeColor)
+    sendTile(pixelX, pixelY, this.props.activeColor);
   }
 
   componentDidUpdate() {

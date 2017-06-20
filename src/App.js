@@ -13,7 +13,7 @@ import MessageBox from './MessageBox';
 export const store = createStore(AppReducer);
 
 var socket = null;
-const url = 'ws://localhost/canvas';
+const url = 'ws://localhost:8080/canvas';
 
 if(socket == null) {
   try {
