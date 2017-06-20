@@ -44,6 +44,9 @@ let App = props => {
         console.log(JSON.stringify(data))
         actions.setPixel(data)
         break;
+      case "error":
+        console.log(JSON.stringify(data))
+        break;
       default:
         console.log("socket onMessage default case!")
     }
@@ -51,6 +54,7 @@ let App = props => {
   socket.onopen = function(e) {
     socket.send(JSON.stringify({"requestType": "initialAuth"}))
     socket.send(JSON.stringify({"requestType": "getColors"}))
+    socket.send(JSON.stringify({"requestType": "dunGoofd"}))
     // socket.send(JSON.stringify({"requestType": "getCanvas"}))
 
     //socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
