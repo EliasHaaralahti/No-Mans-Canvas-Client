@@ -34,7 +34,7 @@ let App = props => {
           actions.drawCanvas(data)
           break;
         case "tileUpdate":
-          // console.log(JSON.stringify(data))
+          console.log(JSON.stringify(data))
           actions.setPixel(data)
           break;
         default:
@@ -44,7 +44,10 @@ let App = props => {
     socket.onopen = function(e) {
       socket.send(JSON.stringify({"requestType": "initialAuth"}))
       socket.send(JSON.stringify({"requestType": "getColors"}))
-      socket.send(JSON.stringify({"requestType": "getCanvas"}))
+      // socket.send(JSON.stringify({"requestType": "getCanvas"}))
+
+      //socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
+        //                          "X": 1, "Y": 1, "colorID": "1"}))
     }
   } catch(exception) {
     console.log("Websocket: Unable to connect!")
@@ -56,7 +59,7 @@ let App = props => {
   // TODO: Pass canvas rows and columns as props and use them
   return (
     <div>
-      <Canvas pixelSize={20} />
+      <Canvas pixelSize={20} updatePixel={props.updatePixel} />
       <ColorMenu expCollected={13} expToNext={80} />
       <ColorMakerMenu visible={props.visible}/>
     </div>
@@ -64,7 +67,8 @@ let App = props => {
 }
 
 App = connect(state => ({
-  visible: state.get('showColorPicker'), }),
+  visible: state.get('showColorPicker'),
+  updatePixel: state.get('updatePixel') }),
   { },
 )(App);
 
