@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import './App.css';
 import AppReducer from './AppReducer';
 import * as actions from './AppActions';
+import { colorPickerVisible } from './AppActions'
 import Canvas from './Canvas';
 import ColorMenu from './ColorMenu';
 import ColorMakerMenu from './ColorMakerMenu';
@@ -14,18 +15,6 @@ const url = 'ws://localhost:8080/canvas';
 export var socket = null;
 
 export const store = createStore(AppReducer);
-
-// TODO: Does this work later?
-/*
-export default connect(
-  (state) => ({
-    state: state.reducer
-  }),
-  (dispatch) => ({
-    actions: bindActionCreators(screenActions, dispatch)
-  })
-)(RootContainer);
-*/
 
 let App = props => {
   try {
@@ -75,24 +64,10 @@ let App = props => {
   )
 }
 
-/*
-App = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App)
-*/
-
 App = connect(state => ({
-  showColorPicker: state.get('showColorPicker'), }), {},
+  colorPickerVisible: state.get('showColorPicker'), }),
+  { colorPickerVisible },
 )(App);
 
-/*
-export default(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-)*/
-
-// render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
 export default App

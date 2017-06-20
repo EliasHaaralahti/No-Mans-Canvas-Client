@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './ColorMakerMenu.css';
 import SelectableColor from './SelectableColor';
+import { colorPickerVisible } from './AppActions';
 
 class ColorMakerMenu extends React.Component {
   constructor(props) {
@@ -18,6 +20,7 @@ class ColorMakerMenu extends React.Component {
     this.onBlueChanged = this.onBlueChanged.bind(this);
     this.parseColor = this.parseColor.bind(this);
     this.onSelectionChanged = this.onSelectionChanged.bind(this);
+    this.onCancel = this.onCancel.bind(this);
   }
 
   getCustomRGB() {
@@ -73,9 +76,12 @@ class ColorMakerMenu extends React.Component {
     console.log("selected color " + color);
   }
 
+  onCancel() {
+    colorPickerVisible(false)
+  }
+
 
   render() {
-    // Functional but currently doesn't re-render the component when state changes
     if(!this.props.visible) return null;
 
     //TODO dynamic colors
@@ -101,7 +107,7 @@ class ColorMakerMenu extends React.Component {
           </form>
           <SelectableColor rgb={this.getCustomRGB()} group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
           <div className="buttons">
-            <button type="button">Cancel</button>
+            <button type="button" onClick={this.onCancel}>Cancel</button>
             <button type="button">Create</button>
           </div>
         </div>
@@ -110,4 +116,7 @@ class ColorMakerMenu extends React.Component {
   }
 }
 
-export default ColorMakerMenu;
+export default connect((state) => ({
+    visible: state.get('showColorPicker')}),
+    { colorPickerVisible },
+)(ColorMakerMenu);

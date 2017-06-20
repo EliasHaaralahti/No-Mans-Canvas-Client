@@ -15,9 +15,11 @@ export const initialState = fromJS({
 export default(state = initialState, action) => {
   switch (action.type) {
     case 'SET_COLOR_PICKER_VISIBLE': {
+      console.log("AppReducer state set color picker changed to: " + action.visible)
       return state.set('showColorPicker', action.visible)
     }
     case 'SET_USER_ID': {
+      console.log("user id set: " + action.userID)
       return state.set('userID', action.userID)
     }
     case 'SET_PIXEL': {
