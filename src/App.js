@@ -59,7 +59,8 @@ let App = props => {
   // TODO: Pass canvas rows and columns as props and use them
   return (
     <div>
-      <Canvas pixelSize={20} updatePixel={props.updatePixel} />
+      <Canvas pixelSize={20} updatePixel={props.updatePixel}
+              activeColor={props.activeColor} />
       <ColorMenu expCollected={13} expToNext={80} />
       <ColorMakerMenu visible={props.visible}/>
     </div>
@@ -68,7 +69,8 @@ let App = props => {
 
 App = connect(state => ({
   visible: state.get('showColorPicker'),
-  updatePixel: state.get('updatePixel') }),
+  updatePixel: state.get('updatePixel'),
+  activeColor: state.get('activeColor') }),
   { },
 )(App);
 
