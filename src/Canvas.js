@@ -81,7 +81,7 @@ class Canvas extends React.Component {
     if (this.state.mouseIsDown) {
       var moveX = this.state.lastX - e.screenX;
       var moveY = this.state.lastY - e.screenY;
-      if (moveX != 0 || moveY != 0) {
+      if (moveX !== 0 || moveY !== 0) {
         this.clearCanvas();
 
         this.c.translate(-moveX, -moveY);
