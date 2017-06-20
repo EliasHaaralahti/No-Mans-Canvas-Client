@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import './App.css';
 import AppReducer from './AppReducer';
 import * as actions from './AppActions';
-import { colorPickerVisible } from './AppActions'
 import Canvas from './Canvas';
 import ColorMenu from './ColorMenu';
 import ColorMakerMenu from './ColorMakerMenu';
@@ -59,14 +58,14 @@ let App = props => {
     <div>
       <Canvas pixelSize={20} />
       <ColorMenu expCollected={13} expToNext={80} />
-      <ColorMakerMenu visible={props.colorPickerVisible}/>
+      <ColorMakerMenu visible={props.visible}/>
     </div>
   )
 }
 
 App = connect(state => ({
-  colorPickerVisible: state.get('showColorPicker'), }),
-  { colorPickerVisible },
+  visible: state.get('showColorPicker'), }),
+  { },
 )(App);
 
 

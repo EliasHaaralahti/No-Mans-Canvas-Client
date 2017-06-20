@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import './ColorMakerMenu.css';
 import SelectableColor from './SelectableColor';
 import { colorPickerVisible } from './AppActions';
@@ -116,7 +115,4 @@ class ColorMakerMenu extends React.Component {
   }
 }
 
-export default connect((state) => ({
-    visible: state.get('showColorPicker')}),
-    { colorPickerVisible },
-)(ColorMakerMenu);
+export default ColorMakerMenu

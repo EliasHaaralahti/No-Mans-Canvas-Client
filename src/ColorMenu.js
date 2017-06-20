@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import './ColorMenu.css';
 import { colorPickerVisible } from './AppActions';
@@ -26,10 +25,6 @@ class ColorMenu extends React.Component {
   onOpenPicker(e) {
     console.log("click");
     colorPickerVisible(true);
-  }
-
-  componentDidUpdate() {
-    console.log("COLORMENU UPDATE")
   }
 
   //TODO: Dynamic progress bar
@@ -63,9 +58,4 @@ class ColorMenu extends React.Component {
   }
 }
 
-export default connect((state) => ({
-    colorPickerVisible: state.get('showColorPicker')}),
-    { colorPickerVisible },
-)(ColorMenu);
-
-// export default ColorMenu;
+export default ColorMenu;
