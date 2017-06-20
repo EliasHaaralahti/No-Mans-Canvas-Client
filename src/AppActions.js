@@ -30,6 +30,17 @@ export function setPixel(data) {
     data
   }
   store.dispatch(action)
+  if (data !== null) setPixelInCanvas(data[0].X, data[0].Y, data[0].colorID);
+}
+
+export function setPixelInCanvas(x, y, colorID) {
+  const action = {
+    type: "SET_PIXEL_IN_CANVAS",
+    x,
+    y,
+    colorID
+  }
+  store.dispatch(action);
 }
 
 export function drawCanvas(data) {
