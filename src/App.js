@@ -11,44 +11,13 @@ import ColorMakerMenu from './ColorMakerMenu';
 import MessageBox from './MessageBox';
 
 const url = 'ws://localhost:8080/canvas';
-export var socket = null;
+var socket = null;
 
 export const store = createStore(AppReducer);
 
 let App = props => {
   try {
     socket = new WebSocket(url)
-    socket.onmessage = function(e) {
-      const data = JSON.parse(e.data);
-      switch (data[0].responseType) {
-        case "authSuccessful":
-          // console.log(JSON.stringify(data))
-          actions.setUserID(data[0].uuid)
-          break;
-        case "colorList":
-          // console.log(JSON.stringify(data))
-          actions.setColors(data)
-          break;
-        case "fullCanvas":
-          // console.log(JSON.stringify(data))
-          actions.drawCanvas(data)
-          break;
-        case "tileUpdate":
-          console.log(JSON.stringify(data))
-          actions.setPixel(data)
-          break;
-        default:
-          console.log("socket onMessage default case!")
-      }
-    }
-    socket.onopen = function(e) {
-      socket.send(JSON.stringify({"requestType": "initialAuth"}))
-      socket.send(JSON.stringify({"requestType": "getColors"}))
-      // socket.send(JSON.stringify({"requestType": "getCanvas"}))
-
-      //socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
-        //                          "X": 1, "Y": 1, "colorID": "1"}))
-    }
   } catch(exception) {
     console.log("Websocket: Unable to connect!")
   }
@@ -56,11 +25,43 @@ let App = props => {
     return <MessageBox message="No response from server!" warning="True" />
   }
 
+  socket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    switch (data[0].responseType) {
+      case "authSuccessful":
+        // console.log(JSON.stringify(data))
+        actions.setUserID(data[0].uuid)
+        break;
+      case "colorList":
+        console.log(JSON.stringify(data))
+        actions.setColors(data)
+        break;
+      case "fullCanvas":
+        // console.log(JSON.stringify(data))
+        actions.drawCanvas(data)
+        break;
+      case "tileUpdate":
+        console.log(JSON.stringify(data))
+        actions.setPixel(data)
+        break;
+      default:
+        console.log("socket onMessage default case!")
+    }
+  }
+  socket.onopen = function(e) {
+    socket.send(JSON.stringify({"requestType": "initialAuth"}))
+    socket.send(JSON.stringify({"requestType": "getColors"}))
+    // socket.send(JSON.stringify({"requestType": "getCanvas"}))
+
+    //socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
+      //                          "X": 1, "Y": 1, "colorID": "1"}))
+  }
+
   // TODO: Pass canvas rows and columns as props and use them
   return (
     <div>
       <Canvas pixelSize={20} updatePixel={props.updatePixel}
-              activeColor={props.activeColor} />
+              activeColor={props.activeColor} socket={socket}/>
       <ColorMenu expCollected={13} expToNext={80} />
       <ColorMakerMenu visible={props.visible}/>
     </div>

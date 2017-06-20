@@ -1,6 +1,5 @@
 import React from 'react';
 import './Canvas.css';
-import { socket } from './App';
 import { setPixel } from './AppActions';
 
 // Uses HTML5 canvas, this will be the final implementation of the Grid
@@ -30,21 +29,19 @@ class Canvas extends React.Component {
   }
 
   onClick(e) {
-    // TODO: 'Snap' coordinates to grid according to pixelSize
     var mouseX = parseInt(e.clientX, 10);
     var mouseY = parseInt(e.clientY, 10);
 
     mouseX = Math.floor(mouseX/this.props.pixelSize) * this.props.pixelSize;
     mouseY = Math.floor(mouseY/this.props.pixelSize) * this.props.pixelSize;
 
-    console.log(mouseX)
-    console.log(mouseY)
+    console.log("mouse position X: " + mouseX + " Y: " + mouseY)
 
-    var color = this.props.activeColor;
-    this.c.fillStyle= color
+    // These should actually be where ever backend draws
+    this.c.fillStyle= this.props.activeColor
     this.c.fillRect(mouseX, mouseY, this.props.pixelSize, this.props.pixelSize);
 
-    socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
+    this.props.socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
                                 "X": mouseX, "Y": mouseY, "colorID": "1"}))
   }
 

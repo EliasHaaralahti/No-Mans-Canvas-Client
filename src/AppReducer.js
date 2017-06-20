@@ -8,7 +8,7 @@ export const initialState = fromJS({
   colors: {},
   canvas: [],
   updatePixel: {},
-  activeColor: "#ff0000",
+  activeColor: "#000000",
   showColorPicker: false,
 })
 
