@@ -22,6 +22,7 @@ export function setPixel(data) {
     data
   }
   store.dispatch(action)
+  if (data !== null) setPixelInCanvas(data[0].X, data[0].Y, data[0].colorID);
 }
 
 export function setPixelInCanvas(x, y, colorID) {
