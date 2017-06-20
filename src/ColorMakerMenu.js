@@ -20,6 +20,7 @@ class ColorMakerMenu extends React.Component {
     this.parseColor = this.parseColor.bind(this);
     this.onSelectionChanged = this.onSelectionChanged.bind(this);
     this.onCancel = this.onCancel.bind(this);
+    this.onCreate = this.onCreate.bind(this);
   }
 
   getCustomRGB() {
@@ -79,6 +80,11 @@ class ColorMakerMenu extends React.Component {
     colorPickerVisible(false)
   }
 
+  onCreate(){
+    console.log("creating color " + this.state.selectedColor);
+    colorPickerVisible(false)
+  }
+
 
   render() {
     if(!this.props.visible) return null;
@@ -88,12 +94,15 @@ class ColorMakerMenu extends React.Component {
 
     return (
       <div className="colorMakerMenu">
+        <style>
+          @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+        </style>
         <div className="offset">
-          <p>Pick a color!</p><br/>
+          <p>Pick a color!</p>
           <SelectableColor rgb="#FF0000" group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
           <SelectableColor rgb="#00FF00" group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
           <SelectableColor rgb="#0000FF" group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
-          <br/><br/>
+          <br/>
           Or make your own one with RGB-values! <br/>
           <form>
           R:
@@ -102,12 +111,12 @@ class ColorMakerMenu extends React.Component {
           <input type="text" name="green" defaultValue={255} onChange={this.onGreenChanged}/>
           B:
           <input type="text" name="blue" defaultValue={255} onChange={this.onBlueChanged}/>
-          <br/><br/>
+          <br/>
           </form>
           <SelectableColor rgb={this.getCustomRGB()} group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
           <div className="buttons">
             <button type="button" onClick={this.onCancel}>Cancel</button>
-            <button type="button">Create</button>
+            <button type="button" onClick={this.onCreate}>Create</button>
           </div>
         </div>
       </div>

@@ -38,6 +38,9 @@ class ColorMenu extends React.Component {
 
     return (
       <div className="colorMenu">
+        <style>
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+        </style>
         <div className="offset">
 
           <p>Your Colors</p>
