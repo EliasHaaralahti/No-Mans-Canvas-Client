@@ -1,7 +1,7 @@
 import React from 'react';
 import './Canvas.css';
 import { setPixel } from './AppActions';
-import { socketSend, sendTile } from './App';
+import { sendTile, getColor } from './App';
 
 class Canvas extends React.Component {
   constructor(props) {
@@ -14,17 +14,6 @@ class Canvas extends React.Component {
     this.onClick = this.onClick.bind(this);
     this.onMove = this.onMove.bind(this);
   }
-  // c usually refers to context when using canvas
-  // NOTE: Will this also cause re-render? do this before mount?
-  componentDidMount() {
-    // Here draw the initial canvas
-    // TODO: Use proper dimensions
-    for (var y = 0; y < 5; y+=this.props.pixelSize) {
-      for (var x = 0; x < 5; x+=this.props.pixelSize) {
-        // this.c.fillRect(dataX, dataY, this.props.pixelSize, this.props.pixelSize);
-      }
-    }
-  }
 
   onClick(e) {
     e.preventDefault();
@@ -36,16 +25,25 @@ class Canvas extends React.Component {
 
     console.log("mouse position X: " + mouseX + " Y: " + mouseY)
 
-    sendTile( mouseX, mouseY)
+    sendTile( mouseX, mouseY, this.props.activeColor)
   }
 
   componentDidUpdate() {
+    if(this.props.canvasDraw) {
+      console.log(this.props.canvas[2].colorID)
+      for (var i = 1; i < this.props.canvas.length - 1; i++) {
+        this.c.fillStyle=getColor(this.props.canvas[i].colorID)
+        this.c.fillRect(this.props.canvas[i].X, this.props.canvas[i].Y, 1, 1);
+      }
+    }
+
+
    if(this.props.updatePixel != null) {
-     console.log("CANVAS DRAWING: ")
-     console.log(JSON.stringify(this.props.updatePixel))
      const pixel = this.props.updatePixel;
 
-     this.c.fillStyle= this.props.activeColor
+     console.log("Color ID: ")
+     console.log(pixel[0].colorID)
+     this.c.fillStyle=getColor(pixel[0].colorID)
      this.c.fillRect(pixel[0].X, pixel[0].Y, this.props.pixelSize, this.props.pixelSize);
      // Sets update pixel back to none
      setPixel(null)
@@ -59,24 +57,13 @@ class Canvas extends React.Component {
   }
 
   render() {
-    /*// TODO: Pass socket as prop rather than import, might fix problem (?)
-    // TODO: Might not work but the idea is here:
-    // If new updatePixel received from websocket, draw it
-    if(this.props.updatePixel.size !== 0) {
-      if(this.c != null){
-        // Draw updated pixel, for now 1, 1 coordinates
-        this.c.fillRect(1, 1, this.props.pixelSize, this.props.pixelSize);
-        // Reset the updatePixel state
-        setPixel({})
-      }
-    }*/
     return (
       <canvas id="canvas" ref={(c) => {
                 if(c != null) {
                   this.c = c.getContext('2d')}
                 }
               }
-              width={1000} height={1000}
+              width={this.props.columns} height={this.props.rows}
               onClick={this.onClick} onMouseMove={this.onMove} />
     )
   }
