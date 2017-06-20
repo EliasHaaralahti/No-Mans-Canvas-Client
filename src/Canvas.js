@@ -7,11 +7,15 @@ class Canvas extends React.Component {
     super(props)
     this.state = {
         x: 0,
-        y: 0
+        y: 0,
+        lastX: 0,
+        lastY: 0,
+        dragStart: null,
+        dragged: false
     }
 
     this.onClick = this.onClick.bind(this);
-    this.onMove = this.onMove.bind(this);
+    this.onMouseMove = this.onMouseMove.bind(this);
   }
   // c usually refers to context when using canvas
   // NOTE: Will this also cause re-render? do this before mount?
@@ -55,10 +59,27 @@ class Canvas extends React.Component {
     }
   }
 
-  onMove(e) {
-    // var mouseX = parseInt(e.clientX, 10);
-    // var mouseY = parseInt(e.clientY, 10);
-    // console.log("Mouse X: " + mouseX + " Y: " + mouseY)
+  onMouseDown(e) {
+    document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
+    this.setState({
+      lastX: e.offsetX,
+      lastY: e.offsetY,
+      dragStart: this.c.transformedPoint(this.state.lastX, this.state.lastY),
+      dragged: false
+    });
+  }
+
+  onMouseMove(e) {
+    this.setState({
+      lastX: e.offsetX,
+      lastY: e.offsetY,
+      dragged: true
+    });
+
+    if (this.state.dragStart) {
+      var pt = this.c.transformedPoint(this.state.lastX, this.state.lastY);
+      this.c.translate(pt.x-this.state.dragStart.x, pt.y-this.state.dragStart.y);
+    }
   }
 
   render() {
@@ -80,7 +101,7 @@ class Canvas extends React.Component {
                 }
               }
               width={window.innerWidth} height={window.innerHeight}
-              onClick={this.onClick} onMouseMove={this.onMove} />
+              onClick={this.onClick} onMouseMove={this.onMouseMove} />
     )
   }
 }
