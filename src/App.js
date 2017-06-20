@@ -26,11 +26,11 @@ if(socket == null) {
 socket.onmessage = function(e) {
   console.log("message received from websocket")
   const data = JSON.parse(e.data);
-  console.log(JSON.stringify(data))
   switch (data[0].responseType) {
     case "authSuccessful":
       // console.log(JSON.stringify(data))
       actions.setUserID(data[0].uuid)
+      window.localStorage.setItem("userID", data[0].uuid)
       break;
     case "colorList":
       // console.log(JSON.stringify(data))
@@ -51,10 +51,19 @@ socket.onmessage = function(e) {
       console.log("socket onMessage default case!")
   }
 }
+// TODO: USE PROPER USER ID WHEN BACKEND READY
 socket.onopen = function(e) {
-  socket.send(JSON.stringify({"requestType": "initialAuth"}))
+  // TODO: When backend readyhange numbers to null and !==
+  if(window.localStorage.getItem('userID') === "2145") {
+    console.log("localStorage ID found!")
+    actions.setUserID(window.localStorage.getItem('userID'))
+    // TODO: auth backend
+  } else {
+    console.log("Requesting new ID!")
+    socket.send(JSON.stringify({"requestType": "initialAuth"}))
+  }
   socket.send(JSON.stringify({"requestType": "getColors"}))
-  socket.send(JSON.stringify({"requestType": "getCanvas", "userID": "1"})) //TODO: proper user ID
+  socket.send(JSON.stringify({"requestType": "getCanvas", "userID": "1"}))
 }
 
 let App = props => {
