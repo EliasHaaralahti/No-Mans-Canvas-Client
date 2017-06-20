@@ -31,7 +31,7 @@ class ColorMenu extends React.Component {
   render() {
     var colors = [];
     for (var i = 0; i < this.state.colors.length; ++i) {
-      colors.push(<SelectableColor rgb={getColor(this.state.colors[i])} key={i}
+      colors.push(<SelectableColor colorID={this.state.colors[i]} rgb={getColor(this.state.colors[i])} key={i}
         group="colorSelect" onSelectionChanged={this.onColorSelected}/>)
     }
 

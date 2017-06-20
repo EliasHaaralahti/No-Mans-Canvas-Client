@@ -28,8 +28,8 @@ export default(state = initialState, action) => {
     case 'SET_PIXEL_IN_CANVAS': {
       var canvas = state.get('canvas');
       var index = action.y * state.get('columns') + action.x;
-      canvas[index] = {"colorID": action.colorID};
-      console.log("Setting pixel at index "+index);
+      canvas[index] = {"colorID": parseInt(action.colorID, 10)};
+      console.log("Setting pixel at index "+index+" with ID "+action.colorID);
       return state.set('canvas', canvas);
     }
     case 'DRAW_CANVAS': {
