@@ -12,12 +12,16 @@ export const initialState = fromJS({
   activeColor: 0,
   showColorPicker: false,
   canvasDraw: false,
+  showLoadingScreen: true,
 })
 
 export default(state = initialState, action) => {
   switch (action.type) {
     case 'SET_COLOR_PICKER_VISIBLE': {
       return state.set('showColorPicker', action.visible)
+    }
+    case 'SET_LOADING_SCREEN' : {
+      return state.set('showLoadingScreen', action.visible)
     }
     case 'SET_USER_ID': {
       return state.set('userID', action.userID)

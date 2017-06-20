@@ -9,6 +9,7 @@ import Canvas from './Canvas';
 import ColorMenu from './ColorMenu';
 import ColorMakerMenu from './ColorMakerMenu';
 import MessageBox from './MessageBox';
+import LoadingScreen from './LoadingScreen';
 
 export const store = createStore(AppReducer);
 
@@ -39,6 +40,7 @@ socket.onmessage = function(e) {
     case "fullCanvas":
       console.log("full canvas retrieved!")
       actions.drawCanvas(data)
+      actions.loadingScreenVisible(false)
       break;
     case "tileUpdate":
       console.log("tileUpdate")
@@ -80,12 +82,14 @@ let App = props => {
 
       <ColorMenu expCollected={13} expToNext={80} colors={props.colors} />
       <ColorMakerMenu visible={props.visible}/>
+      <LoadingScreen visible={props.loadingVisible}/>
     </div>
   )
 }
 
 App = connect(state => ({
   visible: state.get('showColorPicker'),
+  loadingVisible: state.get('showLoadingScreen'),
   updatePixel: state.get('updatePixel'),
   activeColor: state.get('activeColor'),
   userColors: state.get('colors'),
