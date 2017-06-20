@@ -2,9 +2,6 @@ import React from 'react';
 import './Canvas.css';
 import { setPixel } from './AppActions';
 
-// Uses HTML5 canvas, this will be the final implementation of the Grid
-// Project currently uses Grid.js, which does not suit our needs.
-
 class Canvas extends React.Component {
   constructor(props) {
     super(props)
@@ -37,12 +34,25 @@ class Canvas extends React.Component {
 
     console.log("mouse position X: " + mouseX + " Y: " + mouseY)
 
-    // These should actually be where ever backend draws
-    this.c.fillStyle= this.props.activeColor
-    this.c.fillRect(mouseX, mouseY, this.props.pixelSize, this.props.pixelSize);
+    // TODO:
+    // this.props.socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
+    //                             "X": mouseX, "Y": mouseY, "colorID": "1"}))
+  }
 
-    this.props.socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
-                                "X": mouseX, "Y": mouseY, "colorID": "1"}))
+  componentDidUpdate() {
+   if(this.props.updatePixel != null) {
+     console.log("CANVAS DRAWING: ")
+     console.log(JSON.stringify(this.props.updatePixel))
+     const pixel = this.props.updatePixel;
+     var x = pixel[0].X;
+     var y = pixel[0].Y;
+     console.log("X: " + x  +" Y: " + y)
+
+     this.c.fillStyle= this.props.activeColor
+     this.c.fillRect(x, y, this.props.pixelSize, this.props.pixelSize);
+     // Sets update pixel back to none
+     setPixel(null)
+    }
   }
 
   onMove(e) {
@@ -52,7 +62,7 @@ class Canvas extends React.Component {
   }
 
   render() {
-    // TODO: Pass socket as prop rather than import, might fix problem (?)
+    /*// TODO: Pass socket as prop rather than import, might fix problem (?)
     // TODO: Might not work but the idea is here:
     // If new updatePixel received from websocket, draw it
     if(this.props.updatePixel.size !== 0) {
@@ -62,7 +72,7 @@ class Canvas extends React.Component {
         // Reset the updatePixel state
         setPixel({})
       }
-    }
+    }*/
     return (
       <canvas id="canvas" ref={(c) => {
                 if(c != null) {
