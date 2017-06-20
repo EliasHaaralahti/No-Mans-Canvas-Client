@@ -31,15 +31,13 @@ socket.onmessage = function(e) {
       actions.setUserID(data[0].uuid)
       break;
     case "colorList":
-      console.log(JSON.stringify(data))
+      // console.log(JSON.stringify(data))
       actions.setColors(data)
       break;
     case "fullCanvas":
-      // console.log(JSON.stringify(data))
       actions.drawCanvas(data)
       break;
     case "tileUpdate":
-      console.log(JSON.stringify(data))
       actions.setPixel(data)
       break;
     case "error":
@@ -52,27 +50,22 @@ socket.onmessage = function(e) {
 socket.onopen = function(e) {
   socket.send(JSON.stringify({"requestType": "initialAuth"}))
   socket.send(JSON.stringify({"requestType": "getColors"}))
-  socket.send(JSON.stringify({"requestType": "dunGoofd"}))
-  // socket.send(JSON.stringify({"requestType": "getCanvas"}))
-
-  socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
-                              "X": 0, "Y": 99, "colorID": "1"}))
-
-
-  socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
-                              "X": 99, "Y": 0, "colorID": "1"}))
+  socket.send(JSON.stringify({"requestType": "getCanvas"}))
 }
 
 let App = props => {
   if(socket == null) {
     return <MessageBox message="No response from server!" warning="True" />
   }
-  // TODO: Pass canvas rows and columns as props and use them
+  // TODO: Is prop socket used?
   return (
     <div>
-      <Canvas pixelSize={20} updatePixel={props.updatePixel}
-              activeColor={props.activeColor} socket={socket}/>
-      <ColorMenu expCollected={13} expToNext={80} />
+      <Canvas pixelSize={5} rows={props.rows} columns={props.columns}
+              updatePixel={props.updatePixel} activeColor={props.activeColor}
+              canvas={props.canvas} canvasDraw={props.canvasDraw}
+              socket={socket}/>
+
+      <ColorMenu expCollected={13} expToNext={80} colors={props.colors} />
       <ColorMakerMenu visible={props.visible}/>
     </div>
   )
@@ -81,22 +74,49 @@ let App = props => {
 App = connect(state => ({
   visible: state.get('showColorPicker'),
   updatePixel: state.get('updatePixel'),
-  activeColor: state.get('activeColor'), }),
+  activeColor: state.get('activeColor'),
+  userColors: state.get('colors'),
+  rows: state.get('rows'),
+  columns: state.get('columns'),
+  canvas: state.get('canvas'),
+  canvasDraw: state.get('canvasDraw')
+  }),
   { },
 )(App);
 
-export const socketSend = (data) => {
-  // Null check may not work
-  if (socket != null) {
-    socket.send(JSON.stringify(data))
-  }
+export const sendTile = (x, y, colorID) => {
+  socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
+                              "X": x, "Y": y, "colorID": colorID}))
 }
 
-export const sendTile = (x, y) => {
-  console.log("Sending tile!")
-  console.log(x)
-  socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
-                              "X": x, "Y": y, "colorID": "1"}))
+export const getColor = (id) => {
+  var colors = store.getState().get('colors')
+  if(colors.length == null) return "#000000";
+
+  for (var i = 0; i < colors.length; i++) {
+    if(colors[i].ID === id) {
+        var hex = rgbToHex(colors[i].R, colors[i].G, colors[i].B)
+        return hex;
+    }
+  }
+  return "#000000";
 }
+
+// NOTE: Copied from stackoverflow, not teste
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+/*
+// NOTE: Copied from stackoverflow, not tested
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+*/
 
 export default App

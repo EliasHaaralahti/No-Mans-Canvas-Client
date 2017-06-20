@@ -1,15 +1,17 @@
 import { fromJS } from 'immutable'
 
+// TODO: Cleaning up: use dictionaries like user { ID, exp}
 export const initialState = fromJS({
   userID: -1,
   userExp: 0,
-  rows: 0,
-  columns: 0,
+  rows: 100,
+  columns: 100,
   colors: {},
   canvas: [],
   updatePixel: null,
-  activeColor: "#000000",
+  activeColor: 0,
   showColorPicker: false,
+  canvasDraw: false,
 })
 
 export default(state = initialState, action) => {
@@ -24,7 +26,7 @@ export default(state = initialState, action) => {
       return state.set('updatePixel', action.data)
     }
     case 'DRAW_CANVAS': {
-      return state.set('canvas', action.data)
+      return state.set('canvas', action.data).set('canvasDraw', true)
     }
     case 'SET_COLORS': {
       return state.set('colors', action.colors)
@@ -34,6 +36,12 @@ export default(state = initialState, action) => {
     }
     case 'SET_USER_EXP': {
       return state.set('userExp', action.amount);
+    }
+    case 'SET_ROWS': {
+      return state.set('rows', action.dimension)
+    }
+    case 'SET_COLUMNS': {
+      return state.set('columns', action.dimension)
     }
     default: {
       return state;
