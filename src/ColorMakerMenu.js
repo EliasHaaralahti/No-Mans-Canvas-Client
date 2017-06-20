@@ -98,11 +98,19 @@ class ColorMakerMenu extends React.Component {
           @import url('https://fonts.googleapis.com/css?family=Open+Sans');
         </style>
         <div className="offset">
+<<<<<<< HEAD
           <p>Pick a color!</p>
           <SelectableColor rgb="#FF0000" group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
           <SelectableColor rgb="#00FF00" group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
           <SelectableColor rgb="#0000FF" group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
           <br/>
+=======
+          <p>Pick a color!</p><br/>
+          <SelectableColor rgb={0} group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
+          <SelectableColor rgb={1} group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
+          <SelectableColor rgb={2} group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
+          <br/><br/>
+>>>>>>> bffde8f79ed3fe7e23a81df909e92d2c92dc6e87
           Or make your own one with RGB-values! <br/>
           <form>
           R:
