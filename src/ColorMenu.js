@@ -4,16 +4,15 @@ import './ColorMenu.css';
 import { colorPickerVisible } from './AppActions';
 import { setActiveColor } from './AppActions';
 import SelectableColor from './SelectableColor';
-
-import { socketSend } from './App';
+import { getColor } from './App';
 
 class ColorMenu extends React.Component {
   constructor(props) {
-    // Give available colors as props
+    // TODO: Give available colors as props
     super(props);
     this.state = {
-      selectedColor: "#000000",
-      colors: ["#000000", "#FFFFFF", "#ff0000", "#0000FF", "#ffff00"]
+      selectedColor: 0,
+      colors: [0, 1, 2, 3, 4]
     };
     this.onColorSelected = this.onColorSelected.bind(this);
     this.onOpenPicker = this.onOpenPicker.bind(this);
@@ -32,7 +31,7 @@ class ColorMenu extends React.Component {
   render() {
     var colors = [];
     for (var i = 0; i < this.state.colors.length; ++i) {
-      colors.push(<SelectableColor rgb={this.state.colors[i]} key={i}
+      colors.push(<SelectableColor rgb={getColor(this.state.colors[i])} key={i}
         group="colorSelect" onSelectionChanged={this.onColorSelected}/>)
     }
 

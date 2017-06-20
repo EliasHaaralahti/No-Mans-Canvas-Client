@@ -90,9 +90,9 @@ class ColorMakerMenu extends React.Component {
       <div className="colorMakerMenu">
         <div className="offset">
           <p>Pick a color!</p><br/>
-          <SelectableColor rgb="#FF0000" group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
-          <SelectableColor rgb="#00FF00" group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
-          <SelectableColor rgb="#0000FF" group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
+          <SelectableColor rgb={0} group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
+          <SelectableColor rgb={1} group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
+          <SelectableColor rgb={2} group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
           <br/><br/>
           Or make your own one with RGB-values! <br/>
           <form>
