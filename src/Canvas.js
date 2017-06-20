@@ -48,6 +48,9 @@ class Canvas extends React.Component {
   componentDidUpdate() {
     if(this.props.canvasDraw) {
       console.log("Drawing canvas!");
+
+      // OLD DRAW WITH X AND Y VALUES
+      /*
       for (var i = 1; i < this.props.canvas.length; i++) {
         this.c.fillStyle=getColor(this.props.canvas[i].colorID);
         var pixelX = this.props.canvas[i].X * this.props.pixelSize;
@@ -55,14 +58,25 @@ class Canvas extends React.Component {
         this.c.fillRect(pixelX, pixelY, this.props.pixelSize, this.props.pixelSize);
       }
       setDrawCanvas(false);
-    }
+      */
 
+      // TODO: NOT OPTIMAL! RUSHED SOLUTION
+      var counter = 0;
+      for (var y = 0; y < this.props.rows; y++) {
+        for(var x = 0; x < this.props.columns; x++) {
+          this.c.fillStyle=getColor(this.props.canvas[counter].colorID);
+          var pixelX = x * this.props.pixelSize;
+          var pixelY = y * this.props.pixelSize;
+          this.c.fillRect(pixelX, pixelY, this.props.pixelSize, this.props.pixelSize);
+          counter++;
+        }
+      }
+      setDrawCanvas(false);
+    }
 
    if(this.props.updatePixel != null) {
      const pixel = this.props.updatePixel;
-
-     console.log("Color ID: ")
-     console.log(pixel[0].colorID)
+     console.log("Canvas received pixel color: " + pixel[0].colorID)
      this.c.fillStyle=getColor(pixel[0].colorID)
      this.c.fillRect(pixel[0].X * this.props.pixelSize, pixel[0].Y * this.props.pixelSize,
        this.props.pixelSize, this.props.pixelSize);
