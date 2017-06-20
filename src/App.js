@@ -10,10 +10,10 @@ import ColorMenu from './ColorMenu';
 import ColorMakerMenu from './ColorMakerMenu';
 import MessageBox from './MessageBox';
 
-const url = 'ws://localhost:8080/canvas';
-var socket = null;
-
 export const store = createStore(AppReducer);
+
+var socket = null;
+const url = 'ws://localhost:8080/canvas';
 
 if(socket == null) {
   try {
@@ -54,8 +54,13 @@ socket.onopen = function(e) {
   socket.send(JSON.stringify({"requestType": "getColors"}))
   socket.send(JSON.stringify({"requestType": "dunGoofd"}))
   // socket.send(JSON.stringify({"requestType": "getCanvas"}))
+
   socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
-                              "X": 1, "Y": 1, "colorID": "1"}))
+                              "X": 0, "Y": 99, "colorID": "1"}))
+
+
+  socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
+                              "X": 99, "Y": 0, "colorID": "1"}))
 }
 
 let App = props => {
@@ -80,5 +85,18 @@ App = connect(state => ({
   { },
 )(App);
 
+export const socketSend = (data) => {
+  // Null check may not work
+  if (socket != null) {
+    socket.send(JSON.stringify(data))
+  }
+}
+
+export const sendTile = (x, y) => {
+  console.log("Sending tile!")
+  console.log(x)
+  socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
+                              "X": x, "Y": y, "colorID": "1"}))
+}
 
 export default App
