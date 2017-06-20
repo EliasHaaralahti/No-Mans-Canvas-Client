@@ -59,7 +59,11 @@ class Canvas extends React.Component {
 
   render() {
     return (
-      <canvas id="canvas" ref={(c) => this.c = c.getContext('2d')}
+      <canvas id="canvas" ref={(c) => {
+                if(c != null) {
+                  this.c = c.getContext('2d')}
+                }
+              }
               width={window.innerWidth} height={window.innerHeight}
               onClick={this.onClick} onMouseMove={this.onMove} />
     )
