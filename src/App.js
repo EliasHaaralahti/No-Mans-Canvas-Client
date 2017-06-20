@@ -41,7 +41,7 @@ socket.onmessage = function(e) {
       actions.drawCanvas(data)
       break;
     case "tileUpdate":
-      console.log("tileUpdate")
+      console.log("tileUpdate: "+JSON.stringify(data))
       actions.setPixel(data)
       break;
     case "error":

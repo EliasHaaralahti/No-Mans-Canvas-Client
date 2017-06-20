@@ -25,6 +25,13 @@ export default(state = initialState, action) => {
     case 'SET_PIXEL': {
       return state.set('updatePixel', action.data)
     }
+    case 'SET_PIXEL_IN_CANVAS': {
+      var canvas = state.get('canvas');
+      var index = action.y * state.get('columns') + action.x;
+      canvas[index] = {"colorID": action.colorID};
+      console.log("Setting pixel at index "+index);
+      return state.set('canvas', canvas);
+    }
     case 'DRAW_CANVAS': {
       return state.set('canvas', action.data).set('canvasDraw', true)
     }

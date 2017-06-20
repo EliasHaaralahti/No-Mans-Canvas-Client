@@ -24,6 +24,16 @@ export function setPixel(data) {
   store.dispatch(action)
 }
 
+export function setPixelInCanvas(x, y, colorID) {
+  const action = {
+    type: "SET_PIXEL_IN_CANVAS",
+    x,
+    y,
+    colorID
+  }
+  store.dispatch(action);
+}
+
 export function drawCanvas(data) {
   var dimension = Math.sqrt(data.length - 1)
   setDimensions(dimension)
