@@ -45,8 +45,10 @@ class Canvas extends React.Component {
     if(this.props.canvasDraw) {
       console.log(this.props.canvas[2].colorID)
       for (var i = 1; i < this.props.canvas.length - 1; i++) {
-        this.c.fillStyle=getColor(this.props.canvas[i].colorID)
-        this.c.fillRect(this.props.canvas[i].X, this.props.canvas[i].Y, 1, 1);
+        this.c.fillStyle=getColor(this.props.canvas[i].colorID);
+        var pixelX = this.props.canvas[i].X * this.props.pixelSize;
+        var pixelY = this.props.canvas[i].Y * this.props.pixelSize;
+        this.c.fillRect(pixelX, pixelY, this.props.pixelSize, this.props.pixelSize);
       }
     }
 
@@ -57,7 +59,8 @@ class Canvas extends React.Component {
      console.log("Color ID: ")
      console.log(pixel[0].colorID)
      this.c.fillStyle=getColor(pixel[0].colorID)
-     this.c.fillRect(pixel[0].X, pixel[0].Y, this.props.pixelSize, this.props.pixelSize);
+     this.c.fillRect(pixel[0].X * this.props.pixelSize, pixel[0].Y * this.props.pixelSize,
+       this.props.pixelSize, this.props.pixelSize);
      // Sets update pixel back to none
      setPixel(null)
     }
