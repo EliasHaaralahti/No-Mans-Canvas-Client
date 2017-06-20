@@ -1,5 +1,6 @@
 .colorMenu {
-  background-color: turquoise;
+  background-color: lightgrey;
+  opacity: 50%;
   z-index: 2;
   position: fixed;
   height: 120px;
@@ -8,6 +9,7 @@
   left: -8px;
   text-align: left;
   font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
   font-weight: bold;
   border-radius: 10px;
 }
@@ -25,12 +27,14 @@ p {
 .getColorsBtn {
   display: inline-block;
   background-color: yellow;
+  border-radius: 10px;
   position: absolute;
   width: 80px;
   height: 25px;
   left: 150px;
-  top: 8px;
-  font-size: 12px;
+  top: 15px;
+  font-size: 13px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .progressContainer {
@@ -51,7 +55,7 @@ p {
 .progressInfo {
   z-index: 3;
   position: absolute;
-  margin: 2px 0 0 3px;
-  font-size: 12px;
+  margin: 0 0 0 3px;
+  font-size: 15px;
   margin-left: 2px;
 }
