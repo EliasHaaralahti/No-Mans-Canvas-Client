@@ -7,23 +7,34 @@ class Canvas extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-        x: 0,
-        y: 0
+        x: 0.0,
+        y: 0.0,
+        lastX: 0.0,
+        lastY: 0.0,
+        mouseIsDown: false,
+        dragging: false,
+        canvasX: 0.0,
+        canvasY: 0.0,
+        scale: 1.0
     }
 
     this.onClick = this.onClick.bind(this);
-    this.onMove = this.onMove.bind(this);
+    this.onMouseMove = this.onMouseMove.bind(this);
+    this.onMouseDown = this.onMouseDown.bind(this);
+    this.onMouseUp = this.onMouseUp.bind(this);
+    this.onMouseWheel = this.onMouseWheel.bind(this);
+    this.clearCanvas = this.clearCanvas.bind(this);
   }
 
   onClick(e) {
     e.preventDefault();
-    var mouseX = parseInt(e.clientX, 10);
-    var mouseY = parseInt(e.clientY, 10);
+    var mouseX = parseInt(e.clientX, 10) - this.state.canvasX;
+    var mouseY = parseInt(e.clientY, 10) - this.state.canvasY;
 
     mouseX = Math.floor(mouseX/this.props.pixelSize) * this.props.pixelSize;
     mouseY = Math.floor(mouseY/this.props.pixelSize) * this.props.pixelSize;
 
-    console.log("mouse position X: " + mouseX + " Y: " + mouseY)
+    console.log("Clicked at " + mouseX + ", " + mouseY)
 
     sendTile( mouseX, mouseY, this.props.activeColor)
   }
@@ -50,21 +61,86 @@ class Canvas extends React.Component {
     }
   }
 
-  onMove(e) {
-    // var mouseX = parseInt(e.clientX, 10);
-    // var mouseY = parseInt(e.clientY, 10);
-    // console.log("Mouse X: " + mouseX + " Y: " + mouseY)
+  onMouseDown(e) {
+    document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
+    this.setState({
+      lastX: e.screenX,
+      lastY: e.screenY,
+      mouseIsDown: true
+    });
+  }
+
+  clearCanvas() {
+    this.c.save();
+    this.c.setTransform(1,0,0,1,0,0);
+    this.c.clearRect(0,0,this.canvas.width, this.canvas.height);
+    this.c.restore();
+  }
+
+  onMouseMove(e) {
+    if (this.state.mouseIsDown) {
+      var moveX = this.state.lastX - e.screenX;
+      var moveY = this.state.lastY - e.screenY;
+      if (moveX != 0 || moveY != 0) {
+        this.clearCanvas();
+
+        this.c.translate(-moveX, -moveY);
+
+        //TODO: redraw canvas
+
+        this.setState({
+          canvasX: this.state.canvasX - moveX,
+          canvasY: this.state.canvasY - moveY,
+          dragging: true,
+          lastX: e.screenX,
+          lastY: e.screenY
+        });
+      }
+    }
+  }
+
+  onMouseUp(e) {
+    if (!this.state.dragging) {
+      this.onClick(e);
+    }
+
+    this.setState({
+      mouseIsDown: false,
+      dragging: false
+    });
+  }
+
+  onMouseWheel(e) {
+    var delta = -e.deltaY / 20;
+
+    if ((delta > 0 && this.state.scale > 2.0) || (delta < 0 && this.state.scale < 0.5)) return;
+
+    var factor = Math.pow(1.1, delta);
+
+    var transX = (this.canvas.width / 2 - this.state.canvasX) * this.state.zoom;
+    var transY = (this.canvas.height / 2 - this.state.canvasY) * this.state.zoom;
+    this.c.translate(transX, transY);
+    this.c.scale(factor,factor);
+    this.c.translate(-transX, -transY);
+
+    this.clearCanvas();
+
+    this.setState({
+      scale: this.state.scale * factor
+    })
   }
 
   render() {
     return (
       <canvas id="canvas" ref={(c) => {
                 if(c != null) {
-                  this.c = c.getContext('2d')}
-                }
+                  this.c = c.getContext('2d');
+                  this.canvas = c;
+                }}
               }
-              width={this.props.columns} height={this.props.rows}
-              onClick={this.onClick} onMouseMove={this.onMove} />
+              width={window.innerWidth} height={window.innerHeight}
+              onMouseMove={this.onMouseMove} onMouseDown={this.onMouseDown}
+              onMouseUp={this.onMouseUp} onWheel={this.onMouseWheel} />
     )
   }
 }
