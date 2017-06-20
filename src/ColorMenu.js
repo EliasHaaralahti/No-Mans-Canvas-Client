@@ -23,7 +23,6 @@ class ColorMenu extends React.Component {
   }
 
   onOpenPicker(e) {
-    console.log("click");
     colorPickerVisible(true);
   }
 
