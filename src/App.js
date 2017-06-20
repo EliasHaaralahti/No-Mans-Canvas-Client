@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStore } from 'redux'
-import { connect, Provider } from 'react-redux';
-import {render} from 'react-dom';
+import { connect } from 'react-redux';
 
 import './App.css';
 import AppReducer from './AppReducer';
@@ -76,19 +75,6 @@ let App = props => {
   )
 }
 
-
-const mapStateToProps = state => {
-  return {
-    // showColorPicker: state.get('showColorPicker')
-    test: state
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  // actions.colorPickerVisible(true)
-  actions.colorPickerVisible
-}
-
 /*
 App = connect(
   mapStateToProps,
@@ -96,11 +82,10 @@ App = connect(
 )(App)
 */
 
-/*
 App = connect(state => ({
-  showColorPicker: state.app.get('showColorPicker'), }), {},
+  showColorPicker: state.get('showColorPicker'), }), {},
 )(App);
-*/
+
 /*
 export default(
   <Provider store={store}>
