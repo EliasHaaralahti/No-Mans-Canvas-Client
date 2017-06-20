@@ -7,7 +7,7 @@ export const initialState = fromJS({
   columns: 0,
   colors: {},
   canvas: [],
-  updatePixel: {},
+  updatePixel: null,
   activeColor: "#000000",
   showColorPicker: false,
 })
@@ -21,7 +21,6 @@ export default(state = initialState, action) => {
       return state.set('userID', action.userID)
     }
     case 'SET_PIXEL': {
-      console.log("SINGLE PIXEL UPDATED!")
       return state.set('updatePixel', action.data)
     }
     case 'DRAW_CANVAS': {
