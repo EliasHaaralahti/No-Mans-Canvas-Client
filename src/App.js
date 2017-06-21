@@ -23,18 +23,21 @@ if(socket == null) {
     console.log("Websocket: Unable to connect!")
   }
 }
-
+//TODO: backend gives tiles event
 socket.onmessage = function(e) {
   console.log("message received from websocket")
   const data = JSON.parse(e.data);
   switch (data[0].responseType) {
     case "authSuccessful":
-      // console.log(JSON.stringify(data))
+      console.log(JSON.stringify(data))
+      console.log("GOT NEW ID")
       actions.setUserID(data[0].uuid)
       window.localStorage.setItem("userID", data[0].uuid)
+      console.log(store.getState().get("userID"))
       break;
     case "colorList":
       // console.log(JSON.stringify(data))
+      console.log("got colors")
       actions.setColors(data)
       break;
     case "fullCanvas":
@@ -46,8 +49,16 @@ socket.onmessage = function(e) {
       console.log("tileUpdate: "+JSON.stringify(data))
       actions.setPixel(data)
       break;
+    case "incrementTileCount":
+      console.log("tile data: ")
+      console.log(JSON.stringify(data))
+      // actions.addUserTiles(data[1].amount)
+      break;
     case "error":
       console.log(JSON.stringify(data))
+      break;
+    case "reAuthSuccesful":
+      console.log("re-auth succesful!")
       break;
     default:
       console.log("socket onMessage default case!")
@@ -55,17 +66,17 @@ socket.onmessage = function(e) {
 }
 // TODO: USE PROPER USER ID WHEN BACKEND READY
 socket.onopen = function(e) {
-  // TODO: When backend readyhange numbers to null and !==
-  if(window.localStorage.getItem('userID') === "2145") {
+  if(window.localStorage.getItem('userID') !== null) {
     console.log("localStorage ID found!")
     actions.setUserID(window.localStorage.getItem('userID'))
-    // TODO: auth backend
+    console.log(store.getState().get("userID").toString())
+    socket.send(JSON.stringify({"requestType": "auth", "userID": store.getState().get("userID").toString()}))
   } else {
     console.log("Requesting new ID!")
     socket.send(JSON.stringify({"requestType": "initialAuth"}))
   }
-  socket.send(JSON.stringify({"requestType": "getColors"}))
-  socket.send(JSON.stringify({"requestType": "getCanvas", "userID": "1"}))
+  socket.send(JSON.stringify({"requestType": "getColors", "userID": store.getState().get("userID").toString()}))
+  socket.send(JSON.stringify({"requestType": "getCanvas", "userID": store.getState().get("userID").toString()}))
 }
 
 let App = props => {
@@ -73,10 +84,14 @@ let App = props => {
     <div>
       <Canvas pixelSize={5} rows={props.rows} columns={props.columns}
               updatePixel={props.updatePixel} activeColor={props.activeColor}
-              canvas={props.canvas} canvasDraw={props.canvasDraw}/>
+              canvas={props.canvas} canvasDraw={props.canvasDraw}
+              remainingTiles={props.remainingTiles}
+              userExp={props.userExp} userExpLimit={props.userExpLimit}/>
 
-      <ColorMenu expCollected={13} expToNext={80}
-              colors={props.userColors} activeColor={props.activeColor} />
+      <ColorMenu expCollected={props.userExp} expToNext={props.userExpLimit}
+              colors={props.userColors} activeColor={props.activeColor}
+              remainingTiles={props.remainingTiles}
+              userTiles={props.userTiles} />
       <ColorMakerMenu visible={props.visible}/>
       <LoadingScreen visible={props.loadingVisible}/>
     </div>
@@ -92,13 +107,17 @@ App = connect(state => ({
   rows: state.get('rows'),
   columns: state.get('columns'),
   canvas: state.get('canvas'),
-  canvasDraw: state.get('canvasDraw')
+  canvasDraw: state.get('canvasDraw'),
+  userExp: state.get('userExp'),
+  userExpLimit: state.get('userExpLimit'),
+  remainingTiles: state.get('remainingTiles'),
+  userTiles: state.get('userTiles'),
   }),
   { },
 )(App);
 
 export const sendTile = (x, y, colorID) => {
-  socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
+  socket.send(JSON.stringify({"requestType": "postTile", "userID":  store.getState().get("userID").toString(),
                               "X": x, "Y": y, "colorID": colorID}))
 }
 
