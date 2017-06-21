@@ -8,6 +8,14 @@ export function colorPickerVisible(visible) {
   store.dispatch(action)
 }
 
+export function loadingScreenVisible(visible) {
+  const action = {
+    type: "SET_LOADING_SCREEN",
+    visible
+  }
+  store.dispatch(action)
+}
+
 export function setUserID(userID) {
   const action = {
     type: "SET_USER_ID",
