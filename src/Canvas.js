@@ -108,11 +108,11 @@ class Canvas extends React.Component {
       var moveX = this.state.lastX - e.screenX;
       var moveY = this.state.lastY - e.screenY;
       if (moveX !== 0 || moveY !== 0) {
-        this.clearCanvas();
+        //this.clearCanvas();
 
         this.translate(-moveX, -moveY);
 
-        setDrawCanvas(true);
+        //setDrawCanvas(true);
 
         this.setState({
           dragging: true,
@@ -145,9 +145,9 @@ class Canvas extends React.Component {
     var mouseY = (e.pageY - this.canvas.offsetTop - this.state.canvasY) / this.state.scale;
     this.scale(factor, mouseX, mouseY);
 
-    this.clearCanvas();
+    //this.clearCanvas();
 
-    setDrawCanvas(true);
+    //setDrawCanvas(true);
   }
 
   translate(x, y) {
