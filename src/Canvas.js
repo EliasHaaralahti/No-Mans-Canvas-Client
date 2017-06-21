@@ -2,6 +2,9 @@ import React from 'react';
 import './Canvas.css';
 import { setPixel, setDrawCanvas, setPixelInCanvas } from './AppActions';
 import { sendTile, getColor } from './App';
+import { createCSSTransformBuilder } from "easy-css-transform-builder";
+
+const builder = createCSSTransformBuilder();
 
 class Canvas extends React.Component {
   constructor(props) {
@@ -141,7 +144,7 @@ class Canvas extends React.Component {
     var factor = Math.pow(1.1, delta);
 
     var mouseX = (e.pageX - this.canvas.offsetLeft - this.state.canvasX) / this.state.scale;
-    var mouseY = (e.pageY - this.canvas.offsetTop  - this.state.canvasY) / this.state.scale;
+    var mouseY = (e.pageY - this.canvas.offsetTop - this.state.canvasY) / this.state.scale;
     this.scale(factor, mouseX, mouseY);
 
     this.clearCanvas();
@@ -150,11 +153,8 @@ class Canvas extends React.Component {
   }
 
   translate(x, y) {
-    var moveX = x/this.state.scale;
-    var moveY = y/this.state.scale;
-    this.c.translate(moveX, moveY);
-    var newX = this.state.canvasX + moveX*this.state.scale;
-    var newY = this.state.canvasY + moveY*this.state.scale;
+    var newX = this.state.canvasX + x;
+    var newY = this.state.canvasY + y;
     this.setState({
       canvasX: newX,
       canvasY: newY
@@ -166,8 +166,6 @@ class Canvas extends React.Component {
     var moveY = (1.0-factor)*originY * this.state.scale;
     this.translate(moveX, moveY);
 
-    this.c.scale(factor,factor);
-
     var newScale = this.state.scale * factor;
     this.setState({
       scale: newScale
@@ -176,15 +174,28 @@ class Canvas extends React.Component {
 
   render() {
     return (
-      <canvas id="canvas" ref={(c) => {
-                if(c != null) {
-                  this.c = c.getContext('2d');
-                  this.canvas = c;
-                }}
-              }
-              width={window.innerWidth} height={window.innerHeight}
-              onMouseMove={this.onMouseMove} onMouseDown={this.onMouseDown}
-              onMouseUp={this.onMouseUp} onWheel={this.onMouseWheel} />
+      <div width={window.innerWidth} height={window.innerHeight}
+        onMouseMove={this.onMouseMove} onMouseDown={this.onMouseDown}
+        onMouseUp={this.onMouseUp} onWheel={this.onMouseWheel}>
+        <div style={{
+          imageRendering: 'pixelated',
+          transformOrigin: '0 0',
+          transform: builder({
+            scale: this.state.scale,
+            translateX: this.state.canvasX,
+            translateY: this.state.canvasY
+          })
+        }}>
+          <canvas id="canvas" ref={(c) => {
+                    if(c != null) {
+                      this.c = c.getContext('2d');
+                      this.canvas = c;
+                    }}
+                  }
+                  width={this.props.columns * this.props.pixelSize}
+                  height={this.props.rows * this.props.pixelSize}/>
+        </div>
+      </div>
     )
   }
 }
