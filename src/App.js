@@ -13,7 +13,7 @@ import MessageBox from './MessageBox';
 export const store = createStore(AppReducer);
 
 var socket = null;
-const url = 'ws://localhost:8080/canvas';
+const url = 'ws://192.168.1.57:8080/canvas';
 
 if(socket == null) {
   try {
@@ -28,12 +28,15 @@ socket.onmessage = function(e) {
   const data = JSON.parse(e.data);
   switch (data[0].responseType) {
     case "authSuccessful":
-      // console.log(JSON.stringify(data))
+      console.log(JSON.stringify(data))
+      console.log("GOT NEW ID")
       actions.setUserID(data[0].uuid)
       window.localStorage.setItem("userID", data[0].uuid)
+      console.log(store.getState().get("userID"))
       break;
     case "colorList":
       // console.log(JSON.stringify(data))
+      console.log("got colors")
       actions.setColors(data)
       break;
     case "fullCanvas":
@@ -47,23 +50,26 @@ socket.onmessage = function(e) {
     case "error":
       console.log(JSON.stringify(data))
       break;
+    case "reAuthSuccesful":
+      console.log("re-auth succesful!")
+      break;
     default:
       console.log("socket onMessage default case!")
   }
 }
 // TODO: USE PROPER USER ID WHEN BACKEND READY
 socket.onopen = function(e) {
-  // TODO: When backend readyhange numbers to null and !==
-  if(window.localStorage.getItem('userID') === "2145") {
+  if(window.localStorage.getItem('userID') !== null) {
     console.log("localStorage ID found!")
     actions.setUserID(window.localStorage.getItem('userID'))
-    // TODO: auth backend
+    console.log(store.getState().get("userID").toString())
+    socket.send(JSON.stringify({"requestType": "auth", "userID": store.getState().get("userID").toString()}))
   } else {
     console.log("Requesting new ID!")
     socket.send(JSON.stringify({"requestType": "initialAuth"}))
   }
-  socket.send(JSON.stringify({"requestType": "getColors"}))
-  socket.send(JSON.stringify({"requestType": "getCanvas", "userID": "1"}))
+  socket.send(JSON.stringify({"requestType": "getColors", "userID": store.getState().get("userID").toString()}))
+  socket.send(JSON.stringify({"requestType": "getCanvas", "userID": store.getState().get("userID").toString()}))
 }
 
 let App = props => {
@@ -98,7 +104,7 @@ App = connect(state => ({
 )(App);
 
 export const sendTile = (x, y, colorID) => {
-  socket.send(JSON.stringify({"requestType": "postTile", "userID": "1",
+  socket.send(JSON.stringify({"requestType": "postTile", "userID":  store.getState().get("userID").toString(),
                               "X": x, "Y": y, "colorID": colorID}))
 }
 
