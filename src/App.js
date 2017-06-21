@@ -14,7 +14,7 @@ import LoadingScreen from './LoadingScreen';
 export const store = createStore(AppReducer);
 
 var socket = null;
-const url = 'ws://localhost:8080/canvas';
+const url = 'ws://192.168.1.57:8080/canvas';
 
 if(socket == null) {
   try {
@@ -32,33 +32,40 @@ socket.onmessage = function(e) {
       console.log("New ID received")
       actions.setUserID(data[0].uuid)
       window.localStorage.setItem("userID", data[0].uuid)
-      console.log(store.getState().get("userID"))
+      actions.setUserTiles(data[0].remainingTiles)
+      socket.send(JSON.stringify({"requestType": "getColors", "userID": store.getState().get("userID").toString()}))
+      socket.send(JSON.stringify({"requestType": "getCanvas", "userID": store.getState().get("userID").toString()}))
       break;
     case "colorList":
       // console.log(JSON.stringify(data))
-      console.log("got colors")
+      console.log("Colors received")
       actions.setColors(data)
       break;
     case "fullCanvas":
-      console.log("full canvas retrieved!")
+      console.log("Canvas received!")
       actions.drawCanvas(data)
       actions.loadingScreenVisible(false)
       break;
     case "tileUpdate":
-      console.log("tileUpdate: " + JSON.stringify(data))
+      // console.log("tileUpdate: " + JSON.stringify(data))
       actions.setPixel(data)
       break;
     case "incrementTileCount":
-      console.log("tile data: ")
-      console.log(JSON.stringify(data))
-      console.log(data[0].amount)
+      // console.log(JSON.stringify(data))
       actions.addUserTiles(data[0].amount)
       break;
     case "error":
+      // TODO: HANDLE WRONG LOCALSTORAGE ID EXCEPTION (GET NEW)
+      // [{"responseType":"error","errorMessage":"User not found! Get a new UUID with initialAuth"}]
+      if(data[0].errorMessage === "User not found! Get a new UUID with initialAuth") {
+        socket.send(JSON.stringify({"requestType": "initialAuth"}))
+      }
       console.log(JSON.stringify(data))
       break;
     case "reAuthSuccessful":
       console.log("re-auth succesful!")
+      socket.send(JSON.stringify({"requestType": "getColors", "userID": store.getState().get("userID").toString()}))
+      socket.send(JSON.stringify({"requestType": "getCanvas", "userID": store.getState().get("userID").toString()}))
       actions.setUserTiles(data[0].remainingTiles)
       break;
     default:
@@ -69,16 +76,12 @@ socket.onmessage = function(e) {
 
 socket.onopen = function(e) {
   if(window.localStorage.getItem('userID') !== null) {
-    console.log("localStorage ID found!")
     actions.setUserID(window.localStorage.getItem('userID'))
-    console.log(store.getState().get("userID").toString())
     socket.send(JSON.stringify({"requestType": "auth", "userID": store.getState().get("userID").toString()}))
   } else {
     console.log("Requesting new ID!")
     socket.send(JSON.stringify({"requestType": "initialAuth"}))
   }
-  socket.send(JSON.stringify({"requestType": "getColors", "userID": store.getState().get("userID").toString()}))
-  socket.send(JSON.stringify({"requestType": "getCanvas", "userID": store.getState().get("userID").toString()}))
 }
 
 let App = props => {
