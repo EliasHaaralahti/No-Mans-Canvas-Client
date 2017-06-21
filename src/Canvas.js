@@ -56,19 +56,11 @@ class Canvas extends React.Component {
     if(this.props.canvasDraw) {
       console.log("Drawing canvas!");
 
-      // OLD DRAW WITH X AND Y VALUES
-      /*
-      for (var i = 1; i < this.props.canvas.length; i++) {
-        this.c.fillStyle=getColor(this.props.canvas[i].colorID);
-        var pixelX = this.props.canvas[i].X * this.props.pixelSize;
-        var pixelY = this.props.canvas[i].Y * this.props.pixelSize;
-        this.c.fillRect(pixelX, pixelY, this.props.pixelSize, this.props.pixelSize);
-      }
-      setDrawCanvas(false);
-      */
+      console.log(this.props.canvas.length)
 
       // TODO: NOT OPTIMAL! RUSHED SOLUTION
-      var counter = 0;
+      // CAN I DO CONDITION: ROWS * COLUMNS IN ONE LOOP ??
+      var counter = 1;
       for (var y = 0; y < this.props.rows; y++) {
         for(var x = 0; x < this.props.columns; x++) {
           this.c.fillStyle=getColor(this.props.canvas[counter].colorID);

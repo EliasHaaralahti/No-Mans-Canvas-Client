@@ -117,6 +117,14 @@ export function substractUserTiles(amount) {
   store.dispatch(action)
 }
 
+export function setUserTiles(amount) {
+  const action = {
+    type: "SET_USER_TILES",
+    amount
+  }
+  store.dispatch(action)
+}
+
 export function addUserExp(amount) {
   const action = {
     type: "ADD_USER_EXP",

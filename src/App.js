@@ -14,7 +14,7 @@ import LoadingScreen from './LoadingScreen';
 export const store = createStore(AppReducer);
 
 var socket = null;
-const url = 'ws://localhost:8080/canvas';
+const url = 'ws://192.168.1.57:8080/canvas';
 
 if(socket == null) {
   try {
@@ -29,8 +29,7 @@ socket.onmessage = function(e) {
   const data = JSON.parse(e.data);
   switch (data[0].responseType) {
     case "authSuccessful":
-      console.log(JSON.stringify(data))
-      console.log("GOT NEW ID")
+      console.log("New ID received")
       actions.setUserID(data[0].uuid)
       window.localStorage.setItem("userID", data[0].uuid)
       console.log(store.getState().get("userID"))
@@ -46,25 +45,28 @@ socket.onmessage = function(e) {
       actions.loadingScreenVisible(false)
       break;
     case "tileUpdate":
-      console.log("tileUpdate: "+JSON.stringify(data))
+      console.log("tileUpdate: " + JSON.stringify(data))
       actions.setPixel(data)
       break;
     case "incrementTileCount":
       console.log("tile data: ")
       console.log(JSON.stringify(data))
-      // actions.addUserTiles(data[1].amount)
+      console.log(data[0].amount)
+      actions.addUserTiles(data[0].amount)
       break;
     case "error":
       console.log(JSON.stringify(data))
       break;
-    case "reAuthSuccesful":
+    case "reAuthSuccessful":
       console.log("re-auth succesful!")
+      actions.setUserTiles(data[0].remainingTiles)
       break;
     default:
       console.log("socket onMessage default case!")
+      console.log(JSON.stringify(data))
   }
 }
-// TODO: USE PROPER USER ID WHEN BACKEND READY
+
 socket.onopen = function(e) {
   if(window.localStorage.getItem('userID') !== null) {
     console.log("localStorage ID found!")

@@ -4,9 +4,9 @@ import { fromJS } from 'immutable'
 export const initialState = fromJS({
   userID: -1,
   userExp: 0,
-  userExpLimit: 20,
-  userTiles: 50,
-  remainingTiles:50,
+  userExpLimit: 0,
+  userTiles: 60,
+  remainingTiles:0,
   rows: 0,
   columns: 0,
   colors: {},
@@ -61,15 +61,22 @@ export default(state = initialState, action) => {
       return state.set('userExp', value);
     }
     case 'REMOVE_USER_TILES': {
-      var value = state.get('remainingTiles');
-      value -= 1
-      return state.set('remainingTiles', value);
+      var subValue = state.get('remainingTiles');
+      subValue -= 1
+      return state.set('remainingTiles', subValue);
     }
     case 'ADD_USER_TILES': {
-      var value = state.get('remainingTiles');
-      value += action.amount
-
-      return state.set('remainingTiles', value);
+      var addValue = state.get('remainingTiles');
+      addValue += action.amount
+      console.log("ADD USER TILES VALUE: " + addValue)
+      return state.set('remainingTiles', addValue);
+    }
+    case 'SET_USER_TILES': {
+      if(state.get('userTiles') < action.amount + state.get('remainingTiles')) {
+        return state.set('remainingTiles', state.get('userTiles'))
+      }
+      console.log("SET TILES: " + action.amount)
+      return state.set('remainingTiles', action.amount)
     }
     case 'SET_ROWS': {
       return state.set('rows', action.dimension)
