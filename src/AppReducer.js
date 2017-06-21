@@ -69,7 +69,7 @@ export default(state = initialState, action) => {
       var addValue = state.get('remainingTiles');
       addValue += action.amount
       if(addValue > state.get('userTiles')) {
-        return state.set('remainingTiles', this.state.get('userTiles'))
+        return state.set('remainingTiles', state.get('userTiles'))
       }
       return state.set('remainingTiles', addValue);
     }
