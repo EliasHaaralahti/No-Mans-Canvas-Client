@@ -47,20 +47,6 @@ export function drawCanvas(data) {
   var dimension = Math.sqrt(data.length - 1)
   setDimensions(dimension)
 
-  /*
-  // TODO: Improve, bad way of creating array
-  // Store data in multidimensional array according to dimensions
-  var counter = 0;
-  var canvas = []
-  // 1 Because you skip responseType
-  for (var y = 1; y < dimension; y++) {
-    canvas[y] = []
-    for (var x = 1; x < dimension; x++) {
-      canvas[y][x] = data
-    }
-  }
-  */
-
   const action = {
     type: "DRAW_CANVAS",
     data
