@@ -91,6 +91,7 @@ class ColorMakerMenu extends React.Component {
 
     //TODO dynamic colors
     //TODO color saving
+    // TODO: Not implemented = Create
 
     return (
       <div className="colorMakerMenu">
@@ -111,7 +112,6 @@ class ColorMakerMenu extends React.Component {
           <SelectableColor rgb={this.getCustomRGB()} group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
           <div className="buttons">
             <button type="button" onClick={this.onCancel}>Cancel</button>
-            // TODO: Not implemented = Create
             <button type="button" onClick={this.onCreate}>Not implemented</button>
           </div>
         </div>
