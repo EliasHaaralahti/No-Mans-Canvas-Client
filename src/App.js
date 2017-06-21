@@ -123,7 +123,7 @@ App = connect(state => ({
 
 export const sendTile = (x, y, colorID) => {
   socket.send(JSON.stringify({"requestType": "postTile", "userID":  store.getState().get("userID").toString(),
-                              "X": x, "Y": y, "colorID": colorID}))
+                              "X": x, "Y": y, "colorID": colorID.toString()}))
 }
 
 export const getColor = (id) => {
