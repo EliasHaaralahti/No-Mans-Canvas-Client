@@ -111,7 +111,7 @@ class ColorMakerMenu extends React.Component {
           <SelectableColor rgb={this.getCustomRGB()} group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
           <div className="buttons">
             <button type="button" onClick={this.onCancel}>Cancel</button>
-            <button type="button" onClick={this.onCreate}>Create</button>
+            <button type="button" className={"disabledButton"} onClick={this.onCreate}>Create</button>
           </div>
         </div>
       </div>
