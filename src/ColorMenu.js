@@ -10,10 +10,6 @@ class ColorMenu extends React.Component {
   constructor(props) {
     // TODO: Give available colors as props
     super(props);
-    this.state = {
-      selectedColor: 0,
-      colors: [0, 1, 2, 3, 4]
-    };
     this.onColorSelected = this.onColorSelected.bind(this);
     this.onOpenPicker = this.onOpenPicker.bind(this);
   }
@@ -30,15 +26,19 @@ class ColorMenu extends React.Component {
   //TODO: Dynamic progress bar
   render() {
     var colors = [];
-    for (var i = 0; i < this.state.colors.length; ++i) {
-      colors.push(<SelectableColor rgb={getColor(this.state.colors[i])} key={i}
-        group="colorSelect" onSelectionChanged={this.onColorSelected}/>)
+    for (var i = 0; i < this.props.colors.length; ++i) {
+      colors.push(<SelectableColor colorID={this.props.colors[i].ID} rgb={getColor(this.props.colors[i].ID)} key={i}
+              group="colorSelect" onSelectionChanged={this.onColorSelected}
+              checked={parseInt(this.props.activeColor, 10) === parseInt(this.props.colors[i].ID, 10)}/>)
     }
 
     var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 + "%";
 
     return (
       <div className="colorMenu">
+        <style>
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+        </style>
         <div className="offset">
 
           <p>Your Colors</p>

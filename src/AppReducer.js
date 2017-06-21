@@ -12,6 +12,7 @@ export const initialState = fromJS({
   activeColor: 0,
   showColorPicker: false,
   canvasDraw: false,
+  showLoadingScreen: true,
 })
 
 export default(state = initialState, action) => {
@@ -19,11 +20,21 @@ export default(state = initialState, action) => {
     case 'SET_COLOR_PICKER_VISIBLE': {
       return state.set('showColorPicker', action.visible)
     }
+    case 'SET_LOADING_SCREEN' : {
+      return state.set('showLoadingScreen', action.visible)
+    }
     case 'SET_USER_ID': {
       return state.set('userID', action.userID)
     }
     case 'SET_PIXEL': {
       return state.set('updatePixel', action.data)
+    }
+    case 'SET_PIXEL_IN_CANVAS': {
+      var canvas = state.get('canvas');
+      var index = action.y * state.get('columns') + action.x;
+      canvas[index] = {"colorID": parseInt(action.colorID, 10)};
+      console.log("Setting pixel at index "+index+" with ID "+action.colorID);
+      return state.set('canvas', canvas);
     }
     case 'DRAW_CANVAS': {
       return state.set('canvas', action.data).set('canvasDraw', true)
@@ -39,6 +50,12 @@ export default(state = initialState, action) => {
     }
     case 'SET_USER_EXP': {
       return state.set('userExp', action.amount);
+    }
+    case 'ADD_USER_EXP': {
+      var value = state.get('userExp');
+      value+=1
+      console.log(value)
+      return state.set('userExp', value);
     }
     case 'SET_ROWS': {
       return state.set('rows', action.dimension)

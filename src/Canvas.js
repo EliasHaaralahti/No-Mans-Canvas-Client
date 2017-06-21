@@ -1,6 +1,6 @@
 import React from 'react';
 import './Canvas.css';
-import { setPixel, setDrawCanvas } from './AppActions';
+import { setPixel, setDrawCanvas, setPixelInCanvas, addUserExp } from './AppActions';
 import { sendTile, getColor } from './App';
 
 class Canvas extends React.Component {
@@ -24,21 +24,28 @@ class Canvas extends React.Component {
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onMouseWheel = this.onMouseWheel.bind(this);
     this.clearCanvas = this.clearCanvas.bind(this);
+    this.translate = this.translate.bind(this);
+    this.scale = this.scale.bind(this);
   }
 
   onClick(e) {
     e.preventDefault();
-    var mouseX = parseInt(e.clientX, 10) - this.state.canvasX;
-    var mouseY = parseInt(e.clientY, 10) - this.state.canvasY;
+    var mouseX = (e.pageX - this.canvas.offsetLeft - this.state.canvasX) / this.state.scale;
+    var mouseY = (e.pageY - this.canvas.offsetTop - this.state.canvasY) / this.state.scale;
+
+    console.log("mouse: "+(e.pageX - this.canvas.offsetLeft)+", "+(e.pageY - this.canvas.offsetTop));
+    console.log("canvas: "+this.state.canvasX+", "+this.state.canvasY);
+    console.log("scale: "+this.state.scale);
+
+    if (mouseX < 0 || mouseY < 0) return;
 
     var pixelX = Math.floor(mouseX/this.props.pixelSize);
-    mouseX = pixelX * this.props.pixelSize;
     var pixelY = Math.floor(mouseY/this.props.pixelSize);
-    mouseY = pixelY * this.props.pixelSize;
-
-    console.log("Clicked at " + mouseX + ", " + mouseY)
 
     sendTile(pixelX, pixelY, this.props.activeColor);
+    setPixelInCanvas(pixelX, pixelY, this.props.activeColor);
+
+    addUserExp(1);
   }
 
   componentDidUpdate() {
@@ -104,13 +111,11 @@ class Canvas extends React.Component {
       if (moveX !== 0 || moveY !== 0) {
         this.clearCanvas();
 
-        this.c.translate(-moveX, -moveY);
+        this.translate(-moveX, -moveY);
 
         setDrawCanvas(true);
 
         this.setState({
-          canvasX: this.state.canvasX - moveX,
-          canvasY: this.state.canvasY - moveY,
           dragging: true,
           lastX: e.screenX,
           lastY: e.screenY
@@ -131,26 +136,44 @@ class Canvas extends React.Component {
   }
 
   onMouseWheel(e) {
-    var delta = -e.deltaY / 20;
+    var delta = -e.deltaY / 40;
 
-    if ((delta > 0 && this.state.scale > 2.0) || (delta < 0 && this.state.scale < 0.5)) return;
+    if ((delta > 0 && this.state.scale > 3.0) || (delta < 0 && this.state.scale < 1.0)) return;
 
     var factor = Math.pow(1.1, delta);
 
-    var transX = (this.canvas.width / 2 - this.state.canvasX) * this.state.zoom;
-    var transY = (this.canvas.height / 2 - this.state.canvasY) * this.state.zoom;
-    this.c.translate(transX, transY);
-    this.c.scale(factor,factor);
-    this.c.translate(-transX, -transY);
+    var mouseX = (e.pageX - this.canvas.offsetLeft - this.state.canvasX) / this.state.scale;
+    var mouseY = (e.pageY - this.canvas.offsetTop  - this.state.canvasY) / this.state.scale;
+    this.scale(factor, mouseX, mouseY);
 
     this.clearCanvas();
 
     setDrawCanvas(true);
-    this.forceUpdate();
+  }
 
+  translate(x, y) {
+    var moveX = x/this.state.scale;
+    var moveY = y/this.state.scale;
+    this.c.translate(moveX, moveY);
+    var newX = this.state.canvasX + moveX*this.state.scale;
+    var newY = this.state.canvasY + moveY*this.state.scale;
     this.setState({
-      scale: this.state.scale * factor
-    })
+      canvasX: newX,
+      canvasY: newY
+    });
+  }
+
+  scale(factor, originX = this.canvas.width / 2, originY = this.canvas.height / 2) {
+    var moveX = (1.0-factor)*originX * this.state.scale;
+    var moveY = (1.0-factor)*originY * this.state.scale;
+    this.translate(moveX, moveY);
+
+    this.c.scale(factor,factor);
+
+    var newScale = this.state.scale * factor;
+    this.setState({
+      scale: newScale
+    });
   }
 
   render() {

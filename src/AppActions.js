@@ -8,6 +8,14 @@ export function colorPickerVisible(visible) {
   store.dispatch(action)
 }
 
+export function loadingScreenVisible(visible) {
+  const action = {
+    type: "SET_LOADING_SCREEN",
+    visible
+  }
+  store.dispatch(action)
+}
+
 export function setUserID(userID) {
   const action = {
     type: "SET_USER_ID",
@@ -22,6 +30,17 @@ export function setPixel(data) {
     data
   }
   store.dispatch(action)
+  if (data !== null) setPixelInCanvas(data[0].X, data[0].Y, data[0].colorID);
+}
+
+export function setPixelInCanvas(x, y, colorID) {
+  const action = {
+    type: "SET_PIXEL_IN_CANVAS",
+    x,
+    y,
+    colorID
+  }
+  store.dispatch(action);
 }
 
 export function drawCanvas(data) {
@@ -76,6 +95,14 @@ export function setActiveColor(color) {
 export function setUserExp(amount) {
   const action = {
     type: "SET_USER_EXP",
+    amount
+  }
+  store.dispatch(action)
+}
+
+export function addUserExp(amount) {
+  const action = {
+    type: "ADD_USER_EXP",
     amount
   }
   store.dispatch(action)
