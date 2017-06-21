@@ -4,7 +4,7 @@ import { fromJS } from 'immutable'
 export const initialState = fromJS({
   userID: -1,
   userExp: 0,
-  userExpLimit: 0,
+  userExpLimit: 100,
   userTiles: 60,
   remainingTiles:0,
   rows: 0,
