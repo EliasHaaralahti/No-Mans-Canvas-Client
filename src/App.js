@@ -23,7 +23,7 @@ if(socket == null) {
     console.log("Websocket: Unable to connect!")
   }
 }
-
+//TODO: backend gives tiles event
 socket.onmessage = function(e) {
   console.log("message received from websocket")
   const data = JSON.parse(e.data);
@@ -45,6 +45,11 @@ socket.onmessage = function(e) {
     case "tileUpdate":
       console.log("tileUpdate: "+JSON.stringify(data))
       actions.setPixel(data)
+      break;
+    case "incrementTileCount":
+      console.log("tile data: ")
+      console.log(JSON.stringify(data))
+      // actions.addUserTiles(data[1].amount)
       break;
     case "error":
       console.log(JSON.stringify(data))
@@ -73,10 +78,14 @@ let App = props => {
     <div>
       <Canvas pixelSize={5} rows={props.rows} columns={props.columns}
               updatePixel={props.updatePixel} activeColor={props.activeColor}
-              canvas={props.canvas} canvasDraw={props.canvasDraw}/>
+              canvas={props.canvas} canvasDraw={props.canvasDraw}
+              remainingTiles={props.remainingTiles}
+              userExp={props.userExp} userExpLimit={props.userExpLimit}/>
 
-      <ColorMenu expCollected={props.userExp} expToNext={80}
-              colors={props.userColors} activeColor={props.activeColor} />
+      <ColorMenu expCollected={props.userExp} expToNext={props.userExpLimit}
+              colors={props.userColors} activeColor={props.activeColor}
+              remainingTiles={props.remainingTiles}
+              userTiles={props.userTiles} />
       <ColorMakerMenu visible={props.visible}/>
       <LoadingScreen visible={props.loadingVisible}/>
     </div>
@@ -94,6 +103,9 @@ App = connect(state => ({
   canvas: state.get('canvas'),
   canvasDraw: state.get('canvasDraw'),
   userExp: state.get('userExp'),
+  userExpLimit: state.get('userExpLimit'),
+  remainingTiles: state.get('remainingTiles'),
+  userTiles: state.get('userTiles'),
   }),
   { },
 )(App);

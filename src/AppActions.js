@@ -114,6 +114,23 @@ export function setUserExp(amount) {
   store.dispatch(action)
 }
 
+// TODO: Combine add and subtract tiles
+export function addUserTiles(amount) {
+  const action = {
+    type: "ADD_USER_TILES",
+    amount
+  }
+  store.dispatch(action)
+}
+
+export function substractUserTiles(amount) {
+  const action = {
+    type: "REMOVE_USER_TILES",
+    amount
+  }
+  store.dispatch(action)
+}
+
 export function addUserExp(amount) {
   const action = {
     type: "ADD_USER_EXP",

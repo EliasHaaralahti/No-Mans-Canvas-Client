@@ -33,7 +33,7 @@ class ColorMenu extends React.Component {
     }
 
     var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 + "%";
-
+    var tilesLeftBarLength = (this.props.remainingTiles / this.props.userTiles) * 100 + "%";
     return (
       <div className="colorMenu">
         <style>
@@ -47,6 +47,10 @@ class ColorMenu extends React.Component {
           <div className="progressContainer">
             <p className="progressInfo">To next level: {this.props.expCollected}/{this.props.expToNext}</p>
             <div className="progressBar" style={{width:progressBarLength}} />
+          </div>
+          <div className="progressContainer">
+            <p className="progressInfo">Tiles remaining: {this.props.remainingTiles}/{this.props.userTiles}</p>
+            <div className="progressBar" style={{width:tilesLeftBarLength}} />
           </div>
 
           <button type="button" onClick={this.onOpenPicker}

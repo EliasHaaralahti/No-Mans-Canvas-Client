@@ -1,6 +1,6 @@
 import React from 'react';
 import './Canvas.css';
-import { setPixel, setDrawCanvas, setPixelInCanvas, addUserExp } from './AppActions';
+import { setPixel, setDrawCanvas, setPixelInCanvas, addUserExp, substractUserTiles } from './AppActions';
 import { sendTile, getColor } from './App';
 
 class Canvas extends React.Component {
@@ -42,10 +42,14 @@ class Canvas extends React.Component {
     var pixelX = Math.floor(mouseX/this.props.pixelSize);
     var pixelY = Math.floor(mouseY/this.props.pixelSize);
 
-    sendTile(pixelX, pixelY, this.props.activeColor);
-    setPixelInCanvas(pixelX, pixelY, this.props.activeColor);
-
-    addUserExp(1);
+    if (this.props.remainingTiles > 0){
+      sendTile(pixelX, pixelY, this.props.activeColor);
+      setPixelInCanvas(pixelX, pixelY, this.props.activeColor);
+      if (this.props.userExp < this.props.userExpLimit){
+        addUserExp(1);
+      }
+      substractUserTiles(1);
+    }
   }
 
   componentDidUpdate() {
