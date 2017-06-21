@@ -75,7 +75,7 @@ let App = props => {
               updatePixel={props.updatePixel} activeColor={props.activeColor}
               canvas={props.canvas} canvasDraw={props.canvasDraw}/>
 
-      <ColorMenu expCollected={13} expToNext={80}
+      <ColorMenu expCollected={props.userExp} expToNext={80}
               colors={props.userColors} activeColor={props.activeColor} />
       <ColorMakerMenu visible={props.visible}/>
       <LoadingScreen visible={props.loadingVisible}/>
@@ -92,7 +92,8 @@ App = connect(state => ({
   rows: state.get('rows'),
   columns: state.get('columns'),
   canvas: state.get('canvas'),
-  canvasDraw: state.get('canvasDraw')
+  canvasDraw: state.get('canvasDraw'),
+  userExp: state.get('userExp'),
   }),
   { },
 )(App);

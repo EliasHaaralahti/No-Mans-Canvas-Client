@@ -51,6 +51,12 @@ export default(state = initialState, action) => {
     case 'SET_USER_EXP': {
       return state.set('userExp', action.amount);
     }
+    case 'ADD_USER_EXP': {
+      var value = state.get('userExp');
+      value+=1
+      console.log(value)
+      return state.set('userExp', value);
+    }
     case 'SET_ROWS': {
       return state.set('rows', action.dimension)
     }

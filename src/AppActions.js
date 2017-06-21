@@ -113,3 +113,11 @@ export function setUserExp(amount) {
   }
   store.dispatch(action)
 }
+
+export function addUserExp(amount) {
+  const action = {
+    type: "ADD_USER_EXP",
+    amount
+  }
+  store.dispatch(action)
+}

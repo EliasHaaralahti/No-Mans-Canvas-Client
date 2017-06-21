@@ -1,6 +1,6 @@
 import React from 'react';
 import './Canvas.css';
-import { setPixel, setDrawCanvas, setPixelInCanvas } from './AppActions';
+import { setPixel, setDrawCanvas, setPixelInCanvas, addUserExp } from './AppActions';
 import { sendTile, getColor } from './App';
 
 class Canvas extends React.Component {
@@ -44,6 +44,8 @@ class Canvas extends React.Component {
 
     sendTile(pixelX, pixelY, this.props.activeColor);
     setPixelInCanvas(pixelX, pixelY, this.props.activeColor);
+
+    addUserExp(1);
   }
 
   componentDidUpdate() {
