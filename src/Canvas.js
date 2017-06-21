@@ -143,29 +143,33 @@ class Canvas extends React.Component {
     var factor = Math.pow(1.1, delta);
 
     var mouseX = (e.pageX - this.canvas.offsetLeft - this.state.canvasX) / this.state.scale;
-    var mouseY = (e.pageY - this.canvas.offsetTop - this.state.canvasY) / this.state.scale;
-    //this.translate(mouseX, mouseY);
-    this.scale(factor);
-    //this.translate(-mouseX, -mouseY);
+    var mouseY = (e.pageY - this.canvas.offsetTop  - this.state.canvasY) / this.state.scale;
+    this.scale(factor, mouseX, mouseY);
 
     this.clearCanvas();
 
     setDrawCanvas(true);
-    this.forceUpdate();
   }
 
   translate(x, y) {
-    this.c.translate(x, y);
-    var newX = this.state.canvasX + x*this.state.scale;
-    var newY = this.state.canvasY + y*this.state.scale;
+    var moveX = x/this.state.scale;
+    var moveY = y/this.state.scale;
+    this.c.translate(moveX, moveY);
+    var newX = this.state.canvasX + moveX*this.state.scale;
+    var newY = this.state.canvasY + moveY*this.state.scale;
     this.setState({
       canvasX: newX,
       canvasY: newY
     });
   }
 
-  scale(factor) {
+  scale(factor, originX = this.canvas.width / 2, originY = this.canvas.height / 2) {
+    var moveX = (1.0-factor)*originX * this.state.scale;
+    var moveY = (1.0-factor)*originY * this.state.scale;
+    this.translate(moveX, moveY);
+
     this.c.scale(factor,factor);
+
     var newScale = this.state.scale * factor;
     this.setState({
       scale: newScale
