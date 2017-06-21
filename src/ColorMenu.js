@@ -23,7 +23,6 @@ class ColorMenu extends React.Component {
     colorPickerVisible(true);
   }
 
-  //TODO: Dynamic progress bar
   render() {
     var colors = [];
     for (var i = 0; i < this.props.colors.length; ++i) {
@@ -32,8 +31,9 @@ class ColorMenu extends React.Component {
               checked={parseInt(this.props.activeColor, 10) === parseInt(this.props.colors[i].ID, 10)}/>)
     }
 
-    var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 + "%";
-    var tilesLeftBarLength = (this.props.remainingTiles / this.props.userTiles) * 100 + "%";
+    // TODO: Does -10 scale well?
+    var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 - 10 + "%";
+    var tilesLeftBarLength = (this.props.remainingTiles / this.props.userTiles) * 100 - 10 + "%";
     return (
       <div className="colorMenu">
         <style>

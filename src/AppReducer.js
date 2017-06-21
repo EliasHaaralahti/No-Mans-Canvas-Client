@@ -4,7 +4,7 @@ import { fromJS } from 'immutable'
 export const initialState = fromJS({
   userID: -1,
   userExp: 0,
-  userExpLimit: 0,
+  userExpLimit: 100,
   userTiles: 60,
   remainingTiles:0,
   rows: 0,
@@ -68,7 +68,9 @@ export default(state = initialState, action) => {
     case 'ADD_USER_TILES': {
       var addValue = state.get('remainingTiles');
       addValue += action.amount
-      console.log("ADD USER TILES VALUE: " + addValue)
+      if(addValue > state.get('userTiles')) {
+        return state.set('remainingTiles', this.state.get('userTiles'))
+      }
       return state.set('remainingTiles', addValue);
     }
     case 'SET_USER_TILES': {
