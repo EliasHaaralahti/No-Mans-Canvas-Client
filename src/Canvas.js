@@ -1,7 +1,7 @@
 import React from 'react';
 import './Canvas.css';
 import { setPixel, setDrawCanvas, setPixelInCanvas, addUserExp, substractUserTiles } from './AppActions';
-import { sendTile, getColor, hexToRgb } from './App';
+import { sendTile, getColor } from './App';
 import { createCSSTransformBuilder } from "easy-css-transform-builder";
 
 const builder = createCSSTransformBuilder();
@@ -134,21 +134,13 @@ class Canvas extends React.Component {
         var pixelIndex = pixelY * this.props.columns + pixelX + 1;
         if (!this.props.canvas[pixelIndex]) return;
         var color = this.props.canvas[pixelIndex].colorID;
-        var rgb = hexToRgb(getColor(color));
 
-        if (rgb !== null) {
-          //luminance of pixel to be dimmed
-          var lum = Math.round((2*rgb.r + 3*rgb.g + rgb.b) / 6.0);
-          if (lum > 127) lum -= 100; //add or subtract depending on value
-          else lum += 100;
-          var lumHex = lum.toString(16);
+        this.c.fillStyle = getColor(parseInt(this.props.activeColor, 10));
+        this.c.globalAlpha = 0.4;
+        this.c.fillRect(pixelX * this.props.pixelSize, pixelY * this.props.pixelSize,
+           this.props.pixelSize, this.props.pixelSize);
+        this.c.globalAlpha = 1.0;
 
-          this.c.fillStyle = "#"+lumHex+lumHex+lumHex;
-          this.c.globalAlpha = 0.3;
-          this.c.fillRect(pixelX * this.props.pixelSize, pixelY * this.props.pixelSize,
-             this.props.pixelSize, this.props.pixelSize);
-          this.c.globalAlpha = 1.0;
-        }
         //redraw the pixel that was previusly dimmed
         var dimmed = getColor(this.state.dimmedColor);
         this.drawPixel(this.state.dimX, this.state.dimY, dimmed);
