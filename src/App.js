@@ -140,13 +140,12 @@ export const getColor = (id) => {
 }
 
 // NOTE: Copied from stackoverflow, not teste
-function rgbToHex(r, g, b) {
+export function rgbToHex(r, g, b) {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
-/*
 // NOTE: Copied from stackoverflow, not tested
-function hexToRgb(hex) {
+export function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
         r: parseInt(result[1], 16),
@@ -154,6 +153,5 @@ function hexToRgb(hex) {
         b: parseInt(result[3], 16)
     } : null;
 }
-*/
 
 export default App

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Canvas.css';
 import { setPixel, setDrawCanvas, setPixelInCanvas, addUserExp, substractUserTiles } from './AppActions';
-import { sendTile, getColor } from './App';
+import { sendTile, getColor, hexToRgb } from './App';
 import { createCSSTransformBuilder } from "easy-css-transform-builder";
 
 const builder = createCSSTransformBuilder();
@@ -10,17 +10,19 @@ class Canvas extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-        x: 0.0,
-        y: 0.0,
         lastX: 0.0,
         lastY: 0.0,
         mouseIsDown: false,
         dragging: false,
         canvasX: 0.0,
         canvasY: 0.0,
-        scale: 1.0
+        scale: 1.0,
+        dimX: -1,
+        dimY: -1,
+        dimmedColor: 0
     }
 
+    this.drawPixel = this.drawPixel.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -36,18 +38,19 @@ class Canvas extends React.Component {
     var mouseX = (e.pageX - this.canvas.offsetLeft - this.state.canvasX) / this.state.scale;
     var mouseY = (e.pageY - this.canvas.offsetTop - this.state.canvasY) / this.state.scale;
 
-    console.log("mouse: "+(e.pageX - this.canvas.offsetLeft)+", "+(e.pageY - this.canvas.offsetTop));
-    console.log("canvas: "+this.state.canvasX+", "+this.state.canvasY);
-    console.log("scale: "+this.state.scale);
-
-    if (mouseX < 0 || mouseY < 0) return;
-
     var pixelX = Math.floor(mouseX/this.props.pixelSize);
     var pixelY = Math.floor(mouseY/this.props.pixelSize);
+
+    //don't do anything if clicked outside of canvas
+    if (pixelX < 0 || pixelY < 0 || pixelX > this.props.columns || pixelY > this.props.rows) return;
 
     if (this.props.remainingTiles > 0){
       sendTile(pixelX, pixelY, this.props.activeColor);
       setPixelInCanvas(pixelX, pixelY, this.props.activeColor);
+      this.setState({
+        dimmedColor: parseInt(this.props.activeColor, 10)
+      });
+
       if (this.props.userExp < this.props.userExpLimit){
         addUserExp(1);
       }
@@ -66,10 +69,7 @@ class Canvas extends React.Component {
       var counter = 1;
       for (var y = 0; y < this.props.rows; y++) {
         for(var x = 0; x < this.props.columns; x++) {
-          this.c.fillStyle=getColor(this.props.canvas[counter].colorID);
-          var pixelX = x * this.props.pixelSize;
-          var pixelY = y * this.props.pixelSize;
-          this.c.fillRect(pixelX, pixelY, this.props.pixelSize, this.props.pixelSize);
+          this.drawPixel(x, y, getColor(this.props.canvas[counter].colorID));
           counter++;
         }
       }
@@ -85,6 +85,13 @@ class Canvas extends React.Component {
      // Sets update pixel back to none
      setPixel(null)
     }
+  }
+
+  drawPixel(x, y, color) {
+    this.c.fillStyle = color;
+    var pixelX = x * this.props.pixelSize;
+    var pixelY = y * this.props.pixelSize;
+    this.c.fillRect(pixelX, pixelY, this.props.pixelSize, this.props.pixelSize);
   }
 
   onMouseDown(e) {
@@ -108,16 +115,47 @@ class Canvas extends React.Component {
       var moveX = this.state.lastX - e.screenX;
       var moveY = this.state.lastY - e.screenY;
       if (moveX !== 0 || moveY !== 0) {
-        //this.clearCanvas();
-
         this.translate(-moveX, -moveY);
-
-        //setDrawCanvas(true);
 
         this.setState({
           dragging: true,
           lastX: e.screenX,
           lastY: e.screenY
+        });
+      }
+    }
+    else { //dim pixel under cursor
+      var mouseX = (e.pageX - this.canvas.offsetLeft - this.state.canvasX) / this.state.scale;
+      var mouseY = (e.pageY - this.canvas.offsetTop - this.state.canvasY) / this.state.scale;
+      var pixelX = Math.floor(mouseX/this.props.pixelSize);
+      var pixelY = Math.floor(mouseY/this.props.pixelSize);
+
+      if (pixelX !== this.state.dimX || pixelY !== this.state.dimY) {
+        var pixelIndex = pixelY * this.props.columns + pixelX + 1;
+        if (!this.props.canvas[pixelIndex]) return;
+        var color = this.props.canvas[pixelIndex].colorID;
+        var rgb = hexToRgb(getColor(color));
+
+        if (rgb !== null) {
+          //luminance of pixel to be dimmed
+          var lum = Math.round((2*rgb.r + 3*rgb.g + rgb.b) / 6.0);
+          if (lum > 127) lum -= 100; //add or subtract depending on value
+          else lum += 100;
+          var lumHex = lum.toString(16);
+
+          this.c.fillStyle = "#"+lumHex+lumHex+lumHex;
+          this.c.globalAlpha = 0.3;
+          this.c.fillRect(pixelX * this.props.pixelSize, pixelY * this.props.pixelSize,
+             this.props.pixelSize, this.props.pixelSize);
+          this.c.globalAlpha = 1.0;
+        }
+        //redraw the pixel that was previusly dimmed
+        var dimmed = getColor(this.state.dimmedColor);
+        this.drawPixel(this.state.dimX, this.state.dimY, dimmed);
+        this.setState({
+          dimX: pixelX,
+          dimY: pixelY,
+          dimmedColor: color
         });
       }
     }
@@ -144,10 +182,6 @@ class Canvas extends React.Component {
     var mouseX = (e.pageX - this.canvas.offsetLeft - this.state.canvasX) / this.state.scale;
     var mouseY = (e.pageY - this.canvas.offsetTop - this.state.canvasY) / this.state.scale;
     this.scale(factor, mouseX, mouseY);
-
-    //this.clearCanvas();
-
-    //setDrawCanvas(true);
   }
 
   translate(x, y) {
