@@ -71,7 +71,6 @@ socket.onmessage = function(e) {
     case "reAuthSuccessful":
       console.log("re-auth succesful!")
       socket.send(JSON.stringify({"requestType": "getColors", "userID": store.getState().get("userID").toString()}))
-      socket.send(JSON.stringify({"requestType": "getCanvas", "userID": store.getState().get("userID").toString()}))
       actions.setUserTiles(data[0].remainingTiles)
       break;
     default:
