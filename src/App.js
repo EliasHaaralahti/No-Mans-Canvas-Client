@@ -52,6 +52,10 @@ socket.onmessage = function(e) {
       // console.log("tileUpdate: " + JSON.stringify(data))
       actions.setPixel(data)
       break;
+    case "userCount":
+      console.log("userCount update: " + data[0].amount)
+      actions.setConnectedUsers(data[0].count)
+      break;
     case "incrementTileCount":
       // console.log(JSON.stringify(data))
       actions.addUserTiles(data[0].amount)
@@ -98,6 +102,7 @@ let App = props => {
       <ColorMenu expCollected={props.userExp} expToNext={props.userExpLimit}
               colors={props.userColors} activeColor={props.activeColor}
               remainingTiles={props.remainingTiles}
+              connectedUsers={props.connectedUsers}
               userTiles={props.userTiles} />
       <ColorMakerMenu visible={props.visible}/>
       <LoadingScreen visible={props.loadingVisible}/>
@@ -118,6 +123,7 @@ App = connect(state => ({
   userExp: state.get('userExp'),
   userExpLimit: state.get('userExpLimit'),
   remainingTiles: state.get('remainingTiles'),
+  connectedUsers: state.get('connectedUsers'),
   userTiles: state.get('userTiles'),
   }),
   { },

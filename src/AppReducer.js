@@ -7,6 +7,7 @@ export const initialState = fromJS({
   userExpLimit: 100,
   userTiles: 60,
   remainingTiles:0,
+  connectedUsers:0,
   rows: 0,
   columns: 0,
   colors: {},
@@ -53,6 +54,9 @@ export default(state = initialState, action) => {
     }
     case 'SET_USER_EXP': {
       return state.set('userExp', action.amount);
+    }
+    case 'SET_CONNECTED_USERS': {
+      return state.set('connectedUsers', action.amount);
     }
     case 'ADD_USER_EXP': {
       var value = state.get('userExp');

@@ -100,6 +100,14 @@ export function setUserExp(amount) {
   store.dispatch(action)
 }
 
+export function setConnectedUsers(amount) {
+  const action = {
+    type: "SET_CONNECTED_USERS",
+    amount
+  }
+  store.dispatch(action)
+}
+
 // TODO: Combine add and subtract tiles
 export function addUserTiles(amount) {
   const action = {
