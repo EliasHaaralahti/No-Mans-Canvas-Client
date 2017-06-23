@@ -14,7 +14,7 @@ import LoadingScreen from './LoadingScreen';
 export const store = createStore(AppReducer);
 
 var socket = null;
-const url = 'ws://192.168.1.57:8080/canvas';
+const url = 'ws://localhost:8080/canvas';
 
 if(socket == null) {
   try {
@@ -33,13 +33,15 @@ socket.onmessage = function(e) {
       actions.setUserID(data[0].uuid)
       window.localStorage.setItem("userID", data[0].uuid)
       actions.setUserTiles(data[0].remainingTiles)
+      console.log("Requesting colorlist")
       socket.send(JSON.stringify({"requestType": "getColors", "userID": store.getState().get("userID").toString()}))
-      socket.send(JSON.stringify({"requestType": "getCanvas", "userID": store.getState().get("userID").toString()}))
       break;
     case "colorList":
       // console.log(JSON.stringify(data))
       console.log("Colors received")
       actions.setColors(data)
+      console.log("Requesting Canvas")
+      socket.send(JSON.stringify({"requestType": "getCanvas", "userID": store.getState().get("userID").toString()}))
       break;
     case "fullCanvas":
       console.log("Canvas received!")
