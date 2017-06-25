@@ -5,14 +5,17 @@
   position: fixed;
   height: 120px;
   width: 300px;
-  bottom: 50%;
-  left: 50%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   text-align: left;
   font-size: 16px;
   font-family: 'Open Sans', sans-serif;
   font-weight: bold;
   border-radius: 10px;
   text-align: center;
+  margin: auto;
 }
 
 .offset{

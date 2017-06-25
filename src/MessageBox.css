@@ -11,8 +11,12 @@ scale div according to text length*/
   color: black;
   font-size: 200%;
   display: inline-block;
-  bottom: 50%;
-  right: 50%;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
 }
 
 .warning {
