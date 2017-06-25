@@ -23,73 +23,88 @@ if(socket == null) {
     console.log("Websocket: Unable to connect!")
   }
 }
-//TODO: backend gives tiles event
+
 socket.onmessage = function(e) {
-  console.log("message received from websocket")
   const data = JSON.parse(e.data);
   switch (data[0].responseType) {
+
     case "authSuccessful":
-      console.log("New ID received")
-      actions.setUserID(data[0].uuid)
       window.localStorage.setItem("userID", data[0].uuid)
+      actions.setUserID(data[0].uuid)
+      actions.setUserMaxTiles(data[0].maxTiles)
       actions.setUserTiles(data[0].remainingTiles)
-      console.log("Requesting colorlist")
+      actions.setLevel(data[0].level)
+      actions.setUserRequiredExp(data[0].tilesToNextLevel)
+      actions.setUserExp(data[0].levelProgress)
       socket.send(JSON.stringify({"requestType": "getColors", "userID": store.getState().get("userID").toString()}))
       break;
+
     case "colorList":
-      // console.log(JSON.stringify(data))
-      console.log("Colors received")
       actions.setColors(data)
-      console.log("Requesting Canvas")
       socket.send(JSON.stringify({"requestType": "getCanvas", "userID": store.getState().get("userID").toString()}))
       break;
+
     case "fullCanvas":
-      console.log("Canvas received!")
       actions.drawCanvas(data)
       actions.loadingScreenVisible(false)
       break;
+
     case "tileUpdate":
-      // console.log("tileUpdate: " + JSON.stringify(data))
       actions.setPixel(data)
       break;
+
     case "userCount":
-      console.log("userCount update: " + data[0].amount)
       actions.setConnectedUsers(data[0].count)
       break;
+
     case "incrementTileCount":
-      // console.log(JSON.stringify(data))
       actions.addUserTiles(data[0].amount)
       break;
+
+    case "levelUp":
+      actions.setLevel(data[0].level)
+      actions.setUserMaxTiles(data[0].maxTiles)
+      actions.setUserTiles(data[0].remainingTiles)
+      actions.setUserRequiredExp(data[0].tilesToNextLevel)
+      actions.setUserExp(data[0].levelProgress)
+      break;
+
     case "error":
-      // TODO: HANDLE WRONG LOCALSTORAGE ID EXCEPTION (GET NEW)
-      // [{"responseType":"error","errorMessage":"User not found! Get a new UUID with initialAuth"}]
       if(data[0].errorMessage === "User not found! Get a new UUID with initialAuth") {
         socket.send(JSON.stringify({"requestType": "initialAuth"}))
       }
       console.log(JSON.stringify(data))
       break;
+
     case "reAuthSuccessful":
-      console.log("re-auth succesful!")
       socket.send(JSON.stringify({"requestType": "getColors", "userID": store.getState().get("userID").toString()}))
+      actions.setUserMaxTiles(data[0].maxTiles)
       actions.setUserTiles(data[0].remainingTiles)
+      actions.setLevel(data[0].level)
+      actions.setUserRequiredExp(data[0].tilesToNextLevel)
+      actions.setUserExp(data[0].levelProgress)
       break;
+
     default:
       console.log("socket onMessage default case!")
       console.log(JSON.stringify(data))
   }
 }
 
+// Authentication logic
 socket.onopen = function(e) {
   if(window.localStorage.getItem('userID') !== null) {
     actions.setUserID(window.localStorage.getItem('userID'))
     socket.send(JSON.stringify({"requestType": "auth", "userID": store.getState().get("userID").toString()}))
   } else {
-    console.log("Requesting new ID!")
     socket.send(JSON.stringify({"requestType": "initialAuth"}))
   }
 }
 
 let App = props => {
+  // TODO: Show messageBox telling user about levelUp and what level
+  //<MessageBox visile={props.showLevelScreen}
+  //            message={"Level up! You are now level " + props.userLevel + "!"} />
   return (
     <div>
       <Canvas pixelSize={5} rows={props.rows} columns={props.columns}
@@ -102,7 +117,8 @@ let App = props => {
               colors={props.userColors} activeColor={props.activeColor}
               remainingTiles={props.remainingTiles}
               connectedUsers={props.connectedUsers}
-              userTiles={props.userTiles} />
+              userTiles={props.userTiles}
+              userLevel={props.userLevel} />
       <ColorMakerMenu visible={props.visible}/>
       <LoadingScreen visible={props.loadingVisible}/>
     </div>
@@ -124,6 +140,8 @@ App = connect(state => ({
   remainingTiles: state.get('remainingTiles'),
   connectedUsers: state.get('connectedUsers'),
   userTiles: state.get('userTiles'),
+  userLevel: state.get('level'),
+  showLevelScreen: state.get('showNewLevelScreen'),
   }),
   { },
 )(App);
@@ -146,12 +164,10 @@ export const getColor = (id) => {
   return "#000000";
 }
 
-// NOTE: Copied from stackoverflow, not teste
 export function rgbToHex(r, g, b) {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
-// NOTE: Copied from stackoverflow, not tested
 export function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {

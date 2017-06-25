@@ -2,10 +2,11 @@ import { fromJS } from 'immutable'
 
 // TODO: Cleaning up: use dictionaries like user { ID, exp}
 export const initialState = fromJS({
-  userID: -1,
+  userID: 0,
   userExp: 0,
-  userExpLimit: 100,
-  userTiles: 60,
+  userExpLimit: 0,
+  username: "",
+  userTiles: 0,
   remainingTiles:0,
   connectedUsers:0,
   rows: 0,
@@ -17,6 +18,8 @@ export const initialState = fromJS({
   showColorPicker: false,
   canvasDraw: false,
   showLoadingScreen: true,
+  showNewLevelScreen: false,
+  level: 1,
 })
 
 export default(state = initialState, action) => {
@@ -53,6 +56,7 @@ export default(state = initialState, action) => {
       return state.set('activeColor', action.color)
     }
     case 'SET_USER_EXP': {
+      console.log("SETTING EXP: " + action.amount)
       return state.set('userExp', action.amount);
     }
     case 'SET_CONNECTED_USERS': {
@@ -78,10 +82,12 @@ export default(state = initialState, action) => {
       return state.set('remainingTiles', addValue);
     }
     case 'SET_USER_TILES': {
+      console.log("SETTING USER TILES...")
       if(state.get('userTiles') < action.amount + state.get('remainingTiles')) {
+        console.log("Set max amount: " + state.get('userTiles'))
         return state.set('remainingTiles', state.get('userTiles'))
       }
-      console.log("SET TILES: " + action.amount)
+      console.log("Set amount: " + action.amount)
       return state.set('remainingTiles', action.amount)
     }
     case 'SET_ROWS': {
@@ -89,6 +95,18 @@ export default(state = initialState, action) => {
     }
     case 'SET_COLUMNS': {
       return state.set('columns', action.dimension)
+    }
+    case 'SET_USER_LEVEL': {
+      return state.set('level', action.level)
+    }
+    case 'SET_USER_MAX_TILES': {
+      return state.set('userTiles', action.amount)
+    }
+    case 'SET_USER_REQUIRED_EXP': {
+      return state.set('userExpLimit', action.amount)
+    }
+    case 'SET_NEW_LEVEL_SCREEN_VISIBLE': {
+      return state.set('showNewLevelScreen', action.state)
     }
     default: {
       return state;

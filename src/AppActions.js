@@ -140,3 +140,35 @@ export function addUserExp(amount) {
   }
   store.dispatch(action)
 }
+
+export function setLevel(level) {
+  const action = {
+    type: "SET_USER_LEVEL",
+    level
+  }
+  store.dispatch(action)
+}
+
+export function setUserMaxTiles(amount) {
+  const action = {
+    type: "SET_USER_MAX_TILES",
+    amount
+  }
+  store.dispatch(action)
+}
+
+export function setUserRequiredExp(amount) {
+  const action = {
+    type: "SET_USER_REQUIRED_EXP",
+    amount
+  }
+  store.dispatch(action)
+}
+
+export function setNewLevelScreenVisible(visible) {
+  const action = {
+    type: "SET_NEW_LEVEL_SCREEN_VISIBLE",
+    visible
+  }
+  store.dispatch(action)
+}

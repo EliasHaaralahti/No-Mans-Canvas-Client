@@ -52,6 +52,7 @@ class ColorMenu extends React.Component {
             <p className="progressInfo">Tiles remaining: {this.props.remainingTiles}/{this.props.userTiles}</p>
             <div className="progressBar" style={{width:tilesLeftBarLength}} />
           </div>
+          <p>Level: {this.props.userLevel}</p>
           <p>Connected users: {this.props.connectedUsers}</p>
 
           <button type="button" onClick={this.onOpenPicker}
