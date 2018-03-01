@@ -28,6 +28,15 @@ socket.onmessage = function(e) {
   const data = JSON.parse(e.data);
   switch (data[0].responseType) {
 
+    case "disconnecting":
+      console.log("Server sent SHUTDOWN")
+      break;
+
+    case "announcement":
+      console.log("Server sent ANNOUNCEMENT:")
+      console.log(data[0].message)
+      break;
+
     case "authSuccessful":
       window.localStorage.setItem("userID", data[0].uuid)
       actions.setUserID(data[0].uuid)
