@@ -31,7 +31,7 @@ socket.onmessage = function(e) {
     case "disconnecting":
       console.log("Server sent SHUTDOWN")
       // Change state message box text to default warning message
-      actions.setMessageBoxText("Server restarting due to maintenance. Drawings won't be saved for a short while. Please refresh")
+      actions.setMessageBoxText("Server restarting due to maintenance. Drawings won't be saved for a short while. Please wait a few minutes and then refresh.")
       // Change state message box visiblity
       // NOTE: Later this could be implemented with only state text
       actions.setMessageBoxVisibility(true)

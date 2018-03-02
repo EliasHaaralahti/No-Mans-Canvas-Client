@@ -1,15 +1,22 @@
 /* TODO: Center both message and warning perfectly,
 scale div according to text length*/
 
+.textcontent {
+  margin: 20px;
+  color: white;
+  font-size: 110%;
+}
+
 .message {
-  border: 2px solid black;
-  background-color: white;
+  font-family: sans-serif;
+  border: 2px solid darkgray;
+  border-radius: 4px;
+  background-color: gray;
   width: 30%;
-  height: 15%;
+  height: 30%;
   position: fixed;
   text-align: center;
   color: black;
-  font-size: 200%;
   display: inline-block;
 
   top: 0;
@@ -22,7 +29,8 @@ scale div according to text length*/
 .warning {
   margin: 0 auto;
   border: 2px solid black;
-  background-color: white;
+  border-radius: 4px;
+  background-color: gray;
   width: 30%;
   height: 15%;
   position: fixed;
@@ -37,10 +45,12 @@ scale div according to text length*/
 .ok-button {
   background-color: lightgreen;
   border: 1px solid black;
+  border-radius: 5px;
+  color: green;
   font-size: 120%;
   padding: 5px;
   display: inline-block;
   position: absolute;
-  bottom: 3%;
-  right: 50%;
+  bottom: 5%;
+  right: 45%;
 }

@@ -18,8 +18,10 @@ class MessageBox extends React.Component {
     const className = this.props.warning ? "warning" : "message";
     return (
         <div className={className}>
+          <div className="textcontent">
           { this.props.message }
-          <input type="button" className="ok-button" value="ok" onClick={this.onConfirm} />
+          </div>
+          <input type="button" className="ok-button" value="OK" onClick={this.onConfirm} />
         </div>
     )
   }
