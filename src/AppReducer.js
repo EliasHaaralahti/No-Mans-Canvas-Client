@@ -33,7 +33,7 @@ export default(state = initialState, action) => {
       return state.set('showMessageBox', action.visible)
     }
     case 'SET_MESSAGE_BOX_TEXT': {
-      return state,set('messageBoxText', action.message)
+      return state.set('messageBoxText', action.message)
     }
     case 'SET_LOADING_SCREEN': {
       return state.set('showLoadingScreen', action.visible)
