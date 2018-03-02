@@ -16,6 +16,22 @@ export function loadingScreenVisible(visible) {
   store.dispatch(action)
 }
 
+export function setMessageBoxVisibility(visible) {
+  const action = {
+    type: "SET_MESSAGE_BOX_VISIBLE",
+    visible
+  }
+  store.dispatch(action)
+}
+
+export function setMessageBoxText(message) {
+  const action = {
+    type: "SET_MESSAGE_BOX_TEXT",
+    message
+  }
+  store.dispatch(action)
+}
+
 export function setUserID(userID) {
   const action = {
     type: "SET_USER_ID",

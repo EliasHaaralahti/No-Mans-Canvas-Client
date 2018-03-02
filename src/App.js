@@ -30,11 +30,21 @@ socket.onmessage = function(e) {
 
     case "disconnecting":
       console.log("Server sent SHUTDOWN")
+      // Change state message box text to default warning message
+      setMessageBoxText("Server restarting due to maintenance. Drawings won't be saved for a short while. Please refresh")
+      // Change state message box visiblity
+      // NOTE: Later this could be implemented with only state text
+      setMessageBoxVisibility(visible)
       break;
 
     case "announcement":
       console.log("Server sent ANNOUNCEMENT:")
       console.log(data[0].message)
+      // Change state message box text
+      setMessageBoxText(data[0].message)
+      // Change state message box visiblity
+      // NOTE: Later this could be implemented with only state text
+      setMessageBoxVisibility(visible)
       break;
 
     case "authSuccessful":
@@ -130,6 +140,7 @@ let App = props => {
               userLevel={props.userLevel} />
       <ColorMakerMenu visible={props.visible}/>
       <LoadingScreen visible={props.loadingVisible}/>
+      <MessageBox visible={props.showMessageBox} message={props.messageBoxText} />
     </div>
   )
 }
@@ -151,6 +162,8 @@ App = connect(state => ({
   userTiles: state.get('userTiles'),
   userLevel: state.get('level'),
   showLevelScreen: state.get('showNewLevelScreen'),
+  showMessageBox: state.get('showMessageBox'),
+  messageBoxText: state.get('messageBoxText'),
   }),
   { },
 )(App);

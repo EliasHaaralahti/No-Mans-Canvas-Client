@@ -20,12 +20,20 @@ export const initialState = fromJS({
   showLoadingScreen: true,
   showNewLevelScreen: false,
   level: 1,
+  showMessageBox: false,
+  messageBoxText: ""
 })
 
 export default(state = initialState, action) => {
   switch (action.type) {
     case 'SET_COLOR_PICKER_VISIBLE': {
       return state.set('showColorPicker', action.visible)
+    }
+    case 'SET_MESSAGE_BOX_VISIBLE' {
+      return state.set('showMessageBox', action.visible)
+    }
+    case 'SET_MESSAGE_BOX_TEXT' {
+      return state,set('messageBoxText', action.message)
     }
     case 'SET_LOADING_SCREEN' : {
       return state.set('showLoadingScreen', action.visible)
@@ -65,7 +73,6 @@ export default(state = initialState, action) => {
     case 'ADD_USER_EXP': {
       var value = state.get('userExp');
       value+=1
-      console.log(value)
       return state.set('userExp', value);
     }
     case 'REMOVE_USER_TILES': {
@@ -82,12 +89,9 @@ export default(state = initialState, action) => {
       return state.set('remainingTiles', addValue);
     }
     case 'SET_USER_TILES': {
-      console.log("SETTING USER TILES...")
       if(state.get('userTiles') < action.amount + state.get('remainingTiles')) {
-        console.log("Set max amount: " + state.get('userTiles'))
         return state.set('remainingTiles', state.get('userTiles'))
       }
-      console.log("Set amount: " + action.amount)
       return state.set('remainingTiles', action.amount)
     }
     case 'SET_ROWS': {
