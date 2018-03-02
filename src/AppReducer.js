@@ -29,13 +29,13 @@ export default(state = initialState, action) => {
     case 'SET_COLOR_PICKER_VISIBLE': {
       return state.set('showColorPicker', action.visible)
     }
-    case 'SET_MESSAGE_BOX_VISIBLE' {
+    case 'SET_MESSAGE_BOX_VISIBLE': {
       return state.set('showMessageBox', action.visible)
     }
-    case 'SET_MESSAGE_BOX_TEXT' {
+    case 'SET_MESSAGE_BOX_TEXT': {
       return state,set('messageBoxText', action.message)
     }
-    case 'SET_LOADING_SCREEN' : {
+    case 'SET_LOADING_SCREEN': {
       return state.set('showLoadingScreen', action.visible)
     }
     case 'SET_USER_ID': {
