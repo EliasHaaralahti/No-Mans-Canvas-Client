@@ -6,13 +6,20 @@ import { createCSSTransformBuilder } from "easy-css-transform-builder";
 
 const builder = createCSSTransformBuilder();
 
+const dragThreshold = 5;
+
 class Canvas extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-        lastX: 0.0,
-        lastY: 0.0,
+        lastMouseX: 0.0,
+        lastMouseY: 0.0,
+        draggedX: 0.0,
+        draggedY: 0.0,
+        dragOriginX: 0.0,
+        dragOriginY: 0.0,
         mouseIsDown: false,
+        mouseWasDown: false,
         dragging: false,
         canvasX: 0.0,
         canvasY: 0.0,
@@ -97,9 +104,13 @@ class Canvas extends React.Component {
   onMouseDown(e) {
     document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
     this.setState({
-      lastX: e.screenX,
-      lastY: e.screenY,
-      mouseIsDown: true
+      lastMouseX: e.screenX,
+      lastMouseY: e.screenY,
+      mouseIsDown: true,
+      dragOriginX: this.state.canvasX,
+      dragOriginY: this.state.canvasY,
+      draggedX: 0.0,
+      draggedY: 0.0
     });
   }
 
@@ -112,15 +123,30 @@ class Canvas extends React.Component {
 
   onMouseMove(e) {
     if (this.state.mouseIsDown) {
-      var moveX = this.state.lastX - e.screenX;
-      var moveY = this.state.lastY - e.screenY;
-      if (moveX !== 0 || moveY !== 0) {
-        this.translate(-moveX, -moveY);
+      var moveX = e.screenX - this.state.lastMouseX;
+      var moveY = e.screenY - this.state.lastMouseY;
+      this.setState({
+        lastMouseX: e.screenX,
+        lastMouseY: e.screenY,
+        draggedX: this.state.draggedX + moveX,
+        draggedY: this.state.draggedY + moveY
+      });
 
+      // Only drag if the mouse has moved enough
+      if (this.state.draggedX * this.state.draggedX + this.state.draggedY * this.state.draggedY > dragThreshold * dragThreshold)
+      {
         this.setState({
-          dragging: true,
-          lastX: e.screenX,
-          lastY: e.screenY
+          canvasX: this.state.dragOriginX + this.state.draggedX,
+          canvasY: this.state.dragOriginY + this.state.draggedY,
+          dragging: true
+        });
+      }
+      else
+      {
+        this.setState({
+          canvasX: this.state.dragOriginX,
+          canvasY: this.state.dragOriginY,
+          dragging: false
         });
       }
     }
@@ -151,6 +177,10 @@ class Canvas extends React.Component {
         });
       }
     }
+
+    this.setState({
+      mouseWasDown: this.state.mouseIsDown
+    });
   }
 
   onMouseUp(e) {
