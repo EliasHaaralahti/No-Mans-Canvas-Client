@@ -53,9 +53,9 @@ class Canvas extends React.Component {
 
     if (this.props.remainingTiles > 0){
       sendTile(pixelX, pixelY, this.props.activeColor);
-      setPixelInCanvas(pixelX, pixelY, this.props.activeColor);
+      // Don't undim this tile, wait for server to give new color
       this.setState({
-        dimmedColor: parseInt(this.props.activeColor, 10)
+        dimmedColor: -1
       });
 
       if (this.props.userExp < this.props.userExpLimit){
@@ -168,8 +168,12 @@ class Canvas extends React.Component {
         this.c.globalAlpha = 1.0;
 
         //redraw the pixel that was previusly dimmed
-        var dimmed = getColor(this.state.dimmedColor);
-        this.drawPixel(this.state.dimX, this.state.dimY, dimmed);
+        if (this.state.dimmedColor >= 0)
+        {
+          var dimmed = getColor(this.state.dimmedColor);
+          this.drawPixel(this.state.dimX, this.state.dimY, dimmed);
+        }
+
         this.setState({
           dimX: pixelX,
           dimY: pixelY,
