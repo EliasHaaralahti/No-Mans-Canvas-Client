@@ -54,7 +54,7 @@ class ColorMenu extends React.Component {
           </div>
           <p>Level: {this.props.userLevel}</p>
           <p>Connected users: {this.props.connectedUsers}</p>
-
+	  <p>By: <a href="https://twitter.com/vkoskiv">vkoskiv</a>, <a href="https://twitter.com/moletrooper">moletrooper</a>, <a href="https://github.com/EliasHaaralahti">Elias</a></p>
           <button type="button" onClick={this.onOpenPicker}
             className="getColorsBtn">Set Nickname</button> <br/>
 
