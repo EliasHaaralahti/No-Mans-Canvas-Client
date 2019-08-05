@@ -28,6 +28,11 @@ socket.onmessage = function(e) {
   const data = JSON.parse(e.data);
   switch (data[0].responseType) {
 
+    case "nameSetSuccess":
+      console.log("Name was set successfully")
+      actions.setMessageBoxText("Nickname was set successfully!")
+      actions.setMessageBoxVisibility(true)
+      break;
     case "disconnecting":
       console.log("Server sent SHUTDOWN")
       // Change state message box text to default warning message
@@ -167,6 +172,11 @@ App = connect(state => ({
   }),
   { },
 )(App);
+
+export const sendNick = (nick) => {
+  console.log("sending nick " + nick)
+  socket.send(JSON.stringify({"requestType": "setUsername", "userID": store.getState().get("userID").toString(), "name": nick}))
+}
 
 export const sendTile = (x, y, colorID) => {
   socket.send(JSON.stringify({"requestType": "postTile", "userID":  store.getState().get("userID").toString(),

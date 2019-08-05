@@ -26,6 +26,10 @@ export const initialState = fromJS({
 
 export default(state = initialState, action) => {
   switch (action.type) {
+    case 'SET_NICKNAME': {
+      console.log('appreducer also set the name to global state '+action.nick)
+      return state.set('username', action.nick)
+    }
     case 'SET_COLOR_PICKER_VISIBLE': {
       return state.set('showColorPicker', action.visible)
     }

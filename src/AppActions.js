@@ -100,6 +100,15 @@ export function setColors(colors) {
   store.dispatch(action)
 }
 
+export function setNickName(nick) {
+  console.log('Appactions setting nickname ' +nick)
+  const action = {
+    type: "SET_NICKNAME",
+    nick
+  }
+  store.dispatch(action)
+}
+
 export function setActiveColor(color) {
   const action = {
     type: "SET_ACTIVE_COLOR",

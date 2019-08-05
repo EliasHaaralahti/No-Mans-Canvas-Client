@@ -25,10 +25,11 @@ p {
 
 .getColorsBtn {
   display: inline-block;
-  background-color: yellow;
+  background-color: green;
+  color: white;
   border-radius: 10px;
   position: absolute;
-  width: 80px;
+  width: 140px;
   height: 25px;
   left: 150px;
   top: 15px;

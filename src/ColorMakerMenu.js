@@ -1,5 +1,7 @@
 import React from 'react';
 import './ColorMakerMenu.css';
+import { sendNick } from './App';
+//import { setNickName } from './AppActions';
 import SelectableColor from './SelectableColor';
 import { colorPickerVisible } from './AppActions';
 
@@ -8,11 +10,13 @@ class ColorMakerMenu extends React.Component {
     // Give available colors as props
     super(props);
     this.state = {
+      nickname: "",
       customRed: 255,
       customGreen: 255,
       customBlue: 255,
       selectedColor: 0
     }
+    this.onNickChanged = this.onNickChanged.bind(this);
     this.getCustomRGB = this.getCustomRGB.bind(this);
     this.onRedChanged = this.onRedChanged.bind(this);
     this.onGreenChanged = this.onGreenChanged.bind(this);
@@ -42,6 +46,14 @@ class ColorMakerMenu extends React.Component {
     else if (value > 255) value = 255;
 
     return value;
+  }
+
+  onNickChanged(e) {
+    var value = e.target.value;
+    this.setState({
+      nickname: value
+    });
+    console.log("Setting nick to" + value);
   }
 
   onRedChanged(e) {
@@ -81,7 +93,9 @@ class ColorMakerMenu extends React.Component {
   }
 
   onCreate(){
-    console.log("creating color " + this.state.selectedColor);
+    //console.log("creating color " + this.state.selectedColor);
+    console.log("Setting nickname");
+    sendNick(this.state.nickname);
     colorPickerVisible(false)
   }
 
@@ -99,20 +113,15 @@ class ColorMakerMenu extends React.Component {
           @import url('https://fonts.googleapis.com/css?family=Open+Sans');
         </style>
         <div className="offset">
-          Make your own color with RGB-values! <br/>
+          Set your nickname to appear in the highscores! <br/>
           <form>
-          R:
-          <input type="text" name="red" defaultValue={255} onChange={this.onRedChanged}/>
-          G:
-          <input type="text" name="green" defaultValue={255} onChange={this.onGreenChanged}/>
-          B:
-          <input type="text" name="blue" defaultValue={255} onChange={this.onBlueChanged}/>
+          Nickname:
+          <input type="text" name="nick" defaultValue="" onChange={this.onNickChanged}/>
           <br/>
           </form>
-          <SelectableColor rgb={this.getCustomRGB()} group="colorMaker" onSelectionChanged={this.onSelectionChanged}/>
           <div className="buttons">
             <button type="button" onClick={this.onCancel}>Cancel</button>
-            <button type="button" onClick={this.onCreate}>Not implemented</button>
+            <button type="button" onClick={this.onCreate}>Set nickname</button>
           </div>
         </div>
       </div>
