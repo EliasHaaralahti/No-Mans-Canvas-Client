@@ -76,8 +76,10 @@ class Canvas extends React.Component {
       var counter = 1;
       for (var y = 0; y < this.props.rows; y++) {
         for(var x = 0; x < this.props.columns; x++) {
-          this.drawPixel(x, y, getColor(this.props.canvas[counter].colorID));
-          counter++;
+	  //Note: We no longer use colorID since the API now returns just an array with the responseType
+	  //as the first element, and an array of colorIDs for the rest without any labels. Saves space.
+          this.drawPixel(x, y, getColor(this.props.canvas[counter]));
+	  counter++;
         }
       }
       setDrawCanvas(false);
@@ -88,7 +90,7 @@ class Canvas extends React.Component {
      console.log("Canvas received pixel color: " + pixel[0].colorID)
      this.c.fillStyle=getColor(pixel[0].colorID)
      this.c.fillRect(pixel[0].X * this.props.pixelSize, pixel[0].Y * this.props.pixelSize,
-       this.props.pixelSize, this.props.pixelSize);
+     this.props.pixelSize, this.props.pixelSize);
      // Sets update pixel back to none
      setPixel(null)
     }
@@ -158,8 +160,7 @@ class Canvas extends React.Component {
 
       if (pixelX !== this.state.dimX || pixelY !== this.state.dimY) {
         var pixelIndex = pixelY * this.props.columns + pixelX + 1;
-        if (!this.props.canvas[pixelIndex]) return;
-        var color = this.props.canvas[pixelIndex].colorID;
+	var color = this.props.canvas[pixelIndex];
 
         this.c.fillStyle = getColor(parseInt(this.props.activeColor, 10));
         this.c.globalAlpha = 0.4;
