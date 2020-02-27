@@ -7,14 +7,14 @@ class LoadingScreen extends React.Component {
   }
 
   render() {
-    if(!this.props.visible) return null;
+    if (!this.props.visible) return null;
 
     return (
-      <div className="LoadingScreen">
+      <div className="overlay">
         <style>
-        @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+          @import url('https://fonts.googleapis.com/css?family=Open+Sans');
         </style>
-        <div className="offset">
+        <div className="loadingScreen">
           The canvas is loading, please wait...
         </div>
       </div>

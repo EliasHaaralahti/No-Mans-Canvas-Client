@@ -13,16 +13,16 @@ class MessageBox extends React.Component {
   }
 
   render() {
-    if(!this.props.visible) return null;
+    if (!this.props.visible) return null;
 
     const className = this.props.warning ? "warning" : "message";
     return (
-        <div className={className}>
-          <div className="textcontent">
-          { this.props.message }
-          </div>
-          <input type="button" className="ok-button" value="OK" onClick={this.onConfirm} />
+      <div className="overlay">
+        <div className={`messageBox ${className}`}>
+          <p>{this.props.message}</p>
+          <button onClick={this.onConfirm} >OK</button>
         </div>
+      </div>
     )
   }
 }

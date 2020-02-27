@@ -1,12 +1,18 @@
 .colorSelect {
-  display: inline-block;
+  display: flex;
+  align-items: center;
 }
 
 .colorSelect label {
-  width: 20px;
-  height: 20px;
-  margin-left: -4px;
-  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  margin-left: -1.2em;
+  border: 1px solid black;
+  border-radius: 2px;
+}
+
+.colorSelect input[type=checkbox]:checked + label {
+  border-width: 3px;
 }
 
 .colorSelect label:hover {
@@ -16,8 +22,4 @@
 .colorSelect input[type=checkbox] {
   visibility: hidden;
   width: 0;
-}
-
-.colorSelect input[type=checkbox]:checked + label {
-  outline: 2px solid black;
 }

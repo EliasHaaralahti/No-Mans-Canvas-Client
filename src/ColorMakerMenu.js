@@ -34,7 +34,7 @@ class ColorMakerMenu extends React.Component {
     if (green.length < 2) green = '0' + green;
     var blue = this.state.customBlue.toString(16);
     if (blue.length < 2) blue = '0' + blue;
-    var color = '#'+red+green+blue;
+    var color = '#' + red + green + blue;
     return color;
   }
 
@@ -61,7 +61,7 @@ class ColorMakerMenu extends React.Component {
     this.setState({
       customRed: value
     });
-    console.log("Setting red to "+value);
+    console.log("Setting red to " + value);
   }
 
   onGreenChanged(e) {
@@ -69,7 +69,7 @@ class ColorMakerMenu extends React.Component {
     this.setState({
       customGreen: value
     });
-    console.log("Setting green to "+value);
+    console.log("Setting green to " + value);
   }
 
   onBlueChanged(e) {
@@ -77,7 +77,7 @@ class ColorMakerMenu extends React.Component {
     this.setState({
       customBlue: value
     });
-    console.log("Setting blue to "+value);
+    console.log("Setting blue to " + value);
   }
 
 
@@ -92,7 +92,7 @@ class ColorMakerMenu extends React.Component {
     colorPickerVisible(false)
   }
 
-  onCreate(){
+  onCreate() {
     //console.log("creating color " + this.state.selectedColor);
     console.log("Setting nickname");
     sendNick(this.state.nickname);
@@ -101,23 +101,22 @@ class ColorMakerMenu extends React.Component {
 
 
   render() {
-    if(!this.props.visible) return null;
+    if (!this.props.visible) return null;
 
     //TODO dynamic colors
     //TODO color saving
     // TODO: Not implemented = Create
 
     return (
-      <div className="colorMakerMenu">
-        <style>
-          @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+      <div className="overlay">
+        <div className="colorMakerMenu">
+          <style>
+            @import url('https://fonts.googleapis.com/css?family=Open+Sans');
         </style>
-        <div className="offset">
-          Set your nickname to appear in the highscores! <br/>
+          <label for="nick">Set your nickname to appear in the highscores!</label>
           <form>
-          Nickname:
-          <input type="text" name="nick" defaultValue="" onChange={this.onNickChanged}/>
-          <br/>
+            <input type="text" name="nick" defaultValue="" onChange={this.onNickChanged} />
+            <br />
           </form>
           <div className="buttons">
             <button type="button" onClick={this.onCancel}>Cancel</button>

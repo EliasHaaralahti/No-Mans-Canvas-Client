@@ -1,25 +1,10 @@
-.LoadingScreen {
-  background-color: lightgreen;
-  opacity: 50%;
-  z-index: 2;
-  position: fixed;
+.loadingScreen {
+  background-color: #c0ffee;
   height: 120px;
   width: 300px;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  text-align: left;
-  font-size: 16px;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: bold;
-  border-radius: 10px;
+  padding: 30px;
   text-align: center;
-  margin: auto;
-}
-
-.offset{
-  margin-left: 20px;
-  margin-right: 12px;
-  margin-bottom: 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 2px solid black;
 }

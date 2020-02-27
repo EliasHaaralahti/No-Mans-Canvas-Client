@@ -7,50 +7,26 @@ scale div according to text length*/
   font-size: 110%;
 }
 
-.message {
-  font-family: sans-serif;
-  border: 2px solid darkgray;
-  border-radius: 4px;
-  background-color: gray;
-  width: 30%;
-  height: 30%;
-  position: fixed;
-  text-align: center;
-  color: black;
-  display: inline-block;
-
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-}
-
-.warning {
-  margin: 0 auto;
+.messageBox {
   border: 2px solid black;
   border-radius: 4px;
-  background-color: gray;
-  width: 30%;
-  height: 15%;
-  position: fixed;
+  background: #a0adad;
+  width: 200px;
+  height: 120px;
   text-align: center;
-  color: red;
-  font-size: 200%;
-  display: inline-block;
-  bottom: 50%;
-  right: 50%;
+  color: black;
+  padding: 15px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.ok-button {
-  background-color: lightgreen;
-  border: 1px solid black;
-  border-radius: 5px;
-  color: green;
-  font-size: 120%;
-  padding: 5px;
-  display: inline-block;
-  position: absolute;
-  bottom: 5%;
-  right: 45%;
+.messageBox.warning {
+  color: darkred;
+}
+
+.messageBox p {
+  margin: 0;
 }

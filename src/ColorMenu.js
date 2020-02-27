@@ -27,37 +27,48 @@ class ColorMenu extends React.Component {
     var colors = [];
     for (var i = 1; i < this.props.colors.length; ++i) {
       colors.push(<SelectableColor colorID={this.props.colors[i].ID} rgb={getColor(this.props.colors[i].ID)} key={i}
-              group="colorSelect" onSelectionChanged={this.onColorSelected}
-              checked={parseInt(this.props.activeColor, 10) === parseInt(this.props.colors[i].ID, 10)}/>)
+        group="colorSelect" onSelectionChanged={this.onColorSelected}
+        checked={parseInt(this.props.activeColor, 10) === parseInt(this.props.colors[i].ID, 10)} />)
     }
 
-    // TODO: Does -10 scale well?
-    var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 - 10 + "%";
-    var tilesLeftBarLength = (this.props.remainingTiles / this.props.userTiles) * 100 - 10 + "%";
+    var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 + "%";
+    var tilesLeftBarLength = (this.props.remainingTiles / this.props.userTiles) * 100 + "%";
     return (
       <div className="colorMenu">
         <style>
-        @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+          @import url('https://fonts.googleapis.com/css?family=Open+Sans');
         </style>
-        <div className="offset">
-
-          <p>Your Colors</p>
+        <button type="button" onClick={this.onOpenPicker} className="setNickButton">
+          Set Nickname
+        </button>
+        <div className="colorArea">
+          <span>Your Colors</span>
           {colors}
-
-          <div className="progressContainer">
-            <p className="progressInfo">To next level: {this.props.expCollected}/{this.props.expToNext}</p>
-            <div className="progressBar" style={{width:progressBarLength}} />
-          </div>
-          <div className="progressContainer">
-            <p className="progressInfo">Tiles remaining: {this.props.remainingTiles}/{this.props.userTiles}</p>
-            <div className="progressBar" style={{width:tilesLeftBarLength}} />
-          </div>
-          <p>Level: {this.props.userLevel}</p>
-          <p>Connected users: {this.props.connectedUsers}</p>
-	  <p>By: <a href="https://twitter.com/vkoskiv">vkoskiv</a>, <a href="https://twitter.com/moletrooper">moletrooper</a>, <a href="https://github.com/EliasHaaralahti">Elias</a></p>
-          <button type="button" onClick={this.onOpenPicker}
-            className="getColorsBtn">Set Nickname</button> <br/>
-
+        </div>
+        <div className="progressContainer">
+          <span className="progressInfo">
+            To next level: {this.props.expCollected}/{this.props.expToNext}
+          </span>
+          <div className="progressBar" style={{ width: progressBarLength }} />
+        </div>
+        <div className="progressContainer">
+          <span className="progressInfo">
+            Tiles remaining: {this.props.remainingTiles}/{this.props.userTiles}
+          </span>
+          <div className="progressBar" style={{ width: tilesLeftBarLength }} />
+        </div>
+        <div className="statsArea">
+          <span>Level: {this.props.userLevel}</span>
+          <span>Connected users: {this.props.connectedUsers}</span>
+        </div>
+        <div className="creatorArea">
+          <span>By NAND-Gurut:</span>
+          <ul className="creatorList">
+            <li><a href="https://twitter.com/vkoskiv">vkoskiv</a></li>
+            <li><a href="https://twitter.com/moletrooper">moletrooper</a></li>
+            <li><a href="https://github.com/EliasHaaralahti">Elias</a></li>
+            <li><a href="https://github.com/JonniP">Jonni</a></li>
+          </ul>
         </div>
       </div>
     )
