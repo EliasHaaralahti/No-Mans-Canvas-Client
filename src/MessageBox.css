@@ -12,7 +12,6 @@ scale div according to text length*/
   border-radius: 4px;
   background: #a0adad;
   width: 200px;
-  height: 120px;
   text-align: center;
   color: black;
   padding: 15px;
@@ -29,4 +28,5 @@ scale div according to text length*/
 
 .messageBox p {
   margin: 0;
+  margin-bottom: 15px;
 }
