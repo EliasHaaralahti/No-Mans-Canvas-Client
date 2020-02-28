@@ -6,9 +6,9 @@
 .colorSelect label {
   width: 1.2em;
   height: 1.2em;
-  /*margin-left: -1.2em; <-- Nah*/
   border: 1px solid black;
   border-radius: 2px;
+  margin: 3px;
 }
 
 .colorSelect input[type=checkbox]:checked + label {
@@ -20,6 +20,5 @@
 }
 
 .colorSelect input[type=checkbox] {
-  visibility: hidden;
-  width: 0;
+  display: none;
 }
