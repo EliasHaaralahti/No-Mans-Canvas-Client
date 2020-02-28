@@ -14,8 +14,7 @@ import LoadingScreen from './LoadingScreen';
 export const store = createStore(AppReducer);
 
 var socket = null;
-// const url = 'ws://localhost:8080/canvas';
-const url = 'ws://triton.vkoskiv.com:8099/canvas';
+const url = 'ws://localhost:8080/canvas';
 
 if (socket == null) {
   try {
