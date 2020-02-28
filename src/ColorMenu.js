@@ -42,7 +42,6 @@ class ColorMenu extends React.Component {
           Set Nickname
         </button>
         <div className="colorArea">
-          <span>Your Colors</span>
           {colors}
         </div>
         <div className="progressContainer">

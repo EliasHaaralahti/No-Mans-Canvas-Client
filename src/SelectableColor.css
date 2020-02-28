@@ -6,7 +6,7 @@
 .colorSelect label {
   width: 1.2em;
   height: 1.2em;
-  margin-left: -1.2em;
+  /*margin-left: -1.2em; <-- Nah*/
   border: 1px solid black;
   border-radius: 2px;
 }
