@@ -5,6 +5,7 @@
   "dependencies": {
     "easy-css-transform-builder": "0.0.2",
     "immutable": "^3.8.1",
+    "node-sass": "^4.13.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.5",

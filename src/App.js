@@ -15,7 +15,7 @@ export const store = createStore(AppReducer);
 
 var socket = null;
 // const url = 'ws://localhost:8080/canvas';
-const url = 'ws://triton.vkoskiv.com:8099/canvas';
+const url = 'wss://instanssi.vkoskiv.com/ws';
 
 if (socket == null) {
   try {

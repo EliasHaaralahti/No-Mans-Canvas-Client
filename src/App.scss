@@ -1,5 +1,6 @@
 /* TODO: Take image of ready client and add it as background image when
 no backend collection can be made */
+
 body {
   background-color: #464646;
   margin: 0;
@@ -9,12 +10,12 @@ body {
 }
 
 /* generic css here */
+
 button {
   border: 2px solid black;
   border-radius: 3px;
   color: black;
   background: transparent;
-  -webkit-transition: background 100ms;
   transition: background 100ms;
   cursor: pointer;
 }
@@ -26,14 +27,8 @@ button {
   right: 0;
   bottom: 0;
   left: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
+
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
 }
-/*# sourceMappingURL=App.css.map */

@@ -1,10 +1,6 @@
 .colorSelect {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
 
 .colorSelect label {
@@ -27,4 +23,3 @@
   visibility: hidden;
   width: 0;
 }
-/*# sourceMappingURL=SelectableColor.css.map */
