@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './ColorMenu.css';
+import './styles/colormenu/ColorMenu.css';
 import { colorPickerVisible } from './AppActions';
 import { setActiveColor } from './AppActions';
 import SelectableColor from './SelectableColor';

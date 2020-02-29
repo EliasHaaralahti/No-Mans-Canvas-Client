@@ -1,0 +1,30 @@
+.colorSelect {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.colorSelect label {
+  width: 1.2em;
+  height: 1.2em;
+  /*margin-left: -1.2em; <-- Nah*/
+  border: 1px solid black;
+  border-radius: 2px;
+}
+
+.colorSelect input[type=checkbox]:checked + label {
+  border-width: 3px;
+}
+
+.colorSelect label:hover {
+  cursor: pointer;
+}
+
+.colorSelect input[type=checkbox] {
+  visibility: hidden;
+  width: 0;
+}
+/*# sourceMappingURL=SelectableColor.css.map */

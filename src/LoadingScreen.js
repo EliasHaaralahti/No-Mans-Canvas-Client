@@ -1,5 +1,5 @@
 import React from 'react';
-import './LoadingScreen.css';
+import './styles/loadingscreen/LoadingScreen.css';
 
 class LoadingScreen extends React.Component {
   constructor(props) {

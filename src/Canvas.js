@@ -1,5 +1,5 @@
 import React from 'react';
-import './Canvas.css';
+import './styles/canvas/Canvas.css';
 import { setPixel, setDrawCanvas, setPixelInCanvas, addUserExp, substractUserTiles } from './AppActions';
 import { sendTile, getColor } from './App';
 import { createCSSTransformBuilder } from "easy-css-transform-builder";

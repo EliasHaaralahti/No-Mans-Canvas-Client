@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,MAAM,CAAC;EACL,MAAM,EAAE,eAAe;EACvB,gBAAgB,EAAE,SAAS;CAC5B",
+    "sources": [
+        "Canvas.scss"
+    ],
+    "names": [],
+    "file": "Canvas.css"
+}

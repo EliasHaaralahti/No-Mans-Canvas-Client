@@ -2,7 +2,7 @@ import React from 'react';
 import { createStore } from 'redux'
 import { connect } from 'react-redux';
 
-import './App.css';
+import './styles/app/App.css';
 import AppReducer from './AppReducer';
 import * as actions from './AppActions';
 import Canvas from './Canvas';

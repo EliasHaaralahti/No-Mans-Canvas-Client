@@ -1,5 +1,5 @@
 import React from 'react';
-import './MessageBox.css';
+import './styles/messagebox/MessageBox.css';
 import { setMessageBoxVisibility } from './AppActions';
 
 // TODO: Use const instead of component

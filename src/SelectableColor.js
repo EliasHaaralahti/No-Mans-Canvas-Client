@@ -1,5 +1,5 @@
 import React from 'react';
-import './SelectableColor.css';
+import './styles/selectablecolor/SelectableColor.css';
 
 class SelectableColor extends React.Component {
   constructor(props) {

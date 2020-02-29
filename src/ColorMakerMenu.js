@@ -1,5 +1,5 @@
 import React from 'react';
-import './ColorMakerMenu.css';
+import './styles/colormakermenu/ColorMakerMenu.css';
 import { sendNick } from './App';
 //import { setNickName } from './AppActions';
 import SelectableColor from './SelectableColor';
