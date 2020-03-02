@@ -14,8 +14,7 @@ import LoadingScreen from './LoadingScreen';
 export const store = createStore(AppReducer);
 
 var socket = null;
-// const url = 'ws://localhost:8080/canvas';
-const url = 'wss://instanssi.vkoskiv.com/ws';
+const url = 'ws://localhost:8080/canvas';
 
 if (socket == null) {
   try {
