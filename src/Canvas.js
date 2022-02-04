@@ -6,7 +6,7 @@ import { createCSSTransformBuilder } from "easy-css-transform-builder";
 
 const builder = createCSSTransformBuilder();
 
-const dragThreshold = 5;
+const dragThreshold = 15;
 
 class Canvas extends React.Component {
   constructor(props) {
