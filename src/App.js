@@ -88,7 +88,7 @@ var message_handler = function (e) {
       break;
 
     case "error":
-      if (data[0].errorMessage === "User not found! Get a new UUID with initialAuth") {
+      if (data[0].errorMessage === "Invalid userID") {
         g_socket.send(JSON.stringify({ "requestType": "initialAuth" }))
       }
       console.log(JSON.stringify(data))
