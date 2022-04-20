@@ -14,7 +14,7 @@ export const initialState = fromJS({
   colors: {},
   canvas: [],
   updatePixel: null,
-  activeColor: 0,
+  activeColor: 6,
   showColorPicker: false,
   canvasDraw: false,
   showLoadingScreen: true,
