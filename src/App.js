@@ -13,18 +13,11 @@ import LoadingScreen from './LoadingScreen';
 
 export const store = createStore(AppReducer);
 
-var socket = null;
-const url = 'ws://localhost:8080/canvas';
+const url = 'ws://localhost:3001/ws';
 
-if (socket == null) {
-  try {
-    socket = new WebSocket(url)
-  } catch (exception) {
-    console.log("Websocket: Unable to connect!")
-  }
-}
+var g_socket = null;
 
-socket.onmessage = function (e) {
+var message_handler = function (e) {
   const data = JSON.parse(e.data);
   switch (data[0].responseType) {
 
@@ -36,7 +29,7 @@ socket.onmessage = function (e) {
     case "disconnecting":
       console.log("Server sent SHUTDOWN")
       // Change state message box text to default warning message
-      actions.setMessageBoxText("Server restarting due to maintenance. Drawings won't be saved for a short while. Please wait a few minutes and then refresh.")
+      actions.setMessageBoxText("The server restarted, reconnecting...")
       // Change state message box visiblity
       // NOTE: Later this could be implemented with only state text
       actions.setMessageBoxVisibility(true)
@@ -60,17 +53,18 @@ socket.onmessage = function (e) {
       actions.setLevel(data[0].level)
       actions.setUserRequiredExp(data[0].tilesToNextLevel)
       actions.setUserExp(data[0].levelProgress)
-      socket.send(JSON.stringify({ "requestType": "getColors", "userID": store.getState().get("userID").toString() }))
+      g_socket.send(JSON.stringify({ "requestType": "getColors", "userID": store.getState().get("userID").toString() }))
       break;
 
     case "colorList":
       actions.setColors(data)
-      socket.send(JSON.stringify({ "requestType": "getCanvas", "userID": store.getState().get("userID").toString() }))
+      g_socket.send(JSON.stringify({ "requestType": "getCanvas", "userID": store.getState().get("userID").toString() }))
       break;
 
     case "fullCanvas":
       actions.drawCanvas(data)
       actions.loadingScreenVisible(false)
+	  actions.setMessageBoxVisibility(false)
       break;
 
     case "tileUpdate":
@@ -95,13 +89,13 @@ socket.onmessage = function (e) {
 
     case "error":
       if (data[0].errorMessage === "User not found! Get a new UUID with initialAuth") {
-        socket.send(JSON.stringify({ "requestType": "initialAuth" }))
+        g_socket.send(JSON.stringify({ "requestType": "initialAuth" }))
       }
       console.log(JSON.stringify(data))
       break;
 
     case "reAuthSuccessful":
-      socket.send(JSON.stringify({ "requestType": "getColors", "userID": store.getState().get("userID").toString() }))
+      g_socket.send(JSON.stringify({ "requestType": "getColors", "userID": store.getState().get("userID").toString() }))
       actions.setUserMaxTiles(data[0].maxTiles)
       actions.setUserTiles(data[0].remainingTiles)
       actions.setLevel(data[0].level)
@@ -110,20 +104,41 @@ socket.onmessage = function (e) {
       break;
 
     default:
-      console.log("socket onMessage default case!")
+      console.log("g_socket onMessage default case!")
       console.log(JSON.stringify(data))
   }
+  return false;
 }
 
-// Authentication logic
-socket.onopen = function (e) {
-  if (window.localStorage.getItem('userID') !== null) {
-    actions.setUserID(window.localStorage.getItem('userID'))
-    socket.send(JSON.stringify({ "requestType": "auth", "userID": store.getState().get("userID").toString() }))
-  } else {
-    socket.send(JSON.stringify({ "requestType": "initialAuth" }))
-  }
+
+function set_up_socket() {
+	var ws = new WebSocket(url);
+	// Authentication logic
+	ws.onopen = function (e) {
+	  if (window.localStorage.getItem('userID') !== null) {
+		actions.setUserID(window.localStorage.getItem('userID'))
+		ws.send(JSON.stringify({ "requestType": "auth", "userID": store.getState().get("userID").toString() }))
+	  } else {
+		ws.send(JSON.stringify({ "requestType": "initialAuth" }))
+	  }
+	};
+
+	ws.onmessage = message_handler;
+	
+	ws.onclose = function(e) {
+		console.log("Lost socket. Attempting to reestablish after 2s.");
+		setTimeout(function() {
+			set_up_socket();
+		}, 2000);
+	}
+	ws.onerror = function(err) {
+		console.log('Socket error: ', err.message, 'closing socket.');
+		ws.close();
+	}
+	g_socket = ws;
 }
+
+set_up_socket();
 
 let App = props => {
   // TODO: Show messageBox telling user about levelUp and what level
@@ -175,11 +190,11 @@ App = connect(state => ({
 
 export const sendNick = (nick) => {
   console.log("sending nick " + nick)
-  socket.send(JSON.stringify({ "requestType": "setUsername", "userID": store.getState().get("userID").toString(), "name": nick }))
+  g_socket.send(JSON.stringify({ "requestType": "setUsername", "userID": store.getState().get("userID").toString(), "name": nick }))
 }
 
 export const sendTile = (x, y, colorID) => {
-  socket.send(JSON.stringify({
+  g_socket.send(JSON.stringify({
     "requestType": "postTile", "userID": store.getState().get("userID").toString(),
     "X": x, "Y": y, "colorID": colorID.toString()
   }))
