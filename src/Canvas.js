@@ -67,19 +67,16 @@ class Canvas extends React.Component {
 
   componentDidUpdate() {
     if(this.props.canvasDraw) {
-      console.log("Drawing canvas!");
-
-      console.log(this.props.canvas.length)
+      console.log("Drawing canvas");
 
       // TODO: NOT OPTIMAL! RUSHED SOLUTION
       // CAN I DO CONDITION: ROWS * COLUMNS IN ONE LOOP ??
       var counter = 1;
       for (var y = 0; y < this.props.rows; y++) {
         for(var x = 0; x < this.props.columns; x++) {
-	  //Note: We no longer use colorID since the API now returns just an array with the responseType
-	  //as the first element, and an array of colorIDs for the rest without any labels. Saves space.
-          this.drawPixel(x, y, getColor(this.props.canvas[counter]));
-	  counter++;
+		  //Note: We no longer use colorID since the API now returns just an array with the responseType
+		  //as the first element, and an array of colorIDs for the rest without any labels. Saves space.
+          this.drawPixel(x, y, getColor(this.props.canvas[counter++]));
         }
       }
       setDrawCanvas(false);
