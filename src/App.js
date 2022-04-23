@@ -58,13 +58,19 @@ var message_handler = function (e) {
 
     case "colorList":
       actions.setColors(data)
-      g_socket.send(JSON.stringify({ "requestType": "getCanvas", "userID": store.getState().get("userID").toString() }))
+      g_socket.send(JSON.stringify({ "requestType": "getCanvasBin", "userID": store.getState().get("userID").toString() }))
       break;
 
     case "fullCanvas":
       actions.drawCanvas(data)
       actions.loadingScreenVisible(false)
 	  actions.setMessageBoxVisibility(false)
+      break;
+    
+    case "fullCanvasZlib":
+      actions.drawCanvasBin(data)
+      actions.loadingScreenVisible(false)
+      actions.setMessageBoxVisibility(false)
       break;
 
     case "tileUpdate":

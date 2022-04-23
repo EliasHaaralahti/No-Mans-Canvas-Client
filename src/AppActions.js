@@ -1,4 +1,5 @@
 import { store } from './App';
+const pako = require('pako');
 
 export function colorPickerVisible(visible) {
   const action = {
@@ -66,6 +67,30 @@ export function drawCanvas(data) {
   const action = {
     type: "DRAW_CANVAS",
     data
+  }
+  store.dispatch(action)
+}
+
+export function drawCanvasBin(data) {
+  var bin_str = window.atob(data[1])
+  var len = bin_str.length;
+  var compressed = new Uint8Array(len);
+  for (var i = 0; i < len; i++) {
+    compressed[i] = bin_str.charCodeAt(i);
+  }
+  try {
+    const decompressed = pako.inflate(compressed)
+	var data = Array.from(decompressed)
+	data.unshift(42) // The DRAW_CANVAS action below expects the response object at idx 0
+  } catch (err) {
+    console.log(err)
+  }
+  var dimension = Math.sqrt(data.length - 1)
+  setDimensions(dimension)
+
+  const action = {
+    type: "DRAW_CANVAS",
+	data
   }
   store.dispatch(action)
 }
