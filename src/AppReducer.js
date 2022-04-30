@@ -69,7 +69,7 @@ export default(state = initialState, action) => {
       return state.set('canvas', canvas);
     }
     case 'DRAW_CANVAS': {
-      return state.set('canvas', action.data).set('canvasDraw', true)
+      return state.set('canvas', action.pixels).set('canvasDraw', true)
     }
     case 'SET_DRAW_CANVAS': {
       return state.set('canvasDraw', action.bool)

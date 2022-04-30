@@ -77,7 +77,7 @@ class Canvas extends React.Component {
 
       // TODO: NOT OPTIMAL! RUSHED SOLUTION
       // CAN I DO CONDITION: ROWS * COLUMNS IN ONE LOOP ??
-      var counter = 1;
+      var counter = 0;
       for (var y = 0; y < this.props.rows; y++) {
         for(var x = 0; x < this.props.columns; x++) {
 		  //Note: We no longer use colorID since the API now returns just an array with the responseType
@@ -90,8 +90,8 @@ class Canvas extends React.Component {
 
    if(this.props.updatePixel != null) {
      const pixel = this.props.updatePixel;
-     this.c.fillStyle=getColor(pixel[0].colorID)
-     this.c.fillRect(pixel[0].X * this.props.pixelSize, pixel[0].Y * this.props.pixelSize,
+     this.c.fillStyle=getColor(pixel.colorID)
+     this.c.fillRect(pixel.X * this.props.pixelSize, pixel.Y * this.props.pixelSize,
      this.props.pixelSize, this.props.pixelSize);
      // Sets update pixel back to none
      setPixel(null)

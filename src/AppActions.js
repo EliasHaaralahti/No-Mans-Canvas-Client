@@ -71,7 +71,7 @@ export function setPixel(data) {
     data
   }
   store.dispatch(action)
-  if (data !== null) setPixelInCanvas(data[0].X, data[0].Y, data[0].colorID);
+  if (data !== null) setPixelInCanvas(data.X, data.Y, data.colorID);
 }
 
 export function setPixelInCanvas(x, y, colorID) {
@@ -96,7 +96,7 @@ export function drawCanvas(data) {
 }
 
 export function drawCanvasBin(data) {
-  var bin_str = window.atob(data[1])
+  var bin_str = window.atob(data.payload)
   var len = bin_str.length;
   var compressed = new Uint8Array(len);
   for (var i = 0; i < len; i++) {
@@ -104,17 +104,16 @@ export function drawCanvasBin(data) {
   }
   try {
     const decompressed = pako.inflate(compressed)
-	var data = Array.from(decompressed)
-	data.unshift(42) // The DRAW_CANVAS action below expects the response object at idx 0
+	var pixels = Array.from(decompressed)
   } catch (err) {
     console.log(err)
   }
-  var dimension = Math.sqrt(data.length - 1)
+  var dimension = Math.sqrt(pixels.length)
   setDimensions(dimension)
 
   const action = {
     type: "DRAW_CANVAS",
-	data
+	pixels
   }
   store.dispatch(action)
 }
