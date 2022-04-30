@@ -1,5 +1,12 @@
+:root {
+	--main-text-color: #a8a8a8;
+	--dark-text-color: #696969;
+	--main-bg-color: #202124;
+	--light-bg-color: #46484f;
+}
+
 .colorMenu {
-  background-color: #a0adad;
+  background-color: var(--main-bg-color);
   border-top: 2px solid black;
 
   position: fixed;
@@ -28,12 +35,16 @@
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
+  background-color: var(--light-bg-color);
+  color: var(--dark-text-color);
+  border-color: var(--dark-text-color);
+  height: 30px;
 }
 
 .colorArea {
   border: 1px solid black;
-  border-radius: 3px;
-  background: #eee;
+  border-radius: 5px;
+  background: var(--light-bg-color);
 
   display: flex;
   flex-flow: row wrap;
@@ -45,9 +56,10 @@
   position: relative;
   flex: 1 1 300px;
   padding: 0;
-  height: 20px;
+  height: 30px;
   border: 1px solid black;
-  border-radius: 3px;
+  border-radius: 5px;
+  border-color: var(--dark-text-color);
 }
 
 .progressBar {
@@ -56,32 +68,49 @@
   bottom: 0;
   left: 0;
   /* width from JS */
-  background-color: #c0ffee;
+  background-color: #5afa77;
+  border-radius: 5px;
 }
 
 .progressInfo {
   z-index: 3;
+  color: var(--dark-text-color);
   position: absolute;
   margin: 0 0 0 3px;
-  margin-left: 2px;
+  margin-left: 10px;
+  margin-top: 5px;
 }
 
 .statsArea span {
   margin-right: 15px;
+  color: var(--main-text-color);
 }
 
 .creatorArea {
   display: flex;
   flex-flow: row nowrap;
+  color: var(--main-text-color);
 }
+
 .creatorList {
   margin: 0;
   padding: 0;
+  color: var(--main-text-color);
 }
+
+a:link {
+  color: var(--main-text-color);
+}
+
+a:visited {
+  color: var(--dark-text-color);
+}
+
 .creatorList li {
   display: inline-block;
   margin-left: 8px;
 }
+
 .creatorList li:before {
   content: "";
   display: inline-block;

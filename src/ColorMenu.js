@@ -67,6 +67,7 @@ class ColorMenu extends React.Component {
           <span>Connected users: {this.props.connectedUsers}</span>
         </div>
         <div className="creatorArea">
+		  <span>(<a href="https://github.com/vkoskiv/nmc2">src</a>)</span>
           <span>By NAND-Gurut:</span>
           <ul className="creatorList">
             <li><a href="https://twitter.com/vkoskiv">vkoskiv</a></li>
