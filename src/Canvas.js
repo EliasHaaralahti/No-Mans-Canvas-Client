@@ -73,7 +73,7 @@ class Canvas extends React.Component {
 
   componentDidUpdate() {
     if(this.props.canvasDraw) {
-      console.log("Drawing canvas");
+      console.log("Drawing " + this.props.rows + "x" + this.props.columns + " canvas");
 
       // TODO: NOT OPTIMAL! RUSHED SOLUTION
       // CAN I DO CONDITION: ROWS * COLUMNS IN ONE LOOP ??
@@ -90,7 +90,6 @@ class Canvas extends React.Component {
 
    if(this.props.updatePixel != null) {
      const pixel = this.props.updatePixel;
-     console.log("Canvas received pixel color: " + pixel[0].colorID)
      this.c.fillStyle=getColor(pixel[0].colorID)
      this.c.fillRect(pixel[0].X * this.props.pixelSize, pixel[0].Y * this.props.pixelSize,
      this.props.pixelSize, this.props.pixelSize);

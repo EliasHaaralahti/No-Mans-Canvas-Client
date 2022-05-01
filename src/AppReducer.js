@@ -69,11 +69,9 @@ export default(state = initialState, action) => {
       return state.set('activeColor', action.color)
     }
     case 'SET_USER_EXP': {
-      console.log("SETTING EXP: " + action.amount)
       return state.set('userExp', action.amount);
     }
     case 'SET_IS_ADMIN': {
-      console.log("SETTING isAdmin: " + action.isAdmin)
       return state.set('isAdmin', action.isAdmin)
     }
     case 'TOGGLE_BAN_MODE': {

@@ -22,7 +22,6 @@ class BanButton extends React.Component {
 	  };
 	  buttonText = 'Armed';
 	}
-	console.log('modeEnabled: ' + this.props.modeEnabled)
     if (!this.props.visible) return null;
 
     return (
