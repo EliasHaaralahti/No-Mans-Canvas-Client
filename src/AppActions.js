@@ -150,6 +150,21 @@ export function setUserExp(amount) {
   store.dispatch(action)
 }
 
+export function setIsAdmin(isAdmin) {
+  const action = {
+    type: "SET_IS_ADMIN",
+	isAdmin
+  }
+  store.dispatch(action)
+}
+
+export function toggleBanMode() {
+  const action = {
+    type: "TOGGLE_BAN_MODE"
+  }
+  store.dispatch(action)
+}
+
 export function setConnectedUsers(amount) {
   const action = {
     type: "SET_CONNECTED_USERS",

@@ -107,6 +107,10 @@ var message_handler = function (e) {
       actions.setLevel(data[0].level)
       actions.setUserRequiredExp(data[0].tilesToNextLevel)
       actions.setUserExp(data[0].levelProgress)
+      actions.setIsAdmin(data[0].isAdministrator)
+      break;
+    case "ban_click_success":
+      actions.toggleBanMode()
       break;
 
     default:
@@ -156,14 +160,17 @@ let App = props => {
         updatePixel={props.updatePixel} activeColor={props.activeColor}
         canvas={props.canvas} canvasDraw={props.canvasDraw}
         remainingTiles={props.remainingTiles}
-        userExp={props.userExp} userExpLimit={props.userExpLimit} />
+        userExp={props.userExp} userExpLimit={props.userExpLimit}
+		banModeEnabled={props.banModeEnabled} />
 
       <ColorMenu expCollected={props.userExp} expToNext={props.userExpLimit}
         colors={props.userColors} activeColor={props.activeColor}
         remainingTiles={props.remainingTiles}
         connectedUsers={props.connectedUsers}
         userTiles={props.userTiles}
-        userLevel={props.userLevel} />
+        userLevel={props.userLevel}
+		isAdmin={props.isAdmin}
+		banModeEnabled={props.banModeEnabled} />
       <ColorMakerMenu visible={props.visible} />
       <LoadingScreen visible={props.loadingVisible} />
       <MessageBox visible={props.showMessageBox} message={props.messageBoxText} />
@@ -190,6 +197,8 @@ App = connect(state => ({
   showLevelScreen: state.get('showNewLevelScreen'),
   showMessageBox: state.get('showMessageBox'),
   messageBoxText: state.get('messageBoxText'),
+  isAdmin: state.get('isAdmin'),
+  banModeEnabled: state.get('banModeEnabled')
 }),
   {},
 )(App);
@@ -203,6 +212,17 @@ export const sendTile = (x, y, colorID) => {
   g_socket.send(JSON.stringify({
     "requestType": "postTile", "userID": store.getState().get("userID").toString(),
     "X": x, "Y": y, "colorID": colorID.toString()
+  }))
+}
+
+export const sendBan = (x, y) => {
+  g_socket.send(JSON.stringify({
+    "requestType": "admin_cmd", "userID": store.getState().get("userID").toString(),
+	"X": x, "Y": y,
+	"cmd": {
+      "action": "banclick",
+	  "coords": [x, y]
+	}
   }))
 }
 

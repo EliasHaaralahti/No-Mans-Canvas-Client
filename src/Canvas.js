@@ -1,7 +1,7 @@
 import React from 'react';
 import './Canvas.css';
 import { setPixel, setDrawCanvas, setPixelInCanvas, addUserExp, substractUserTiles } from './AppActions';
-import { sendTile, getColor } from './App';
+import { sendTile, getColor, sendBan } from './App';
 import { createCSSTransformBuilder } from "easy-css-transform-builder";
 
 const builder = createCSSTransformBuilder();
@@ -51,18 +51,24 @@ class Canvas extends React.Component {
     //don't do anything if clicked outside of canvas
     if (pixelX < 0 || pixelY < 0 || pixelX > this.props.columns || pixelY > this.props.rows) return;
 
-    if (this.props.remainingTiles > 0){
-      sendTile(pixelX, pixelY, this.props.activeColor);
-      // Don't undim this tile, wait for server to give new color
-      this.setState({
-        dimmedColor: -1
-      });
+    if (this.props.banModeEnabled) {
+      console.log('Banning at ' + pixelY + ', ' + pixelX)
+      sendBan(pixelX, pixelY)
+    } else {
+      if (this.props.remainingTiles > 0){
+        sendTile(pixelX, pixelY, this.props.activeColor);
+        // Don't undim this tile, wait for server to give new color
+        this.setState({
+          dimmedColor: -1
+        });
 
-      if (this.props.userExp < this.props.userExpLimit){
-        addUserExp(1);
+        if (this.props.userExp < this.props.userExpLimit){
+          addUserExp(1);
+        }
+        substractUserTiles(1);
       }
-      substractUserTiles(1);
-    }
+	}
+
   }
 
   componentDidUpdate() {

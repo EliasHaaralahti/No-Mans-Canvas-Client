@@ -21,7 +21,9 @@ export const initialState = fromJS({
   showNewLevelScreen: false,
   level: 1,
   showMessageBox: false,
-  messageBoxText: ""
+  messageBoxText: "",
+  isAdmin: false,
+  banModeEnabled: false
 })
 
 export default(state = initialState, action) => {
@@ -69,6 +71,14 @@ export default(state = initialState, action) => {
     case 'SET_USER_EXP': {
       console.log("SETTING EXP: " + action.amount)
       return state.set('userExp', action.amount);
+    }
+    case 'SET_IS_ADMIN': {
+      console.log("SETTING isAdmin: " + action.isAdmin)
+      return state.set('isAdmin', action.isAdmin)
+    }
+    case 'TOGGLE_BAN_MODE': {
+      console.log("Toggling ban mode to " + !state.get('banModeEnabled'))
+      return state.set('banModeEnabled', !state.get('banModeEnabled'))
     }
     case 'SET_CONNECTED_USERS': {
       return state.set('connectedUsers', action.amount);

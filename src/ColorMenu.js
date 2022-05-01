@@ -5,6 +5,7 @@ import { colorPickerVisible } from './AppActions';
 import { setActiveColor } from './AppActions';
 import SelectableColor from './SelectableColor';
 import { getColor } from './App';
+import BanButton from './BanButton';
 
 class ColorMenu extends React.Component {
   constructor(props) {
@@ -23,6 +24,10 @@ class ColorMenu extends React.Component {
     colorPickerVisible(true);
   }
 
+  onBanClicked(e) {
+	console.log(e);
+  }
+
   render() {
     var colors = [];
     for (var i = 1; i < this.props.colors.length; ++i) {
@@ -38,6 +43,7 @@ class ColorMenu extends React.Component {
         <style>
           @import url('https://fonts.googleapis.com/css?family=Open+Sans');
         </style>
+		<BanButton visible={this.props.isAdmin} modeEnabled={this.props.banModeEnabled}/>
         <button type="button" onClick={this.onOpenPicker} className="setNickButton">
           Set Nickname
         </button>
