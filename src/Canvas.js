@@ -204,7 +204,7 @@ class Canvas extends React.Component {
   onMouseWheel(e) {
     var delta = -e.deltaY / 40;
 
-    if ((delta > 0 && this.state.scale > 3.0) || (delta < 0 && this.state.scale < 0.5)) return;
+    if ((delta > 0 && this.state.scale > 3.0) || (delta < 0 && this.state.scale < 0.25)) return;
 
     var factor = Math.pow(1.1, delta);
 
