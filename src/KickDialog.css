@@ -1,0 +1,36 @@
+/* TODO: Center both message and warning perfectly,
+scale div according to text length*/
+
+.textcontent {
+  margin: 20px;
+  color: white;
+  font-size: 110%;
+}
+
+.messageBox {
+  border: 2px solid black;
+  border-radius: 4px;
+  background: #a0adad;
+  width: 200px;
+  text-align: center;
+  color: black;
+  padding: 15px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.messageBox.warning {
+  color: darkred;
+}
+
+.messageBox p {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+.button {
+  background-color: lightgreen;
+}
