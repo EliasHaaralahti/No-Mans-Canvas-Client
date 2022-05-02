@@ -33,6 +33,30 @@ export function setMessageBoxText(message) {
   store.dispatch(action)
 }
 
+export function setKickDialogVisibility(visible) {
+  const action = {
+    type: "SET_KICK_DIALOG_VISIBLE",
+    visible
+  }
+  store.dispatch(action)
+}
+
+export function setKickDialogText(message) {
+  const action = {
+    type: "SET_KICK_DIALOG_TEXT",
+    message
+  }
+  store.dispatch(action)
+}
+
+export function setKickDialogButtonText(btn_text) {
+  const action = {
+    type: "SET_KICK_DIALOG_BUTTON_TEXT",
+    btn_text
+  }
+  store.dispatch(action)
+}
+
 export function setUserID(userID) {
   const action = {
     type: "SET_USER_ID",

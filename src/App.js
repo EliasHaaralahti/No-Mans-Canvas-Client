@@ -9,6 +9,7 @@ import Canvas from './Canvas';
 import ColorMenu from './ColorMenu';
 import ColorMakerMenu from './ColorMakerMenu';
 import MessageBox from './MessageBox';
+import KickDialog from './KickDialog';
 import LoadingScreen from './LoadingScreen';
 
 export const store = createStore(AppReducer);
@@ -16,6 +17,7 @@ export const store = createStore(AppReducer);
 const url = 'ws://localhost:3001/ws';
 
 var g_socket = null;
+var g_disconnected = false;
 
 var message_handler = function (e) {
   const data = JSON.parse(e.data);
@@ -112,6 +114,13 @@ var message_handler = function (e) {
     case "ban_click_success":
       actions.toggleBanMode()
       break;
+    case "kicked":
+      g_disconnected = true;
+      g_socket.close()
+      actions.setKickDialogText(data[0].message)
+      actions.setKickDialogButtonText(data[0].btn_text)
+      actions.setKickDialogVisibility(true)
+      break;
 
     default:
       console.log("g_socket onMessage default case!")
@@ -136,10 +145,14 @@ function set_up_socket() {
 	ws.onmessage = message_handler;
 	
 	ws.onclose = function(e) {
-		console.log("Lost socket. Attempting to reestablish after 2s.");
-		setTimeout(function() {
-			set_up_socket();
-		}, 2000);
+        if (g_disconnected) {
+          console.log("Disconnected, waiting for user to click reconnect");
+        } else {
+          console.log("Lost socket. Attempting to reestablish after 2s.");
+          setTimeout(function() {
+            set_up_socket();
+          }, 2000);
+        }
 	}
 	ws.onerror = function(err) {
 		console.log('Socket error: ', err.message, 'closing socket.');
@@ -174,6 +187,7 @@ let App = props => {
       <ColorMakerMenu visible={props.visible} />
       <LoadingScreen visible={props.loadingVisible} />
       <MessageBox visible={props.showMessageBox} message={props.messageBoxText} />
+      <KickDialog visible={props.showKickDialog} message={props.kickDialogText} btn_text={props.kickDialogButtonText}/>
     </div>
   )
 }
@@ -197,6 +211,9 @@ App = connect(state => ({
   showLevelScreen: state.get('showNewLevelScreen'),
   showMessageBox: state.get('showMessageBox'),
   messageBoxText: state.get('messageBoxText'),
+  showKickDialog: state.get('showKickDialog'),
+  kickDialogText: state.get('kickDialogText'),
+  kickDialogButtonText: state.get('kickDialogButtonText'),
   isAdmin: state.get('isAdmin'),
   banModeEnabled: state.get('banModeEnabled')
 }),
@@ -224,6 +241,11 @@ export const sendBan = (x, y) => {
 	  "coords": [x, y]
 	}
   }))
+}
+
+export const resumeConnection = () => {
+  g_disconnected = false;
+  set_up_socket()
 }
 
 export const getColor = (id) => {

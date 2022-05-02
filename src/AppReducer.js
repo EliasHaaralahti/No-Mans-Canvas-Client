@@ -22,6 +22,9 @@ export const initialState = fromJS({
   level: 1,
   showMessageBox: false,
   messageBoxText: "",
+  showKickDialog: false,
+  kickDialogText: "",
+  kickDialogButtonText: "Ok",
   isAdmin: false,
   banModeEnabled: false
 })
@@ -40,6 +43,15 @@ export default(state = initialState, action) => {
     }
     case 'SET_MESSAGE_BOX_TEXT': {
       return state.set('messageBoxText', action.message)
+    }
+    case 'SET_KICK_DIALOG_VISIBLE': {
+      return state.set('showKickDialog', action.visible)
+    }
+    case 'SET_KICK_DIALOG_TEXT': {
+      return state.set('kickDialogText', action.message)
+    }
+    case 'SET_KICK_DIALOG_BUTTON_TEXT': {
+      return state.set('kickDialogButtonText', action.btn_text)
     }
     case 'SET_LOADING_SCREEN': {
       return state.set('showLoadingScreen', action.visible)
