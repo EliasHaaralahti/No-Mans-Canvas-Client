@@ -249,7 +249,7 @@ class Canvas extends React.Component {
         }}>
           <canvas id="canvas" ref={(c) => {
                     if(c != null) {
-                      this.c = c.getContext('2d');
+                      this.c = c.getContext('2d', { alpha: false });
                       this.canvas = c;
                     }}
                   }
