@@ -90,8 +90,10 @@ class Canvas extends React.Component {
 
    if(this.props.updatePixel != null) {
      const pixel = this.props.updatePixel;
-     this.c.fillStyle=getColor(pixel.colorID)
-     this.c.fillRect(pixel.X * this.props.pixelSize, pixel.Y * this.props.pixelSize,
+     this.c.fillStyle = getColor(pixel.c)
+     let x = Math.round(pixel.i % this.props.columns);
+     let y = Math.floor(pixel.i / this.props.columns);
+     this.c.fillRect(x * this.props.pixelSize, y * this.props.pixelSize,
      this.props.pixelSize, this.props.pixelSize);
      // Sets update pixel back to none
      setPixel(null)
@@ -161,7 +163,7 @@ class Canvas extends React.Component {
       var pixelY = Math.floor(mouseY/this.props.pixelSize);
 
       if (pixelX !== this.state.dimX || pixelY !== this.state.dimY) {
-        var pixelIndex = pixelY * this.props.columns + pixelX + 1;
+        var pixelIndex = pixelY * this.props.columns + pixelX;
 	var color = this.props.canvas[pixelIndex];
 
         this.c.fillStyle = getColor(parseInt(this.props.activeColor, 10));

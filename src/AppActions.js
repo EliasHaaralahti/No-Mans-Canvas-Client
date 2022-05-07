@@ -71,15 +71,13 @@ export function setPixel(data) {
     data
   }
   store.dispatch(action)
-  if (data !== null) setPixelInCanvas(data.X, data.Y, data.colorID);
+  if (data !== null) setPixelInCanvas(data);
 }
 
-export function setPixelInCanvas(x, y, colorID) {
+export function setPixelInCanvas(data) {
   const action = {
     type: "SET_PIXEL_IN_CANVAS",
-    x,
-    y,
-    colorID
+    data,
   }
   store.dispatch(action);
 }
@@ -149,7 +147,6 @@ export function setColors(colors) {
 }
 
 export function setNickName(nick) {
-  console.log('Appactions setting nickname ' +nick)
   const action = {
     type: "SET_NICKNAME",
     nick

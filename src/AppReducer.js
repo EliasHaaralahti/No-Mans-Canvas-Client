@@ -32,7 +32,6 @@ export const initialState = fromJS({
 export default(state = initialState, action) => {
   switch (action.type) {
     case 'SET_NICKNAME': {
-      console.log('appreducer also set the name to global state '+action.nick)
       return state.set('username', action.nick)
     }
     case 'SET_COLOR_PICKER_VISIBLE': {
@@ -64,8 +63,7 @@ export default(state = initialState, action) => {
     }
     case 'SET_PIXEL_IN_CANVAS': {
       var canvas = state.get('canvas');
-      var index = action.y * state.get('columns') + action.x + 1;
-      canvas[index] = action.colorID;
+      canvas[action.data.i] = action.data.c;
       return state.set('canvas', canvas);
     }
     case 'DRAW_CANVAS': {

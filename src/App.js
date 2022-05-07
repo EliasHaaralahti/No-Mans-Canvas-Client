@@ -21,7 +21,7 @@ var g_disconnected = false;
 
 var message_handler = function (e) {
   const data = JSON.parse(e.data);
-  switch (data.responseType) {
+  switch (data.rt) {
 
     case "nameSetSuccess":
       console.log("Name was set successfully")
@@ -38,8 +38,6 @@ var message_handler = function (e) {
       break;
 
     case "announcement":
-      console.log("Server sent ANNOUNCEMENT:")
-      console.log(data[0].message)
       // Change state message box text
       actions.setMessageBoxText(data[0].message)
       // Change state message box visiblity
@@ -69,7 +67,7 @@ var message_handler = function (e) {
       actions.setMessageBoxVisibility(false)
       break;
 
-    case "tileUpdate":
+    case "tu": // tileUpdate
       actions.setPixel(data)
       break;
 
@@ -77,8 +75,8 @@ var message_handler = function (e) {
       actions.setConnectedUsers(data.count)
       break;
 
-    case "incrementTileCount":
-      actions.addUserTiles(data.amount)
+    case "itc": //incrementTileCount
+      actions.addUserTiles(data.a)
       break;
 
     case "levelUp":

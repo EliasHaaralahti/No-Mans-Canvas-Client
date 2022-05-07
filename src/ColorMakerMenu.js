@@ -53,7 +53,6 @@ class ColorMakerMenu extends React.Component {
     this.setState({
       nickname: value
     });
-    console.log("Setting nick to" + value);
   }
 
   onRedChanged(e) {
@@ -93,8 +92,6 @@ class ColorMakerMenu extends React.Component {
   }
 
   onCreate() {
-    //console.log("creating color " + this.state.selectedColor);
-    console.log("Setting nickname");
     sendNick(this.state.nickname);
     colorPickerVisible(false)
   }
