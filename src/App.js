@@ -6,11 +6,12 @@ import './App.css';
 import AppReducer from './AppReducer';
 import * as actions from './AppActions';
 import Canvas from './Canvas';
-import ColorMenu from './ColorMenu';
-import ColorMakerMenu from './ColorMakerMenu';
+import BottomBar from './BottomBar';
+import NicknameMenu from './NicknameMenu';
 import MessageBox from './MessageBox';
 import KickDialog from './KickDialog';
 import LoadingScreen from './LoadingScreen';
+import CreditsMenu from './CreditsMenu';
 
 export const store = createStore(AppReducer);
 
@@ -191,17 +192,20 @@ let App = props => {
         userExp={props.userExp} userExpLimit={props.userExpLimit}
 		banModeEnabled={props.banModeEnabled} />
 
-      <ColorMenu expCollected={props.userExp} expToNext={props.userExpLimit}
+      <BottomBar expCollected={props.userExp} expToNext={props.userExpLimit}
         colors={props.userColors} activeColor={props.activeColor}
         remainingTiles={props.remainingTiles}
         connectedUsers={props.connectedUsers}
         userTiles={props.userTiles}
         userLevel={props.userLevel}
-		isAdmin={props.isAdmin}
-		banModeEnabled={props.banModeEnabled} />
-      <ColorMakerMenu visible={props.visible} />
+		    isAdmin={props.isAdmin}
+		    banModeEnabled={props.banModeEnabled} 
+        creditsVisible={props.showCreditsMenu} 
+      />
+      <NicknameMenu visible={props.visible} />
       <LoadingScreen visible={props.loadingVisible} />
       <MessageBox visible={props.showMessageBox} message={props.messageBoxText} />
+      <CreditsMenu visible={props.showCreditsMenu} />
       <KickDialog visible={props.showKickDialog} message={props.kickDialogText} btn_text={props.kickDialogButtonText}/>
     </div>
   )
@@ -225,6 +229,7 @@ App = connect(state => ({
   userLevel: state.get('level'),
   showLevelScreen: state.get('showNewLevelScreen'),
   showMessageBox: state.get('showMessageBox'),
+  showCreditsMenu: state.get('showCreditsMenu'),
   messageBoxText: state.get('messageBoxText'),
   showKickDialog: state.get('showKickDialog'),
   kickDialogText: state.get('kickDialogText'),

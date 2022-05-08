@@ -176,7 +176,7 @@ export function setUserExp(amount) {
 export function setIsAdmin(isAdmin) {
   const action = {
     type: "SET_IS_ADMIN",
-	isAdmin
+	  isAdmin
   }
   store.dispatch(action)
 }
