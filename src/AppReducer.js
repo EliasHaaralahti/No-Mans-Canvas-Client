@@ -11,7 +11,7 @@ export const initialState = fromJS({
   connectedUsers:0,
   rows: 0,
   columns: 0,
-  colors: {},
+  colors: [],
   canvas: [],
   updatePixel: null,
   activeColor: 6,
