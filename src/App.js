@@ -57,7 +57,7 @@ var text_handler = function (e) {
 
     case "announcement":
       // Change state message box text
-      actions.setMessageBoxText(data[0].message)
+      actions.setMessageBoxText(data.message)
       // Change state message box visiblity
       // NOTE: Later this could be implemented with only state text
       actions.setMessageBoxVisibility(true)
