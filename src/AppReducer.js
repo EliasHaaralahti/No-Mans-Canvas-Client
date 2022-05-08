@@ -1,4 +1,5 @@
 import { fromJS } from 'immutable'
+import { color_id_to_index } from './utils'
 
 // TODO: Cleaning up: use dictionaries like user { ID, exp}
 export const initialState = fromJS({
@@ -14,7 +15,7 @@ export const initialState = fromJS({
   colors: [],
   canvas: [],
   updatePixel: null,
-  activeColor: 6,
+  activeColor: 0,
   showColorPicker: false,
   canvasDraw: false,
   showLoadingScreen: true,
@@ -80,7 +81,15 @@ export default(state = initialState, action) => {
       return state.set('colors', action.colors)
     }
     case 'SET_ACTIVE_COLOR': {
-      return state.set('activeColor', action.color)
+      var colors = state.get('colors')
+      var index = color_id_to_index(colors, action.color)
+      var final_index = parseInt(index) + parseInt(action.addToIndex)
+
+      if (final_index < 0) { final_index = 0 }
+      else if (final_index > colors.length - 1) { 
+        final_index = colors.length - 1
+      }
+      return state.set('activeColor', colors[final_index].ID)
     }
     case 'SET_USER_EXP': {
       return state.set('userExp', action.amount);

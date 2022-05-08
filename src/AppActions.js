@@ -155,10 +155,12 @@ export function setNickName(nick) {
   store.dispatch(action)
 }
 
-export function setActiveColor(color) {
+// addToIndex is optional parameter that allows sum/reduce operations.
+export function setActiveColor(color, addToIndex=0) {
   const action = {
     type: "SET_ACTIVE_COLOR",
-    color
+    color,
+    addToIndex
   }
   store.dispatch(action)
 }

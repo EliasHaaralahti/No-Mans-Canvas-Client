@@ -134,6 +134,18 @@ var text_handler = function (e) {
   return false;
 }
 
+function keyboard_input_handler(key, props) {
+  switch (key) {
+    case "ArrowLeft":
+      actions.setActiveColor(props.activeColor, -1)
+      break
+
+    case "ArrowRight":    
+      actions.setActiveColor(props.activeColor, 1)
+      break
+  }
+}
+
 
 function set_up_socket() {
 	var ws = new WebSocket(url);
@@ -170,11 +182,8 @@ function set_up_socket() {
 set_up_socket();
 
 let App = props => {
-  // TODO: Show messageBox telling user about levelUp and what level
-  //<MessageBox visile={props.showLevelScreen}
-  //            message={"Level up! You are now level " + props.userLevel + "!"} />
   return (
-    <div>
+    <div tabIndex="0" onKeyDown={(e) => keyboard_input_handler(e.key, props)}>
       <Canvas pixelSize={5} rows={props.rows} columns={props.columns}
         updatePixel={props.updatePixel} activeColor={props.activeColor}
         canvas={props.canvas} canvasDraw={props.canvasDraw}
