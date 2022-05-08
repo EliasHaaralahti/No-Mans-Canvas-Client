@@ -1,11 +1,13 @@
 :root {
 	--main-text-color: #a8a8a8;
 	--dark-text-color: #696969;
+  --light-text-color: #ffffff;
 	--main-bg-color: #202124;
 	--light-bg-color: #46484f;
+  --very-light-bg-color: #cfcfcf;
 }
 
-.colorMenu {
+.bottomBar {
   background-color: var(--main-bg-color);
   border-top: 2px solid black;
 
@@ -26,7 +28,7 @@
   font-weight: bold;
 }
 
-.colorMenu > * {
+.bottomBar > * {
   margin: 4px 7px;
 }
 
@@ -92,31 +94,12 @@
   color: var(--main-text-color);
 }
 
-.creatorList {
-  margin: 0;
-  padding: 0;
-  color: var(--main-text-color);
-}
-
-a:link {
-  color: var(--main-text-color);
-}
-
-a:visited {
-  color: var(--dark-text-color);
-}
-
-.creatorList li {
-  display: inline-block;
-  margin-left: 8px;
-}
-
-.creatorList li:before {
-  content: "";
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  border: 2px solid black;
-  border-radius: 50%;
-  margin-right: 3px;
+.creditsButton {
+  height: 25px;
+  width: 5vw;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 2px solid white;
+  background-color: white;
 }

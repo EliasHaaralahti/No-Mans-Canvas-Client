@@ -1,22 +1,18 @@
 import React from 'react';
-
-import './ColorMenu.css';
-import { colorPickerVisible } from './AppActions';
-import { setActiveColor } from './AppActions';
+import './BottomBar.css';
+import { colorPickerVisible, setCreditsMenuVisibility, setActiveColor } from './AppActions';
 import SelectableColor from './SelectableColor';
 import { getColor } from './App';
 import BanButton from './BanButton';
 
-class ColorMenu extends React.Component {
+class BottomBar extends React.Component {
   constructor(props) {
-    // TODO: Give available colors as props
     super(props);
     this.onColorSelected = this.onColorSelected.bind(this);
     this.onOpenPicker = this.onOpenPicker.bind(this);
   }
 
   onColorSelected(color) {
-    console.log("color selected: " + color);
     setActiveColor(color);
   }
 
@@ -25,25 +21,26 @@ class ColorMenu extends React.Component {
   }
 
   onBanClicked(e) {
-	console.log(e);
+	  console.log(e);
   }
 
   render() {
     var colors = [];
     for (var i = 0; i < this.props.colors.length; ++i) {
+      var checked = parseInt(this.props.activeColor, 10) === parseInt(this.props.colors[i].ID, 10)
       colors.push(<SelectableColor colorID={this.props.colors[i].ID} rgb={getColor(this.props.colors[i].ID)} key={i}
         group="colorSelect" onSelectionChanged={this.onColorSelected}
-        checked={parseInt(this.props.activeColor, 10) === parseInt(this.props.colors[i].ID, 10)} />)
+        checked={checked} />)
     }
 
     var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 + "%";
     var tilesLeftBarLength = (this.props.remainingTiles / this.props.userTiles) * 100 + "%";
     return (
-      <div className="colorMenu">
+      <div className="bottomBar">
         <style>
           @import url('https://fonts.googleapis.com/css?family=Open+Sans');
         </style>
-		<BanButton visible={this.props.isAdmin} modeEnabled={this.props.banModeEnabled}/>
+		    <BanButton visible={this.props.isAdmin} modeEnabled={this.props.banModeEnabled}/>
         <button type="button" onClick={this.onOpenPicker} className="setNickButton">
           Set Nickname
         </button>
@@ -67,18 +64,16 @@ class ColorMenu extends React.Component {
           <span>Connected users: {this.props.connectedUsers}</span>
         </div>
         <div className="creatorArea">
-		  <span>(<a href="https://github.com/vkoskiv/nmc2">src</a>)</span>
-          <span>By NAND-Gurut:</span>
-          <ul className="creatorList">
-            <li><a href="https://twitter.com/vkoskiv">vkoskiv</a></li>
-            <li><a href="https://twitter.com/moletrooper">moletrooper</a></li>
-            <li><a href="https://github.com/EliasHaaralahti">Elias</a></li>
-            <li><a href="https://github.com/JonniP">Jonni</a></li>
-          </ul>
+		  
+          <button 
+            onClick={() => setCreditsMenuVisibility(!this.props.creditsVisible)} 
+            className={'creditsButton'}>
+              Credits
+          </button>      
         </div>
       </div>
     )
   }
 }
 
-export default ColorMenu;
+export default BottomBar;
