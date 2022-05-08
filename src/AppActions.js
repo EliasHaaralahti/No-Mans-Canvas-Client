@@ -94,21 +94,14 @@ export function drawCanvas(data) {
 }
 
 export function drawCanvasBin(data) {
-  var bin_str = window.atob(data.payload)
-  var len = bin_str.length;
-  var compressed = new Uint8Array(len);
-  for (var i = 0; i < len; i++) {
-    compressed[i] = bin_str.charCodeAt(i);
-  }
   try {
-    const decompressed = pako.inflate(compressed)
+    const decompressed = pako.inflate(data)
 	var pixels = Array.from(decompressed)
   } catch (err) {
     console.log(err)
   }
   var dimension = Math.sqrt(pixels.length)
   setDimensions(dimension)
-
   const action = {
     type: "DRAW_CANVAS",
 	pixels

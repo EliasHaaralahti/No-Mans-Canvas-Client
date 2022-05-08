@@ -20,6 +20,24 @@ var g_socket = null;
 var g_disconnected = false;
 
 var message_handler = function (e) {
+	if (e.data instanceof ArrayBuffer) {
+		binary_handler(e);
+	} else {
+		text_handler(e);
+	}
+}
+
+var binary_handler = function (e) {
+	const data = e.data;
+	// For now, the *only* binary message in this protocol is the
+	// full canvas, zlib compressed.
+	let array = new Uint8Array(e.data);
+	actions.drawCanvasBin(array);
+    actions.loadingScreenVisible(false)
+    actions.setMessageBoxVisibility(false)
+}
+
+var text_handler = function (e) {
   const data = JSON.parse(e.data);
   switch (data.rt) {
 
@@ -58,13 +76,8 @@ var message_handler = function (e) {
 
     case "colorList":
       actions.setColors(data.colors)
+      // The response to this request is handled in binary_handler above.
       g_socket.send(JSON.stringify({ "requestType": "getCanvas", "userID": store.getState().get("userID").toString() }))
-      break;
-
-    case "fullCanvas":
-      actions.drawCanvasBin(data)
-      actions.loadingScreenVisible(false)
-      actions.setMessageBoxVisibility(false)
       break;
 
     case "tu": // tileUpdate
@@ -88,7 +101,7 @@ var message_handler = function (e) {
       break;
 
     case "error":
-      if (data.errorMessage === "Invalid userID") {
+      if (data.msg === "Invalid userID") {
         g_socket.send(JSON.stringify({ "requestType": "initialAuth" }))
       }
       console.log(JSON.stringify(data))
@@ -124,6 +137,7 @@ var message_handler = function (e) {
 
 function set_up_socket() {
 	var ws = new WebSocket(url);
+	ws.binaryType = "arraybuffer";
 	// Authentication logic
 	ws.onopen = function (e) {
 	  if (window.localStorage.getItem('userID') !== null) {
