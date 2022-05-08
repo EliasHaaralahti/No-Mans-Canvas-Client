@@ -25,6 +25,14 @@ export function setMessageBoxVisibility(visible) {
   store.dispatch(action)
 }
 
+export function setCreditsMenuVisibility(visible) {
+  const action = {
+    type: "SET_CREDITS_VISIBLE",
+    visible
+  }
+  store.dispatch(action)
+}
+
 export function setMessageBoxText(message) {
   const action = {
     type: "SET_MESSAGE_BOX_TEXT",

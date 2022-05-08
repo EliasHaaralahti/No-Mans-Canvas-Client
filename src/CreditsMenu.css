@@ -1,0 +1,52 @@
+/* TODO: Center both message and warning perfectly,
+scale div according to text length*/
+
+.textcontent {
+  margin: 20px;
+  color: white;
+  font-size: 110%;
+}
+
+.creditsBox {
+  border: 2px solid black;
+  border-radius: 4px;
+  background: var(--main-bg-color);
+  width: 200px;
+  text-align: center;
+  color: var(--main-text-color);
+  padding: 15px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.creditsBox p {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+.creatorList {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  padding: 0;
+  color: var(--main-text-color);
+}
+
+a:link {
+  color: var(--main-text-color);
+}
+
+a:visited {
+  color: var(--main-text-color);
+}
+
+.creatorList li {
+  margin-left: 8px;
+  text-align: left;
+}
+.OkButton {
+  color: var(--light-text-color);
+  background-color: var(--light-bg-color)
+}
