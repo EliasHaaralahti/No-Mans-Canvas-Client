@@ -69,11 +69,14 @@ class BottomBar extends React.Component {
               About
           </button>
 
-          <button 
-            onClick={() => setAdminmenuVisible(!this.props.adminMenuVisible)} 
-            className={'adminButton'}>
-              Admin
-          </button>
+          { this.props.isAdmin && // Conditionally render only if admin.
+            <button
+              onClick={() => setAdminmenuVisible(!this.props.adminMenuVisible)} 
+              className={'adminButton'}>
+                Admin
+            </button> 
+          }
+          
         </div>
       </div>
     )

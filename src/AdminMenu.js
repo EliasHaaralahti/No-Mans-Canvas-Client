@@ -19,7 +19,7 @@ class AdminMenu extends React.Component {
   }
 
   render() {
-    if (!this.props.visible) return null;
+    if (!this.props.visible || !this.props.isAdmin) return null;
     return (
       <div className={`adminBox`}>
         <BanButton visible={this.props.isAdmin} modeEnabled={this.props.banModeEnabled}/>
