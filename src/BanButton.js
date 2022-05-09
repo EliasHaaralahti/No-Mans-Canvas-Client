@@ -25,7 +25,7 @@ class BanButton extends React.Component {
     if (!this.props.visible) return null;
 
     return (
-	  <button onClick={this.onClick} style={buttonStyle}>{buttonText}</button>
+	    <button onClick={this.onClick} style={buttonStyle}>{buttonText}</button>
     )
   }
 }
