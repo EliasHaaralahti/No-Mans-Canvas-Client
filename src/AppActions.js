@@ -33,6 +33,14 @@ export function setCreditsMenuVisibility(visible) {
   store.dispatch(action)
 }
 
+export function setAdminmenuVisible(visible) {
+  const action = {
+    type: "SET_ADMIN_VISIBLE",
+    visible
+  }
+  store.dispatch(action)
+}
+
 export function setMessageBoxText(message) {
   const action = {
     type: "SET_MESSAGE_BOX_TEXT",

@@ -24,6 +24,7 @@ export const initialState = fromJS({
   showMessageBox: false,
   messageBoxText: "",
   showCreditsMenu: false,
+  showAdminMenu: false,
   showKickDialog: false,
   kickDialogText: "",
   kickDialogButtonText: "Ok",
@@ -44,6 +45,9 @@ export default(state = initialState, action) => {
     }
     case 'SET_CREDITS_VISIBLE': {
       return state.set('showCreditsMenu', action.visible)
+    }
+    case 'SET_ADMIN_VISIBLE': {
+      return state.set('showAdminMenu', action.visible)
     }
     case 'SET_MESSAGE_BOX_TEXT': {
       return state.set('messageBoxText', action.message)

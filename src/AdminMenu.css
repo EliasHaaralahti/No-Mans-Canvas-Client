@@ -1,10 +1,40 @@
-.loadingScreen {
-  background-color: #c0ffee;
-  height: 120px;
-  width: 300px;
-  padding: 30px;
-  text-align: center;
-  font-size: 16px;
-  border-radius: 10px;
+/* TODO: Center both message and warning perfectly,
+scale div according to text length*/
+
+.textcontent {
+  margin: 20px;
+  color: white;
+  font-size: 110%;
+}
+
+.adminBox {
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: 10vw;
+  height: 30vh;
+
   border: 2px solid black;
+  border-radius: 4px;
+  background-color: var(--main-bg-color);
+  width: 200px;
+  text-align: center;
+  color: var(--main-text-color);
+  padding: 15px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.adminBox p {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+.OkButton {
+  color: var(--light-text-color);
+  background-color: var(--light-bg-color)
 }

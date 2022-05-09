@@ -1,9 +1,8 @@
 import React from 'react';
 import './BottomBar.css';
-import { colorPickerVisible, setCreditsMenuVisibility, setActiveColor } from './AppActions';
+import { colorPickerVisible, setCreditsMenuVisibility, setActiveColor, setAdminmenuVisible } from './AppActions';
 import SelectableColor from './SelectableColor';
 import { getColor } from './App';
-import BanButton from './BanButton';
 
 class BottomBar extends React.Component {
   constructor(props) {
@@ -40,7 +39,6 @@ class BottomBar extends React.Component {
         <style>
           @import url('https://fonts.googleapis.com/css?family=Open+Sans');
         </style>
-		    <BanButton visible={this.props.isAdmin} modeEnabled={this.props.banModeEnabled}/>
         <button type="button" onClick={this.onOpenPicker} className="setNickButton">
           Set Nickname
         </button>
@@ -68,8 +66,14 @@ class BottomBar extends React.Component {
           <button 
             onClick={() => setCreditsMenuVisibility(!this.props.creditsVisible)} 
             className={'creditsButton'}>
-              Credits
-          </button>      
+              About
+          </button>
+
+          <button 
+            onClick={() => setAdminmenuVisible(!this.props.adminMenuVisible)} 
+            className={'adminButton'}>
+              Admin
+          </button>
         </div>
       </div>
     )

@@ -1,25 +1,35 @@
 import React from 'react';
-import './LoadingScreen.css';
+import './AdminMenu.css';
+import { setAdminmenuVisible } from './AppActions';
+import BanButton from './BanButton';
 
-class LoadingScreen extends React.Component {
+// TODO: Use const instead of class.
+const AnotherComponent = ({ someElement }) => {
+  return <div>I’m the return! </div>
+}
+
+// TODO: Use const instead of component
+class AdminMenu extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  onConfirm(visible) {
+    setAdminmenuVisible(!visible)
+  }
+
   render() {
     if (!this.props.visible) return null;
-
     return (
-      <div className="overlay">
-        <style>
-          @import url('https://fonts.googleapis.com/css?family=Open+Sans');
-        </style>
-        <div className="loadingScreen">
-          The canvas is loading, please wait...
-        </div>
+      <div className={`adminBox`}>
+        <BanButton visible={this.props.isAdmin} modeEnabled={this.props.banModeEnabled}/>
+
+        <button onClick={() => this.onConfirm(this.props.visible)} className={'OkButton'} >
+          OK
+        </button>
       </div>
     )
   }
 }
 
-export default LoadingScreen;
+export default AdminMenu;

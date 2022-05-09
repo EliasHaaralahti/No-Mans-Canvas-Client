@@ -12,6 +12,7 @@ import MessageBox from './MessageBox';
 import KickDialog from './KickDialog';
 import LoadingScreen from './LoadingScreen';
 import CreditsMenu from './CreditsMenu';
+import AdminMenu from './AdminMenu'
 
 export const store = createStore(AppReducer);
 
@@ -199,14 +200,15 @@ let App = props => {
         userTiles={props.userTiles}
         userLevel={props.userLevel}
 		    isAdmin={props.isAdmin}
-		    banModeEnabled={props.banModeEnabled} 
-        creditsVisible={props.showCreditsMenu} 
+        creditsVisible={props.showCreditsMenu}
+        adminMenuVisible={props.showAdminMenu}
       />
       <NicknameMenu visible={props.visible} />
       <LoadingScreen visible={props.loadingVisible} />
       <MessageBox visible={props.showMessageBox} message={props.messageBoxText} />
       <CreditsMenu visible={props.showCreditsMenu} />
       <KickDialog visible={props.showKickDialog} message={props.kickDialogText} btn_text={props.kickDialogButtonText}/>
+      <AdminMenu visible={props.showAdminMenu} isAdmin={props.isAdmin} banModeEnabled={props.banModeEnabled}/>
     </div>
   )
 }
@@ -230,6 +232,7 @@ App = connect(state => ({
   showLevelScreen: state.get('showNewLevelScreen'),
   showMessageBox: state.get('showMessageBox'),
   showCreditsMenu: state.get('showCreditsMenu'),
+  showAdminMenu: state.get('showAdminMenu'),
   messageBoxText: state.get('messageBoxText'),
   showKickDialog: state.get('showKickDialog'),
   kickDialogText: state.get('kickDialogText'),

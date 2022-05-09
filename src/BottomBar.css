@@ -103,3 +103,14 @@
   border: 2px solid white;
   background-color: white;
 }
+
+.adminButton {
+  margin-left: 5px;
+  height: 25px;
+  width: 5vw;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 2px solid white;
+  background-color: white;
+}
