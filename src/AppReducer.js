@@ -25,8 +25,10 @@ export const initialState = fromJS({
   showKickDialog: false,
   kickDialogText: "",
   kickDialogButtonText: "Ok",
-  isAdmin: false,
-  banModeEnabled: false
+  showCleanupBtn: false,
+  showBanBtn: false,
+  banModeEnabled: false,
+  adminBrushEnabled: false
 })
 
 export default(state = initialState, action) => {
@@ -81,8 +83,15 @@ export default(state = initialState, action) => {
     case 'SET_USER_EXP': {
       return state.set('userExp', action.amount);
     }
-    case 'SET_IS_ADMIN': {
-      return state.set('isAdmin', action.isAdmin)
+    case 'SET_SHOW_CLEANUP_BTN': {
+      return state.set('showCleanupBtn', action.show)
+    }
+    case 'SET_SHOW_BAN_BTN': {
+      return state.set('showBanBtn', action.show)
+    }
+    case 'TOGGLE_ADMIN_BRUSH_MODE': {
+      console.log("Toggling admin brush mode to " + !state.get('adminBrushEnabled'))
+      return state.set('adminBrushEnabled', !state.get('adminBrushEnabled'))
     }
     case 'TOGGLE_BAN_MODE': {
       console.log("Toggling ban mode to " + !state.get('banModeEnabled'))

@@ -114,7 +114,8 @@ var text_handler = function (e) {
       actions.setLevel(data.level)
       actions.setUserRequiredExp(data.tilesToNextLevel)
       actions.setUserExp(data.levelProgress)
-      actions.setIsAdmin(data.isAdministrator)
+      actions.setShowBanBtn(data.showBanBtn)
+      actions.setShowCleanupBtn(data.showCleanupBtn)
       break;
     case "ban_click_success":
       actions.toggleBanMode()
@@ -180,7 +181,8 @@ let App = props => {
         canvas={props.canvas} canvasDraw={props.canvasDraw}
         remainingTiles={props.remainingTiles}
         userExp={props.userExp} userExpLimit={props.userExpLimit}
-		banModeEnabled={props.banModeEnabled} />
+		banModeEnabled={props.banModeEnabled}
+		adminBrushEnabled={props.adminBrushEnabled} />
 
       <ColorMenu expCollected={props.userExp} expToNext={props.userExpLimit}
         colors={props.userColors} activeColor={props.activeColor}
@@ -188,8 +190,10 @@ let App = props => {
         connectedUsers={props.connectedUsers}
         userTiles={props.userTiles}
         userLevel={props.userLevel}
-		isAdmin={props.isAdmin}
-		banModeEnabled={props.banModeEnabled} />
+        showCleanupBtn={props.showCleanupBtn}
+        showBanBtn={props.showBanBtn}
+        banModeEnabled={props.banModeEnabled}
+        adminBrushEnabled={props.adminBrushEnabled} />
       <ColorMakerMenu visible={props.visible} />
       <LoadingScreen visible={props.loadingVisible} />
       <MessageBox visible={props.showMessageBox} message={props.messageBoxText} />
@@ -220,8 +224,10 @@ App = connect(state => ({
   showKickDialog: state.get('showKickDialog'),
   kickDialogText: state.get('kickDialogText'),
   kickDialogButtonText: state.get('kickDialogButtonText'),
-  isAdmin: state.get('isAdmin'),
-  banModeEnabled: state.get('banModeEnabled')
+  showCleanupBtn: state.get('showCleanupBtn'),
+  showBanBtn: state.get('showBanBtn'),
+  banModeEnabled: state.get('banModeEnabled'),
+  adminBrushEnabled: state.get('adminBrushEnabled')
 }),
   {},
 )(App);
@@ -245,6 +251,17 @@ export const sendBan = (x, y) => {
 	"cmd": {
       "action": "banclick",
 	  "coords": [x, y]
+	}
+  }))
+}
+
+export const sendBrushClick = (x, y) => {
+  g_socket.send(JSON.stringify({
+    "requestType": "admin_cmd", "userID": store.getState().get("userID").toString(),
+	"X": x, "Y": y,
+	"cmd": {
+      "action": "brush",
+      "coords": [x, y]
 	}
   }))
 }

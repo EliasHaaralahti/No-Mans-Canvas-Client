@@ -6,6 +6,7 @@ import { setActiveColor } from './AppActions';
 import SelectableColor from './SelectableColor';
 import { getColor } from './App';
 import BanButton from './BanButton';
+import BrushButton from './BrushButton';
 
 class ColorMenu extends React.Component {
   constructor(props) {
@@ -43,7 +44,8 @@ class ColorMenu extends React.Component {
         <style>
           @import url('https://fonts.googleapis.com/css?family=Open+Sans');
         </style>
-		<BanButton visible={this.props.isAdmin} modeEnabled={this.props.banModeEnabled}/>
+        <BanButton visible={this.props.showBanBtn} modeEnabled={this.props.banModeEnabled}/>
+        <BrushButton visible={this.props.showCleanupBtn} modeEnabled={this.props.adminBrushEnabled}/>
         <button type="button" onClick={this.onOpenPicker} className="setNickButton">
           Set Nickname
         </button>
