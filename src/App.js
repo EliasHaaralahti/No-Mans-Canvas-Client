@@ -240,7 +240,7 @@ export const sendNick = (nick) => {
 export const sendTile = (x, y, colorID) => {
   g_socket.send(JSON.stringify({
     "requestType": "postTile", "userID": store.getState().get("userID").toString(),
-    "X": x, "Y": y, "colorID": colorID.toString()
+    "X": x, "Y": y, "colorID": colorID
   }))
 }
 
