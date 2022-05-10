@@ -174,7 +174,7 @@ class Canvas extends React.Component {
         var pixelIndex = pixelY * this.props.columns + pixelX;
         var color = this.props.canvas[pixelIndex];
 
-        this.c.fillStyle = getColor(parseInt(this.props.activeColor, 10));
+        this.c.fillStyle = getColor(this.props.activeColor);
         this.c.globalAlpha = 0.4;
         this.c.fillRect(pixelX * this.props.pixelSize, pixelY * this.props.pixelSize,
         this.props.pixelSize, this.props.pixelSize);

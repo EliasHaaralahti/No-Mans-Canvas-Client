@@ -18,7 +18,8 @@ class ColorMenu extends React.Component {
 
   onColorSelected(color) {
     console.log("color selected: " + color);
-    setActiveColor(color);
+    //FIXME: Wonder why color comes in as a string here?
+    setActiveColor(parseInt(color, 10));
   }
 
   onOpenPicker(e) {
@@ -34,7 +35,7 @@ class ColorMenu extends React.Component {
     for (var i = 0; i < this.props.colors.length; ++i) {
       colors.push(<SelectableColor colorID={this.props.colors[i].ID} rgb={getColor(this.props.colors[i].ID)} key={i}
         group="colorSelect" onSelectionChanged={this.onColorSelected}
-        checked={parseInt(this.props.activeColor, 10) === parseInt(this.props.colors[i].ID, 10)} />)
+        checked={this.props.activeColor === this.props.colors[i].ID} />)
     }
 
     var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 + "%";
