@@ -255,13 +255,13 @@ export const sendBan = (x, y) => {
   }))
 }
 
-export const sendBrushClick = (x, y) => {
+export const sendBrushClick = (x, y, colorID) => {
   g_socket.send(JSON.stringify({
     "requestType": "admin_cmd", "userID": store.getState().get("userID").toString(),
-	"X": x, "Y": y,
 	"cmd": {
       "action": "brush",
-      "coords": [x, y]
+      "coords": [x, y],
+      "colorID": colorID
 	}
   }))
 }

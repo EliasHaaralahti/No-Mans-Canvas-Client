@@ -56,7 +56,7 @@ class Canvas extends React.Component {
       sendBan(pixelX, pixelY)
     } else if (this.props.adminBrushEnabled) {
       console.log('Cleaning up at ' + pixelX + ', ' + pixelY)
-      sendBrushClick(pixelX, pixelY)
+      sendBrushClick(pixelX, pixelY, this.props.activeColor)
       this.setState({
         dimX: -1,
         dimY: -1,
