@@ -57,6 +57,11 @@ class Canvas extends React.Component {
     } else if (this.props.adminBrushEnabled) {
       console.log('Cleaning up at ' + pixelX + ', ' + pixelY)
       sendBrushClick(pixelX, pixelY)
+      this.setState({
+        dimX: -1,
+        dimY: -1,
+        dimmedColor: 0
+      });
     } else {
       if (this.props.remainingTiles > 0){
         sendTile(pixelX, pixelY, this.props.activeColor);
