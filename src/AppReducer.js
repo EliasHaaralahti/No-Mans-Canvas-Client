@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable'
-import { color_id_to_index } from './utils'
+import { colorIdToIndex } from './utils'
 
 // TODO: Cleaning up: use dictionaries like user { ID, exp}
 export const initialState = fromJS({
@@ -86,7 +86,7 @@ export default(state = initialState, action) => {
     }
     case 'SET_ACTIVE_COLOR': {
       var colors = state.get('colors')
-      var index = color_id_to_index(colors, action.color)
+      var index = colorIdToIndex(colors, action.color)
       var final_index = parseInt(index) + parseInt(action.addToIndex)
 
       if (final_index < 0) { final_index = 0 }
