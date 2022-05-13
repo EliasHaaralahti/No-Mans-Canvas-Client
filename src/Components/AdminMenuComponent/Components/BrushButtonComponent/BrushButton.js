@@ -1,12 +1,12 @@
 import React from 'react';
-import './BanButton.css';
-import { toggleBanMode } from '../../../../AppActions';
+import './BrushButton.css';
+import { toggleAdminBrushMode } from '../../../../AppActions';
 
-const BanButton = ({ visible, modeEnabled }) => {
+const BrushButton = ({ visible, modeEnabled }) => {
   if (!visible) return null;
   return (
     <button 
-        onClick={toggleBanMode}
+        onClick={toggleAdminBrushMode}
         className={modeEnabled 
           ? 'banButton-enabled' : 'banButton-disabled'}
     >
@@ -15,4 +15,4 @@ const BanButton = ({ visible, modeEnabled }) => {
   )
 }
 
-export default BanButton;
+export default BrushButton;
