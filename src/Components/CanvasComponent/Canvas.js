@@ -1,7 +1,7 @@
 import React from 'react';
 import './Canvas.css';
-import { setPixel, setDrawCanvas, setPixelInCanvas, addUserExp, substractUserTiles } from '../../AppActions';
-import { sendTile, getColor, sendBan } from '../../App';
+import { setPixel, setDrawCanvas, addUserExp, substractUserTiles } from '../../AppActions';
+import { sendTile, getColor, sendBan, sendBrushClick } from '../../App';
 import { createCSSTransformBuilder } from "easy-css-transform-builder";
 import PixelInfo from './Components/PixelInfoComponent/PixelInfo';
 import { isMouseInsideCanvas } from './canvasUtils'
@@ -62,8 +62,16 @@ class Canvas extends React.Component {
     if (pixelX < 0 || pixelY < 0 || pixelX > this.props.columns || pixelY > this.props.rows) return;
 
     if (this.props.banModeEnabled) {
-      console.log('Banning at ' + pixelY + ', ' + pixelX)
+      console.log('Banning at ' + pixelX + ', ' + pixelY)
       sendBan(pixelX, pixelY)
+    } else if (this.props.adminBrushEnabled) {
+      console.log('Cleaning up at ' + pixelX + ', ' + pixelY)
+      sendBrushClick(pixelX, pixelY, this.props.activeColor)
+      this.setState({
+        dimX: -1,
+        dimY: -1,
+        dimmedColor: 0
+      });
     } else {
       if (this.props.remainingTiles > 0){
         sendTile(pixelX, pixelY, this.props.activeColor);
@@ -174,12 +182,12 @@ class Canvas extends React.Component {
 
       if (pixelX !== this.state.dimX || pixelY !== this.state.dimY) {
         var pixelIndex = pixelY * this.props.columns + pixelX;
-	var color = this.props.canvas[pixelIndex];
+        var color = this.props.canvas[pixelIndex];
 
-        this.c.fillStyle = getColor(parseInt(this.props.activeColor, 10));
+        this.c.fillStyle = getColor(this.props.activeColor);
         this.c.globalAlpha = 0.4;
         this.c.fillRect(pixelX * this.props.pixelSize, pixelY * this.props.pixelSize,
-           this.props.pixelSize, this.props.pixelSize);
+        this.props.pixelSize, this.props.pixelSize);
         this.c.globalAlpha = 1.0;
 
         //redraw the pixel that was previusly dimmed

@@ -181,10 +181,25 @@ export function setUserExp(amount) {
   store.dispatch(action)
 }
 
-export function setIsAdmin(isAdmin) {
+export function setShowCleanupBtn(show) {
   const action = {
-    type: "SET_IS_ADMIN",
-	  isAdmin
+    type: "SET_SHOW_CLEANUP_BTN",
+    show
+  }
+  store.dispatch(action)
+}
+
+export function setShowBanBtn(show) {
+  const action = {
+    type: "SET_SHOW_BAN_BTN",
+    show
+  }
+  store.dispatch(action)
+}
+
+export function toggleAdminBrushMode() {
+  const action = {
+    type: "TOGGLE_ADMIN_BRUSH_MODE"
   }
   store.dispatch(action)
 }

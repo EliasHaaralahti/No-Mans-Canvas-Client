@@ -4,6 +4,8 @@ import { colorPickerVisible, setCreditsMenuVisibility,
   setActiveColor, setAdminmenuVisible } from '../../AppActions';
 import ColorSelector from './Components/ColorSelectorComponent/ColorSelector';
 import { getColor } from '../../App';
+import BrushButton from './Components/BrushButtonComponent/BrushButton';
+
 
 class BottomBar extends React.Component {
   constructor(props) {
@@ -13,7 +15,9 @@ class BottomBar extends React.Component {
   }
 
   onColorSelected(color) {
-    setActiveColor(color);
+    console.log("color selected: " + color);
+    //FIXME: Wonder why color comes in as a string here?
+    setActiveColor(parseInt(color, 10));
   }
 
   onOpenPicker(e) {
@@ -31,6 +35,7 @@ class BottomBar extends React.Component {
       colors.push(<ColorSelector colorID={this.props.colors[i].ID} rgb={getColor(this.props.colors[i].ID)} key={i}
         group="colorSelect" onSelectionChanged={this.onColorSelected}
         checked={checked} />)
+        //checked={this.props.activeColor === this.props.colors[i].ID} />)
     }
 
     var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 + "%";
@@ -40,6 +45,7 @@ class BottomBar extends React.Component {
         <style>
           @import url('https://fonts.googleapis.com/css?family=Open+Sans');
         </style>
+        <BrushButton visible={this.props.showCleanupBtn} modeEnabled={this.props.adminBrushEnabled}/>
         <button type="button" onClick={this.onOpenPicker} className="setNickButton">
           Set Nickname
         </button>
@@ -70,7 +76,7 @@ class BottomBar extends React.Component {
               About
           </button>
 
-          { this.props.isAdmin && // Conditionally render only if admin.
+          { this.props.showBanBtn && // Conditionally render only if admin.
             <button
               onClick={() => setAdminmenuVisible(!this.props.adminMenuVisible)} 
               className={'adminButton'}>

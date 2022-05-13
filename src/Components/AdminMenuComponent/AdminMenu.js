@@ -2,11 +2,11 @@ import './AdminMenu.css';
 import { setAdminmenuVisible } from '../../AppActions';
 import BanButton from './Components/BanButtonComponent/BanButton';
 
-const AdminMenu = ({ visible, isAdmin, banModeEnabled }) => {
-  if (!visible || !isAdmin) return null;
+const AdminMenu = ({ visible, showBanBtn, banModeEnabled }) => {
+  if (!visible || !showBanBtn) return null;
   return (
     <div className={`adminBox`}>
-      <BanButton visible={isAdmin} modeEnabled={banModeEnabled}/>
+      <BanButton visible={showBanBtn} modeEnabled={banModeEnabled}/>
 
       <button onClick={() => setAdminmenuVisible(!visible)} className={'OkButton'} >
         OK
