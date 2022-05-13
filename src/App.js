@@ -203,17 +203,21 @@ let App = props => {
         userLevel={props.userLevel}
         creditsVisible={props.showCreditsMenu}
         adminMenuVisible={props.showAdminMenu}
-        showCleanupBtn={props.showCleanupBtn}
         showBanBtn={props.showBanBtn}
         banModeEnabled={props.banModeEnabled}
-        adminBrushEnabled={props.adminBrushEnabled}
       />
       <NicknameMenu visible={props.visible} />
       <LoadingScreen visible={props.loadingVisible} />
       <MessageBox visible={props.showMessageBox} message={props.messageBoxText} />
       <CreditsMenu visible={props.showCreditsMenu} />
       <KickDialog visible={props.showKickDialog} message={props.kickDialogText} btn_text={props.kickDialogButtonText}/>
-      <AdminMenu visible={props.showAdminMenu} showBanBtn={props.showBanBtn} banModeEnabled={props.banModeEnabled}/>
+      <AdminMenu 
+        visible={props.showAdminMenu} 
+        showBanBtn={props.showBanBtn} 
+        banModeEnabled={props.banModeEnabled}
+        showCleanupBtn={props.showCleanupBtn}
+        adminBrushEnabled={props.adminBrushEnabled}
+      />
     </div>
   )
 }

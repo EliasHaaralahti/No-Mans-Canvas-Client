@@ -45,7 +45,6 @@ class BottomBar extends React.Component {
         <style>
           @import url('https://fonts.googleapis.com/css?family=Open+Sans');
         </style>
-        <BrushButton visible={this.props.showCleanupBtn} modeEnabled={this.props.adminBrushEnabled}/>
         <button type="button" onClick={this.onOpenPicker} className="setNickButton">
           Set Nickname
         </button>

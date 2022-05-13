@@ -10,7 +10,7 @@ const BrushButton = ({ visible, modeEnabled }) => {
         className={modeEnabled 
           ? 'banButton-enabled' : 'banButton-disabled'}
     >
-      {modeEnabled ? 'Armed' : 'Ban'}
+      {modeEnabled ? 'Enabled' : 'Cleanup'}
     </button>
   )
 }
