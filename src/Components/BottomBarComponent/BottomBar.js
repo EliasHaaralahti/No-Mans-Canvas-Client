@@ -2,7 +2,7 @@ import React from 'react';
 import './BottomBar.css';
 import { colorPickerVisible, setCreditsMenuVisibility, 
   setActiveColor, setAdminmenuVisible } from '../../AppActions';
-import SelectableColor from './Components/SelectableColor/SelectableColor';
+import ColorSelector from './Components/ColorSelector/ColorSelector';
 import { getColor } from '../../App';
 
 class BottomBar extends React.Component {
@@ -28,7 +28,7 @@ class BottomBar extends React.Component {
     var colors = [];
     for (var i = 0; i < this.props.colors.length; ++i) {
       var checked = parseInt(this.props.activeColor, 10) === parseInt(this.props.colors[i].ID, 10)
-      colors.push(<SelectableColor colorID={this.props.colors[i].ID} rgb={getColor(this.props.colors[i].ID)} key={i}
+      colors.push(<ColorSelector colorID={this.props.colors[i].ID} rgb={getColor(this.props.colors[i].ID)} key={i}
         group="colorSelect" onSelectionChanged={this.onColorSelected}
         checked={checked} />)
     }

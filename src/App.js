@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import './App.css';
 import AppReducer from './AppReducer';
 import * as actions from './AppActions';
-import Canvas from './Components/Canvas/Canvas';
-import BottomBar from './Components/BottomBar/BottomBar';
-import NicknameMenu from './Components/NicknameMenu/NicknameMenu';
-import MessageBox from './Components/MessageBox/MessageBox';
-import KickDialog from './Components/KickDialog/KickDialog';
-import LoadingScreen from './Components/LoadingScreen/LoadingScreen';
-import CreditsMenu from './Components/CreditsMenu/CreditsMenu';
-import AdminMenu from './Components/AdminMenu/AdminMenu'
+import Canvas from './Components/CanvasComponent/Canvas';
+import BottomBar from './Components/BottomBarComponent/BottomBar';
+import NicknameMenu from './Components/NicknameMenuComponent/NicknameMenu';
+import MessageBox from './Components/MessageBoxComponent/MessageBox';
+import KickDialog from './Components/KickDialogComponent/KickDialog';
+import LoadingScreen from './Components/LoadingScreenComponent/LoadingScreen';
+import CreditsMenu from './Components/CreditsMenuComponent/CreditsMenu';
+import AdminMenu from './Components/AdminMenuComponent/AdminMenu'
 
 export const store = createStore(AppReducer);
 
