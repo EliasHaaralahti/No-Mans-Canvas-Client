@@ -3,7 +3,7 @@ import './Canvas.css';
 import { setPixel, setDrawCanvas, setPixelInCanvas, addUserExp, substractUserTiles } from '../../AppActions';
 import { sendTile, getColor, sendBan } from '../../App';
 import { createCSSTransformBuilder } from "easy-css-transform-builder";
-import PixelInfo from './Components/PixelInfo';
+import PixelInfo from './Components/PixelInfoComponent/PixelInfo';
 import { isMouseInsideCanvas } from './canvasUtils'
 
 const builder = createCSSTransformBuilder();

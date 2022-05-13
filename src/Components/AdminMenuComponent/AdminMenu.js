@@ -1,6 +1,6 @@
 import './AdminMenu.css';
 import { setAdminmenuVisible } from '../../AppActions';
-import BanButton from './Components/BanButton/BanButton';
+import BanButton from './Components/BanButtonComponent/BanButton';
 
 const AdminMenu = ({ visible, isAdmin, banModeEnabled }) => {
   if (!visible || !isAdmin) return null;

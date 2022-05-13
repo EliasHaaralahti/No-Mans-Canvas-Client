@@ -2,7 +2,7 @@ import React from 'react';
 import './BottomBar.css';
 import { colorPickerVisible, setCreditsMenuVisibility, 
   setActiveColor, setAdminmenuVisible } from '../../AppActions';
-import ColorSelector from './Components/ColorSelector/ColorSelector';
+import ColorSelector from './Components/ColorSelectorComponent/ColorSelector';
 import { getColor } from '../../App';
 
 class BottomBar extends React.Component {
