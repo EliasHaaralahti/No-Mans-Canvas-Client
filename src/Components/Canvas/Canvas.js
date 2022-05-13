@@ -1,14 +1,15 @@
 import React from 'react';
 import './Canvas.css';
-import { setPixel, setDrawCanvas, setPixelInCanvas, addUserExp, substractUserTiles } from './AppActions';
-import { sendTile, getColor, sendBan } from './App';
+import { setPixel, setDrawCanvas, setPixelInCanvas, addUserExp, substractUserTiles } from '../../AppActions';
+import { sendTile, getColor, sendBan } from '../../App';
 import { createCSSTransformBuilder } from "easy-css-transform-builder";
-import PixelInfo from './PixelInfo';
-import { isMouseInsideCanvas } from './utils';
+import PixelInfo from './Components/PixelInfo';
+import { isMouseInsideCanvas } from './canvasUtils'
 
 const builder = createCSSTransformBuilder();
 
 const dragThreshold = 15;
+const pixelInfoTresholdInMs = 2000;
 
 class Canvas extends React.Component {
   constructor(props) {
@@ -33,7 +34,6 @@ class Canvas extends React.Component {
         dimY: -1, // Y coordinate of pixel hovered. Dim for dimmed.
         dimmedColor: 0,
         timer: null,
-        pixelInfoTresholdInMs: 2000,
         pixelInfoVisible: false
     }
 
@@ -199,7 +199,7 @@ class Canvas extends React.Component {
       // for long enough to display info about pixel.
       clearInterval(this.state.timer) // TODO: This may not be needed since we overrite the variable?
       if (this.state.pixelInfoVisible) { this.setState({ pixelInfoVisible: false }); }
-      this.state.timer = setTimeout(() => this.showPixelInfo(e), this.state.pixelInfoTresholdInMs);
+      this.state.timer = setTimeout(() => this.showPixelInfo(e), pixelInfoTresholdInMs);
     }
 
     this.setState({

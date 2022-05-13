@@ -1,7 +1,7 @@
 import React from 'react';
 import './KickDialog.css';
-import { setKickDialogVisibility } from './AppActions';
-import { resumeConnection } from './App';
+import { setKickDialogVisibility } from '../../AppActions';
+import { resumeConnection } from '../../App';
 
 class KickDialog extends React.Component {
   constructor(props) {

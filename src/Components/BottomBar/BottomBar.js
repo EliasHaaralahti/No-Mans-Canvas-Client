@@ -1,8 +1,9 @@
 import React from 'react';
 import './BottomBar.css';
-import { colorPickerVisible, setCreditsMenuVisibility, setActiveColor, setAdminmenuVisible } from './AppActions';
-import SelectableColor from './SelectableColor';
-import { getColor } from './App';
+import { colorPickerVisible, setCreditsMenuVisibility, 
+  setActiveColor, setAdminmenuVisible } from '../../AppActions';
+import SelectableColor from './Components/SelectableColor/SelectableColor';
+import { getColor } from '../../App';
 
 class BottomBar extends React.Component {
   constructor(props) {

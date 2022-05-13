@@ -1,6 +1,6 @@
 import React from 'react';
 import './BanButton.css';
-import { toggleBanMode } from './AppActions';
+import { toggleBanMode } from '../../../../AppActions';
 
 class BanButton extends React.Component {
   constructor(props) {

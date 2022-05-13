@@ -1,6 +1,6 @@
 import React from 'react';
 import './CreditsMenu.css';
-import { setCreditsMenuVisibility } from './AppActions';
+import { setCreditsMenuVisibility } from '../../AppActions';
 
 // TODO: Use const instead of component
 class CreditsMenu extends React.Component {

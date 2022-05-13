@@ -1,7 +1,7 @@
 import React from 'react';
 import './NicknameMenu.css';
-import { sendNick } from './App';
-import { colorPickerVisible } from './AppActions';
+import { sendNick } from '../../App';
+import { colorPickerVisible } from '../../AppActions';
 
 class NicknameMenu extends React.Component {
   constructor(props) {
