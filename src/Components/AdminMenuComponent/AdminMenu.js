@@ -1,14 +1,26 @@
 import './AdminMenu.css';
-import { setAdminmenuVisible } from '../../AppActions';
-import BanButton from './Components/BanButtonComponent/BanButton';
-import BrushButton from './Components/BrushButtonComponent/BrushButton';
+import { setAdminmenuVisible, toggleBanMode, toggleAdminBrushMode } from '../../AppActions';
+import ToggleButton from './Components/ToggleButtonComponent/ToggleButton';
 
 const AdminMenu = ({ visible, showBanBtn, banModeEnabled, showCleanupBtn, adminBrushEnabled }) => {  
   if (!visible || !showBanBtn) return null;
   return (
     <div className={`adminBox`}>
-      <BanButton visible={showBanBtn} modeEnabled={banModeEnabled}/>
-      <BrushButton visible={showCleanupBtn} modeEnabled={adminBrushEnabled}/>
+      <ToggleButton 
+        visible={showBanBtn} 
+        enabled={banModeEnabled}
+        action={toggleBanMode}
+        neutralText='Ban'
+        activatedText='Ban Armed'
+      />
+
+      <ToggleButton 
+        visible={showCleanupBtn}
+        enabled={adminBrushEnabled}
+        action={toggleAdminBrushMode}
+        neutralText='Cleanup'
+        activatedText='Cleanup Enabled'
+      />
 
       <button onClick={() => setAdminmenuVisible(!visible)} className={'OkButton'} >
         OK

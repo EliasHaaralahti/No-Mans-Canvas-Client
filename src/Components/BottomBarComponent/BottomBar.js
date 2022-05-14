@@ -4,7 +4,6 @@ import { colorPickerVisible, setCreditsMenuVisibility,
   setActiveColor, setAdminmenuVisible } from '../../AppActions';
 import ColorSelector from './Components/ColorSelectorComponent/ColorSelector';
 import { getColor } from '../../App';
-import BrushButton from '../AdminMenuComponent/Components/BrushButtonComponent/BrushButton';
 
 
 class BottomBar extends React.Component {
