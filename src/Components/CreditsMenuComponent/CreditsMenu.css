@@ -10,10 +10,10 @@ scale div according to text length*/
 .creditsBox {
   border: 2px solid black;
   border-radius: 4px;
-  background: var(--main-bg-color);
+  background: lightgrey;
+  color: black;
   width: 200px;
   text-align: center;
-  color: var(--main-text-color);
   padding: 15px;
 
   display: flex;
@@ -25,21 +25,22 @@ scale div according to text length*/
 .creditsBox p {
   margin: 0;
   margin-bottom: 15px;
+  color: black;
 }
 
 .creatorList {
   margin-top: 2vh;
   margin-bottom: 2vh;
   padding: 0;
-  color: var(--main-text-color);
+  color: black;
 }
 
 a:link {
-  color: var(--main-text-color);
+  color: black;
 }
 
 a:visited {
-  color: var(--main-text-color);
+  color: black;
 }
 
 .creatorList li {
@@ -48,6 +49,6 @@ a:visited {
 }
 
 .OkButton {
-  color: var(--light-text-color);
-  background-color: var(--light-bg-color)
+  color: black;
+  background-color: red;
 }

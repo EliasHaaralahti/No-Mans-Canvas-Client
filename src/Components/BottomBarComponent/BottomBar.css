@@ -39,17 +39,6 @@
   margin: 4px 7px;
 }
 
-.setNickButton {
-  display: inline-block;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  background-color: var(--light-bg-color);
-  color: var(--dark-text-color);
-  border-color: var(--dark-text-color);
-  height: 30px;
-}
-
 .colorArea {
   border: 1px solid black;
   border-radius: 5px;
@@ -66,6 +55,8 @@
   flex: 1 1 300px;
   padding: 0;
   height: 30px;
+  background-color: white;
+  color: black;
   border: 1px solid black;
   border-radius: 5px;
   border-color: var(--dark-text-color);
@@ -88,11 +79,12 @@
   margin: 0 0 0 3px;
   margin-left: 10px;
   margin-top: 5px;
+  color: black;
 }
 
 .statsArea span {
   margin-right: 15px;
-  color: var(--main-text-color);
+  color: white;
 }
 
 .creatorArea {
@@ -101,23 +93,36 @@
   color: var(--main-text-color);
 }
 
-.creditsButton {
-  height: 25px;
-  width: 5vw;
+.setNickButton {
+  display: inline-block;
   text-align: center;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 2px solid white;
+  font-size: 14px;
+  font-weight: bold;
+  height: 25px;
+  cursor: pointer;
   background-color: white;
+  color: black;
+  border-color: black;
+}
+
+.creditsButton {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  height: 25px;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border-color: black;
 }
 
 .adminButton {
-  margin-left: 5px;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
   height: 25px;
-  width: 5vw;
-  text-align: center;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 2px solid white;
+  cursor: pointer;
   background-color: white;
+  color: black;
+  border-color: black;
 }

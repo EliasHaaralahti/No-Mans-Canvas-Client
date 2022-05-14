@@ -6,10 +6,9 @@ const ToggleButton = ({ visible, enabled, action, neutralText, activatedText }) 
   return (
     <button 
         onClick={action}
-        className={enabled 
-          ? 'button-enabled' : 'button-disabled'}
+        className={`button-base ${enabled ? "button-enabled": "button-disabled"}`}
     >
-      {modeEnabled ? activatedText : neutralText}
+      {enabled ? activatedText : neutralText}
     </button>
   )
 }

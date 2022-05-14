@@ -11,18 +11,13 @@ scale div according to text length*/
   position: fixed;
   left: 0;
   top: 0;
-
   width: 10vw;
-  height: 30vh;
-
+  /* height: 30vh; */
   border: 2px solid black;
   border-radius: 4px;
-  background-color: var(--main-bg-color);
-  width: 200px;
+  background-color: darkgrey;
   text-align: center;
   color: var(--main-text-color);
-  padding: 15px;
-
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-around;
@@ -34,7 +29,12 @@ scale div according to text length*/
   margin-bottom: 15px;
 }
 
+.adminBox button {
+  margin: 10px;
+}
+
 .OkButton {
-  color: var(--light-text-color);
-  background-color: var(--light-bg-color)
+  margin-top: 5px;
+  color: black;
+  background-color: white;
 }

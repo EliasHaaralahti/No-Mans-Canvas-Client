@@ -1,5 +1,6 @@
 .menu {
-  background-color: #889292;
+  background-color: white;
+  color: black;
   height: 150px;
   width: 300px;
   text-align: center;
@@ -14,12 +15,19 @@
 
 input[type="text"]{
   width: 250px;
+  border: 1px solid black;
 }
 
 .buttons {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;
+}
+
+button {
+  font-size: 12px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
 }
 
 .sample{
