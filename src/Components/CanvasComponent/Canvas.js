@@ -1,7 +1,7 @@
 import React from 'react';
 import './Canvas.css';
 import { setPixel, setDrawCanvas, addUserExp, substractUserTiles } from '../../AppActions';
-import { sendTile, getColor, sendBan, sendBrushClick } from '../../App';
+import { sendTile, sendBan, sendBrushClick, getColor } from '../../App';
 import { createCSSTransformBuilder } from "easy-css-transform-builder";
 import PixelInfo from './Components/PixelInfoComponent/PixelInfo';
 import { isMouseInsideCanvas } from './canvasUtils'
