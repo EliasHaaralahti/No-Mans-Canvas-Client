@@ -12,7 +12,7 @@ import KickDialog from './Components/KickDialogComponent/KickDialog';
 import LoadingScreen from './Components/LoadingScreenComponent/LoadingScreen';
 import CreditsMenu from './Components/CreditsMenuComponent/CreditsMenu';
 import AdminMenu from './Components/AdminMenuComponent/AdminMenu'
-import { rgbToHex, hexToRgb } from './utils';
+import { rgbToHex } from './utils';
 
 export const store = createStore(AppReducer);
 
