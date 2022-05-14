@@ -39,6 +39,7 @@ class BottomBar extends React.Component {
 
     var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 + "%";
     var tilesLeftBarLength = (this.props.remainingTiles / this.props.userTiles) * 100 + "%";
+    if (!this.props.visible) return null;
     return (
       <div className="bottomBar">
         <style>

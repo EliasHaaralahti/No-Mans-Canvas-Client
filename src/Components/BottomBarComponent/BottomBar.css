@@ -6,6 +6,11 @@
 	--light-bg-color: #46484f;
 }
 
+@keyframes bottomBarAnimation {
+  from {bottom: -100px;}
+  to {bottom: 0px;}
+}
+
 .bottomBar {
   background-color: var(--main-bg-color);
   border-top: 2px solid black;
@@ -25,6 +30,9 @@
   font-size: 14px;
   font-family: 'Open Sans', sans-serif;
   font-weight: bold;
+
+  animation-name: bottomBarAnimation;
+  animation-duration: 2s;
 }
 
 .bottomBar > * {

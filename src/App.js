@@ -195,7 +195,10 @@ let App = props => {
 		banModeEnabled={props.banModeEnabled}
 		adminBrushEnabled={props.adminBrushEnabled} />
 
-      <BottomBar expCollected={props.userExp} expToNext={props.userExpLimit}
+      <BottomBar 
+        visible={props.showBottomBar}
+        expCollected={props.userExp} 
+        expToNext={props.userExpLimit}
         colors={props.userColors} activeColor={props.activeColor}
         remainingTiles={props.remainingTiles}
         connectedUsers={props.connectedUsers}
@@ -249,7 +252,8 @@ App = connect(state => ({
   showCleanupBtn: state.get('showCleanupBtn'),
   showBanBtn: state.get('showBanBtn'),
   banModeEnabled: state.get('banModeEnabled'),
-  adminBrushEnabled: state.get('adminBrushEnabled')
+  adminBrushEnabled: state.get('adminBrushEnabled'),
+  showBottomBar: state.get('showBottomBar'),
 }),
   {},
 )(App);

@@ -31,7 +31,8 @@ export const initialState = fromJS({
   showCleanupBtn: false,
   showBanBtn: false,
   banModeEnabled: false,
-  adminBrushEnabled: false
+  adminBrushEnabled: false,
+  showBottomBar: false,
 })
 
 export default(state = initialState, action) => {
@@ -41,6 +42,9 @@ export default(state = initialState, action) => {
     }
     case 'SET_COLOR_PICKER_VISIBLE': {
       return state.set('showColorPicker', action.visible)
+    }
+    case 'SET_BOTTOM_BAR_VISIBLE': {
+      return state.set('showBottomBar', action.visible)
     }
     case 'SET_MESSAGE_BOX_VISIBLE': {
       return state.set('showMessageBox', action.visible)
@@ -78,7 +82,7 @@ export default(state = initialState, action) => {
       return state.set('canvas', canvas);
     }
     case 'DRAW_CANVAS': {
-      return state.set('canvas', action.pixels).set('canvasDraw', true)
+      return state.set('canvas', action.pixels).set('canvasDraw', true).set('showBottomBar', true)
     }
     case 'SET_DRAW_CANVAS': {
       return state.set('canvasDraw', action.bool)
