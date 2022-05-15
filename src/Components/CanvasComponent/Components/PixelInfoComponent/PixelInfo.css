@@ -1,0 +1,9 @@
+.pixelInfo {
+  position: absolute;
+  background-color: lightgrey;
+  border-color: black;
+  inline-size: max-content;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+}

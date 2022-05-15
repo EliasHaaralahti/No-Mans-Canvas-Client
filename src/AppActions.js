@@ -25,6 +25,22 @@ export function setMessageBoxVisibility(visible) {
   store.dispatch(action)
 }
 
+export function setCreditsMenuVisibility(visible) {
+  const action = {
+    type: "SET_CREDITS_VISIBLE",
+    visible
+  }
+  store.dispatch(action)
+}
+
+export function setAdminmenuVisible(visible) {
+  const action = {
+    type: "SET_ADMIN_VISIBLE",
+    visible
+  }
+  store.dispatch(action)
+}
+
 export function setMessageBoxText(message) {
   const action = {
     type: "SET_MESSAGE_BOX_TEXT",
@@ -147,10 +163,12 @@ export function setNickName(nick) {
   store.dispatch(action)
 }
 
-export function setActiveColor(color) {
+// addToIndex is optional parameter that allows sum/reduce operations.
+export function setActiveColor(color, addToIndex=0) {
   const action = {
     type: "SET_ACTIVE_COLOR",
-    color
+    color,
+    addToIndex
   }
   store.dispatch(action)
 }

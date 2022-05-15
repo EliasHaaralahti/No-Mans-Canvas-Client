@@ -1,16 +1,13 @@
 import React from 'react';
+import './BottomBar.css';
+import { colorPickerVisible, setCreditsMenuVisibility, 
+  setActiveColor, setAdminmenuVisible } from '../../AppActions';
+import ColorSelector from './Components/ColorSelectorComponent/ColorSelector';
+import { getColor } from '../../App';
 
-import './ColorMenu.css';
-import { colorPickerVisible } from './AppActions';
-import { setActiveColor } from './AppActions';
-import SelectableColor from './SelectableColor';
-import { getColor } from './App';
-import BanButton from './BanButton';
-import BrushButton from './BrushButton';
 
-class ColorMenu extends React.Component {
+class BottomBar extends React.Component {
   constructor(props) {
-    // TODO: Give available colors as props
     super(props);
     this.onColorSelected = this.onColorSelected.bind(this);
     this.onOpenPicker = this.onOpenPicker.bind(this);
@@ -27,26 +24,27 @@ class ColorMenu extends React.Component {
   }
 
   onBanClicked(e) {
-	console.log(e);
+	  console.log(e);
   }
 
   render() {
     var colors = [];
     for (var i = 0; i < this.props.colors.length; ++i) {
-      colors.push(<SelectableColor colorID={this.props.colors[i].ID} rgb={getColor(this.props.colors[i].ID)} key={i}
+      var checked = parseInt(this.props.activeColor, 10) === parseInt(this.props.colors[i].ID, 10)
+      colors.push(<ColorSelector colorID={this.props.colors[i].ID} rgb={getColor(this.props.colors[i].ID)} key={i}
         group="colorSelect" onSelectionChanged={this.onColorSelected}
-        checked={this.props.activeColor === this.props.colors[i].ID} />)
+        checked={checked} />)
+        //checked={this.props.activeColor === this.props.colors[i].ID} />)
     }
 
     var progressBarLength = (this.props.expCollected / this.props.expToNext) * 100 + "%";
     var tilesLeftBarLength = (this.props.remainingTiles / this.props.userTiles) * 100 + "%";
+    if (!this.props.visible) return null;
     return (
-      <div className="colorMenu">
+      <div className="bottomBar">
         <style>
           @import url('https://fonts.googleapis.com/css?family=Open+Sans');
         </style>
-        <BanButton visible={this.props.showBanBtn} modeEnabled={this.props.banModeEnabled}/>
-        <BrushButton visible={this.props.showCleanupBtn} modeEnabled={this.props.adminBrushEnabled}/>
         <button type="button" onClick={this.onOpenPicker} className="setNickButton">
           Set Nickname
         </button>
@@ -70,17 +68,25 @@ class ColorMenu extends React.Component {
           <span>Connected users: {this.props.connectedUsers}</span>
         </div>
         <div className="creatorArea">
-          <span>By NAND-Gurut:</span>
-          <ul className="creatorList">
-            <li><a href="https://twitter.com/vkoskiv">vkoskiv</a></li>
-            <li><a href="https://twitter.com/moletrooper">moletrooper</a></li>
-            <li><a href="https://github.com/EliasHaaralahti">Elias</a></li>
-            <li><a href="https://github.com/JonniP">Jonni</a></li>
-          </ul>
+		  
+          <button 
+            onClick={() => setCreditsMenuVisibility(!this.props.creditsVisible)} 
+            className={'creditsButton'}>
+              About
+          </button>
+
+          { this.props.showBanBtn && // Conditionally render only if admin.
+            <button
+              onClick={() => setAdminmenuVisible(!this.props.adminMenuVisible)} 
+              className={'adminButton'}>
+                Admin
+            </button> 
+          }
+          
         </div>
       </div>
     )
   }
 }
 
-export default ColorMenu;
+export default BottomBar;

@@ -4,15 +4,16 @@
 }
 
 .colorSelect label {
-  width: 1.2em;
-  height: 1.2em;
+  width: 1.5em;
+  height: 1.5em;
   border: 1px solid black;
-  border-radius: 2px;
+  border-radius: 5px;
   margin: 3px;
 }
 
 .colorSelect input[type=checkbox]:checked + label {
   border-width: 3px;
+  border-color: black;
 }
 
 .colorSelect label:hover {

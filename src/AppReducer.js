@@ -1,4 +1,5 @@
 import { fromJS } from 'immutable'
+import { colorIdToIndex } from './utils'
 
 // TODO: Cleaning up: use dictionaries like user { ID, exp}
 export const initialState = fromJS({
@@ -14,7 +15,7 @@ export const initialState = fromJS({
   colors: [],
   canvas: [],
   updatePixel: null,
-  activeColor: 6,
+  activeColor: 0,
   showColorPicker: false,
   canvasDraw: false,
   showLoadingScreen: true,
@@ -22,13 +23,16 @@ export const initialState = fromJS({
   level: 1,
   showMessageBox: false,
   messageBoxText: "",
+  showCreditsMenu: false,
+  showAdminMenu: false,
   showKickDialog: false,
   kickDialogText: "",
   kickDialogButtonText: "Ok",
   showCleanupBtn: false,
   showBanBtn: false,
   banModeEnabled: false,
-  adminBrushEnabled: false
+  adminBrushEnabled: false,
+  showBottomBar: false,
 })
 
 export default(state = initialState, action) => {
@@ -39,8 +43,17 @@ export default(state = initialState, action) => {
     case 'SET_COLOR_PICKER_VISIBLE': {
       return state.set('showColorPicker', action.visible)
     }
+    case 'SET_BOTTOM_BAR_VISIBLE': {
+      return state.set('showBottomBar', action.visible)
+    }
     case 'SET_MESSAGE_BOX_VISIBLE': {
       return state.set('showMessageBox', action.visible)
+    }
+    case 'SET_CREDITS_VISIBLE': {
+      return state.set('showCreditsMenu', action.visible)
+    }
+    case 'SET_ADMIN_VISIBLE': {
+      return state.set('showAdminMenu', action.visible)
     }
     case 'SET_MESSAGE_BOX_TEXT': {
       return state.set('messageBoxText', action.message)
@@ -69,7 +82,7 @@ export default(state = initialState, action) => {
       return state.set('canvas', canvas);
     }
     case 'DRAW_CANVAS': {
-      return state.set('canvas', action.pixels).set('canvasDraw', true)
+      return state.set('canvas', action.pixels).set('canvasDraw', true).set('showBottomBar', true)
     }
     case 'SET_DRAW_CANVAS': {
       return state.set('canvasDraw', action.bool)
@@ -78,7 +91,15 @@ export default(state = initialState, action) => {
       return state.set('colors', action.colors)
     }
     case 'SET_ACTIVE_COLOR': {
-      return state.set('activeColor', action.color)
+      var colors = state.get('colors')
+      var index = colorIdToIndex(colors, action.color)
+      var final_index = parseInt(index) + parseInt(action.addToIndex)
+
+      if (final_index < 0) { final_index = 0 }
+      else if (final_index > colors.length - 1) { 
+        final_index = colors.length - 1
+      }
+      return state.set('activeColor', colors[final_index].ID)
     }
     case 'SET_USER_EXP': {
       return state.set('userExp', action.amount);

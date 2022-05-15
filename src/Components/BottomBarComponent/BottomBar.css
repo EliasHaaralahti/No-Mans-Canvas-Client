@@ -1,0 +1,128 @@
+:root {
+	--main-text-color: #a8a8a8;
+	--dark-text-color: #696969;
+  --light-text-color: #ffffff;
+	--main-bg-color: #202124;
+	--light-bg-color: #46484f;
+}
+
+@keyframes bottomBarAnimation {
+  from {bottom: -100px;}
+  to {bottom: 0px;}
+}
+
+.bottomBar {
+  background-color: var(--main-bg-color);
+  border-top: 2px solid black;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 5px;
+
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+
+  text-align: left;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+
+  animation-name: bottomBarAnimation;
+  animation-duration: 2s;
+}
+
+.bottomBar > * {
+  margin: 4px 7px;
+}
+
+.colorArea {
+  border: 1px solid black;
+  border-radius: 5px;
+  background: var(--light-bg-color);
+
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  padding: 0 3px;
+}
+
+.progressContainer {
+  position: relative;
+  flex: 1 1 300px;
+  padding: 0;
+  height: 30px;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  border-color: var(--dark-text-color);
+}
+
+.progressBar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  /* width from JS */
+  background-color: #5afa77;
+  border-radius: 5px;
+}
+
+.progressInfo {
+  z-index: 3;
+  color: var(--dark-text-color);
+  position: absolute;
+  margin: 0 0 0 3px;
+  margin-left: 10px;
+  margin-top: 5px;
+  color: black;
+}
+
+.statsArea span {
+  margin-right: 15px;
+  color: white;
+}
+
+.creatorArea {
+  display: flex;
+  flex-flow: row nowrap;
+  color: var(--main-text-color);
+}
+
+.setNickButton {
+  display: inline-block;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  height: 25px;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border-color: black;
+}
+
+.creditsButton {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  height: 25px;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border-color: black;
+}
+
+.adminButton {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  height: 25px;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border-color: black;
+}

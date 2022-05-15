@@ -1,16 +1,18 @@
 import React from 'react';
 import { createStore } from 'redux'
 import { connect } from 'react-redux';
-
 import './App.css';
 import AppReducer from './AppReducer';
 import * as actions from './AppActions';
-import Canvas from './Canvas';
-import ColorMenu from './ColorMenu';
-import ColorMakerMenu from './ColorMakerMenu';
-import MessageBox from './MessageBox';
-import KickDialog from './KickDialog';
-import LoadingScreen from './LoadingScreen';
+import Canvas from './Components/CanvasComponent/Canvas';
+import BottomBar from './Components/BottomBarComponent/BottomBar';
+import NicknameMenu from './Components/NicknameMenuComponent/NicknameMenu';
+import MessageBox from './Components/MessageBoxComponent/MessageBox';
+import KickDialog from './Components/KickDialogComponent/KickDialog';
+import LoadingScreen from './Components/LoadingScreenComponent/LoadingScreen';
+import CreditsMenu from './Components/CreditsMenuComponent/CreditsMenu';
+import AdminMenu from './Components/AdminMenuComponent/AdminMenu'
+import { rgbToHex } from './utils';
 
 export const store = createStore(AppReducer);
 
@@ -135,6 +137,18 @@ var text_handler = function (e) {
   return false;
 }
 
+function keyboard_input_handler(key, props) {
+  switch (key) {
+    case "ArrowLeft":
+      actions.setActiveColor(props.activeColor, -1)
+      break
+
+    case "ArrowRight":    
+      actions.setActiveColor(props.activeColor, 1)
+      break
+  }
+}
+
 
 function set_up_socket() {
 	var ws = new WebSocket(url);
@@ -171,11 +185,8 @@ function set_up_socket() {
 set_up_socket();
 
 let App = props => {
-  // TODO: Show messageBox telling user about levelUp and what level
-  //<MessageBox visile={props.showLevelScreen}
-  //            message={"Level up! You are now level " + props.userLevel + "!"} />
   return (
-    <div>
+    <div tabIndex="0" onKeyDown={(e) => keyboard_input_handler(e.key, props)}>
       <Canvas pixelSize={5} rows={props.rows} columns={props.columns}
         updatePixel={props.updatePixel} activeColor={props.activeColor}
         canvas={props.canvas} canvasDraw={props.canvasDraw}
@@ -184,20 +195,32 @@ let App = props => {
 		banModeEnabled={props.banModeEnabled}
 		adminBrushEnabled={props.adminBrushEnabled} />
 
-      <ColorMenu expCollected={props.userExp} expToNext={props.userExpLimit}
+      <BottomBar 
+        visible={props.showBottomBar}
+        expCollected={props.userExp} 
+        expToNext={props.userExpLimit}
         colors={props.userColors} activeColor={props.activeColor}
         remainingTiles={props.remainingTiles}
         connectedUsers={props.connectedUsers}
         userTiles={props.userTiles}
         userLevel={props.userLevel}
-        showCleanupBtn={props.showCleanupBtn}
+        creditsVisible={props.showCreditsMenu}
+        adminMenuVisible={props.showAdminMenu}
         showBanBtn={props.showBanBtn}
         banModeEnabled={props.banModeEnabled}
-        adminBrushEnabled={props.adminBrushEnabled} />
-      <ColorMakerMenu visible={props.visible} />
+      />
+      <NicknameMenu visible={props.visible} />
       <LoadingScreen visible={props.loadingVisible} />
       <MessageBox visible={props.showMessageBox} message={props.messageBoxText} />
+      <CreditsMenu visible={props.showCreditsMenu} />
       <KickDialog visible={props.showKickDialog} message={props.kickDialogText} btn_text={props.kickDialogButtonText}/>
+      <AdminMenu 
+        visible={props.showAdminMenu} 
+        showBanBtn={props.showBanBtn} 
+        banModeEnabled={props.banModeEnabled}
+        showCleanupBtn={props.showCleanupBtn}
+        adminBrushEnabled={props.adminBrushEnabled}
+      />
     </div>
   )
 }
@@ -220,6 +243,8 @@ App = connect(state => ({
   userLevel: state.get('level'),
   showLevelScreen: state.get('showNewLevelScreen'),
   showMessageBox: state.get('showMessageBox'),
+  showCreditsMenu: state.get('showCreditsMenu'),
+  showAdminMenu: state.get('showAdminMenu'),
   messageBoxText: state.get('messageBoxText'),
   showKickDialog: state.get('showKickDialog'),
   kickDialogText: state.get('kickDialogText'),
@@ -227,7 +252,8 @@ App = connect(state => ({
   showCleanupBtn: state.get('showCleanupBtn'),
   showBanBtn: state.get('showBanBtn'),
   banModeEnabled: state.get('banModeEnabled'),
-  adminBrushEnabled: state.get('adminBrushEnabled')
+  adminBrushEnabled: state.get('adminBrushEnabled'),
+  showBottomBar: state.get('showBottomBar'),
 }),
   {},
 )(App);
@@ -282,19 +308,6 @@ export const getColor = (id) => {
     }
   }
   return "#000000";
-}
-
-export function rgbToHex(r, g, b) {
-  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-}
-
-export function hexToRgb(hex) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
-  } : null;
 }
 
 export default App
