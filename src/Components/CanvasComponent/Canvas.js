@@ -55,8 +55,8 @@ class Canvas extends React.Component {
     var mouseX = (e.pageX - this.canvas.offsetLeft - this.state.canvasX) / this.state.scale;
     var mouseY = (e.pageY - this.canvas.offsetTop - this.state.canvasY) / this.state.scale;
 
-    var pixelX = Math.floor(mouseX/this.props.pixelSize);
-    var pixelY = Math.floor(mouseY/this.props.pixelSize);
+    var pixelX = Math.floor(mouseX);
+    var pixelY = Math.floor(mouseY);
 
     //don't do anything if clicked outside of canvas
     if (pixelX < 0 || pixelY < 0 || pixelX > this.props.columns || pixelY > this.props.rows) return;
@@ -111,8 +111,7 @@ class Canvas extends React.Component {
      this.c.fillStyle = getColor(pixel.c)
      let x = Math.round(pixel.i % this.props.columns);
      let y = Math.floor(pixel.i / this.props.columns);
-     this.c.fillRect(x * this.props.pixelSize, y * this.props.pixelSize,
-     this.props.pixelSize, this.props.pixelSize);
+     this.c.fillRect(x, y, 1, 1);
      // Sets update pixel back to none
      setPixel(null)
     }
@@ -120,9 +119,9 @@ class Canvas extends React.Component {
 
   drawPixel(x, y, color) {
     this.c.fillStyle = color;
-    var pixelX = x * this.props.pixelSize;
-    var pixelY = y * this.props.pixelSize;
-    this.c.fillRect(pixelX, pixelY, this.props.pixelSize, this.props.pixelSize);
+    var pixelX = x;
+    var pixelY = y;
+    this.c.fillRect(pixelX, pixelY, 1, 1);
   }
 
   onMouseDown(e) {
@@ -177,8 +176,8 @@ class Canvas extends React.Component {
     else { //dim pixel under cursor
       var mouseX = (e.pageX - this.canvas.offsetLeft - this.state.canvasX) / this.state.scale;
       var mouseY = (e.pageY - this.canvas.offsetTop - this.state.canvasY) / this.state.scale;
-      var pixelX = Math.floor(mouseX/this.props.pixelSize);
-      var pixelY = Math.floor(mouseY/this.props.pixelSize);
+      var pixelX = Math.floor(mouseX);
+      var pixelY = Math.floor(mouseY);
 
       if (pixelX !== this.state.dimX || pixelY !== this.state.dimY) {
         var pixelIndex = pixelY * this.props.columns + pixelX;
@@ -186,8 +185,7 @@ class Canvas extends React.Component {
 
         this.c.fillStyle = getColor(this.props.activeColor);
         this.c.globalAlpha = 0.4;
-        this.c.fillRect(pixelX * this.props.pixelSize, pixelY * this.props.pixelSize,
-        this.props.pixelSize, this.props.pixelSize);
+        this.c.fillRect(pixelX, pixelY, 1, 1);
         this.c.globalAlpha = 1.0;
 
         //redraw the pixel that was previusly dimmed
@@ -239,7 +237,7 @@ class Canvas extends React.Component {
   onMouseWheel(e) {
     var delta = -e.deltaY / 40;
 
-    if ((delta > 0 && this.state.scale > 3.0) || (delta < 0 && this.state.scale < 0.25)) return;
+    if ((delta > 0 && this.state.scale > 20.0) || (delta < 0 && this.state.scale < 0.5)) return;
 
     var factor = Math.pow(1.1, delta);
 
@@ -258,8 +256,8 @@ class Canvas extends React.Component {
   }
 
   getCanvasSize() {
-    var width = this.props.columns * this.props.pixelSize
-    var height = this.props.rows * this.props.pixelSize
+    var width = this.props.columns
+    var height = this.props.rows
     return [width, height]
   }
 
@@ -302,10 +300,11 @@ class Canvas extends React.Component {
               mouseY={this.state.lastCalculatedMousePosY}
               pixelX={this.state.dimX}
               pixelY={this.state.dimY}
+			  canvasScale={this.state.scale}
              />
           }
 
-          <canvas id="canvas" ref={(c) => {
+          <canvas style={{imageRendering: 'pixelated'}} id="canvas" ref={(c) => {
                     if(c != null) {
                       this.c = c.getContext('2d', { alpha: false });
                       this.canvas = c;
