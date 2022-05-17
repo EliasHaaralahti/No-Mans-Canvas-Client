@@ -9,17 +9,22 @@ import { isMouseInsideCanvas } from './canvasUtils'
 const builder = createCSSTransformBuilder();
 
 const dragThreshold = 15;
+const zoomMass = 40; // Larger = slower
+const zoomFactor = 1.1;
+const minZoom = 20.0;
+const maxZoom = 0.5;
 const pixelInfoTresholdInMs = 2000;
 
 class Canvas extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-        lastMouseX: 0.0,
-        lastMouseY: 0.0,
-        // This is only updated for pixelInfo
+        // This is only updated when showing pixel info.
         lastCalculatedMousePosX: 0.0,
         lastCalculatedMousePosY: 0.0,
+        // This is used for dragging.
+        lastMouseX: 0.0,
+        lastMouseY: 0.0,
         draggedX: 0.0,
         draggedY: 0.0,
         dragOriginX: 0.0,
@@ -47,7 +52,6 @@ class Canvas extends React.Component {
     this.translate = this.translate.bind(this);
     this.scale = this.scale.bind(this);
     this.showPixelInfo = this.showPixelInfo.bind(this);
-    this.getCanvasSize = this.getCanvasSize.bind(this);
   }
 
   onClick(e) {
@@ -58,9 +62,8 @@ class Canvas extends React.Component {
     var pixelX = Math.floor(mouseX);
     var pixelY = Math.floor(mouseY);
 
-    //don't do anything if clicked outside of canvas
-    if (pixelX < 0 || pixelY < 0 || pixelX > this.props.columns || pixelY > this.props.rows) return;
-
+    if ( !isMouseInsideCanvas(pixelX, pixelY, this.props.columns, this.props.rows) ) return;
+    
     if (this.props.banModeEnabled) {
       console.log('Banning at ' + pixelX + ', ' + pixelY)
       sendBan(pixelX, pixelY)
@@ -85,22 +88,17 @@ class Canvas extends React.Component {
         }
         substractUserTiles(1);
       }
-	}
-
+	  }
   }
 
   componentDidUpdate() {
     if(this.props.canvasDraw) {
       console.log("Drawing " + this.props.rows + "x" + this.props.columns + " canvas");
 
-      // TODO: NOT OPTIMAL! RUSHED SOLUTION
-      // CAN I DO CONDITION: ROWS * COLUMNS IN ONE LOOP ??
       var counter = 0;
       for (var y = 0; y < this.props.rows; y++) {
         for(var x = 0; x < this.props.columns; x++) {
-		  //Note: We no longer use colorID since the API now returns just an array with the responseType
-		  //as the first element, and an array of colorIDs for the rest without any labels. Saves space.
-          this.drawPixel(x, y, getColor(this.props.canvas[counter++]));
+		      this.drawPixel(x, y, getColor(this.props.canvas[counter++]));
         }
       }
       setDrawCanvas(false);
@@ -119,14 +117,14 @@ class Canvas extends React.Component {
 
   drawPixel(x, y, color) {
     this.c.fillStyle = color;
-    var pixelX = x;
-    var pixelY = y;
-    this.c.fillRect(pixelX, pixelY, 1, 1);
+    this.c.fillRect(x, y, 1, 1);
   }
 
   onMouseDown(e) {
-    document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
-    this.setState({
+    document.body.style.mozUserSelect = document.body.style.webkitUserSelect 
+      = document.body.style.userSelect = 'none';
+    
+      this.setState({
       lastMouseX: e.screenX,
       lastMouseY: e.screenY,
       mouseIsDown: true,
@@ -173,7 +171,7 @@ class Canvas extends React.Component {
         });
       }
     }
-    else { //dim pixel under cursor
+    else { // mouse is not down, dim pixel under cursor
       var mouseX = (e.pageX - this.canvas.offsetLeft - this.state.canvasX) / this.state.scale;
       var mouseY = (e.pageY - this.canvas.offsetTop - this.state.canvasY) / this.state.scale;
       var pixelX = Math.floor(mouseX);
@@ -201,9 +199,10 @@ class Canvas extends React.Component {
           dimmedColor: color
         });
       }
+
       // Start timer to check if mouse has not moved 
       // for long enough to display info about pixel.
-      clearInterval(this.state.timer) // TODO: This may not be needed since we overrite the variable?
+      clearInterval(this.state.timer);
       if (this.state.pixelInfoVisible) { this.setState({ pixelInfoVisible: false }); }
       this.state.timer = setTimeout(() => this.showPixelInfo(e), pixelInfoTresholdInMs);
     }
@@ -235,11 +234,9 @@ class Canvas extends React.Component {
   }
 
   onMouseWheel(e) {
-    var delta = -e.deltaY / 40;
-
-    if ((delta > 0 && this.state.scale > 20.0) || (delta < 0 && this.state.scale < 0.5)) return;
-
-    var factor = Math.pow(1.1, delta);
+    const delta = -e.deltaY / zoomMass;
+    if ((delta > 0 && this.state.scale > minZoom) || (delta < 0 && this.state.scale < maxZoom)) return;
+    var factor = Math.pow(zoomFactor, delta);
 
     var mouseX = (e.pageX - this.canvas.offsetLeft - this.state.canvasX) / this.state.scale;
     var mouseY = (e.pageY - this.canvas.offsetTop - this.state.canvasY) / this.state.scale;
@@ -247,33 +244,24 @@ class Canvas extends React.Component {
   }
 
   translate(x, y) {
-    var newX = this.state.canvasX + x;
-    var newY = this.state.canvasY + y;
     this.setState({
-      canvasX: newX,
-      canvasY: newY
+      canvasX: this.state.canvasX + x,
+      canvasY: this.state.canvasY + y
     });
   }
 
-  getCanvasSize() {
-    var width = this.props.columns
-    var height = this.props.rows
-    return [width, height]
-  }
-
   scale(factor, originX = this.canvas.width / 2, originY = this.canvas.height / 2) {
-    var moveX = (1.0-factor)*originX * this.state.scale;
-    var moveY = (1.0-factor)*originY * this.state.scale;
+    var moveX = (1.0 - factor) * originX * this.state.scale;
+    var moveY = (1.0 - factor) * originY * this.state.scale;
     this.translate(moveX, moveY);
 
-    var newScale = this.state.scale * factor;
     this.setState({
-      scale: newScale
+      scale: this.state.scale * factor
     });
   }
 
   render() {
-    const [canvasWidth, canvasHeight] = this.getCanvasSize()
+    const [canvasWidth, canvasHeight] = [ this.props.columns, this.props.rows ]
 
     return (
       <div width={window.innerWidth} height={window.innerHeight}
@@ -300,18 +288,19 @@ class Canvas extends React.Component {
               mouseY={this.state.lastCalculatedMousePosY}
               pixelX={this.state.dimX}
               pixelY={this.state.dimY}
-			  canvasScale={this.state.scale}
+			        canvasScale={this.state.scale}
              />
           }
 
           <canvas style={{imageRendering: 'pixelated'}} id="canvas" ref={(c) => {
-                    if(c != null) {
-                      this.c = c.getContext('2d', { alpha: false });
-                      this.canvas = c;
-                    }}
-                  }
-                  width={canvasWidth}
-                  height={canvasHeight}/>
+              if(c != null) {
+                this.c = c.getContext('2d', { alpha: false });
+                this.canvas = c;
+              }}
+            }
+            width={canvasWidth}
+            height={canvasHeight}
+          />
         </div>
       </div>
     )
