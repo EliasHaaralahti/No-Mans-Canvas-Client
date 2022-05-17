@@ -62,7 +62,7 @@ class Canvas extends React.Component {
     var pixelX = Math.floor(mouseX);
     var pixelY = Math.floor(mouseY);
 
-    if ( !isMouseInsideCanvas(pixelX, pixelY, this.props.columns, this.props.rows) ) return;
+    if ( !isMouseInsideCanvas(pixelX, pixelY, this.props.columns-1, this.props.rows-1) ) return;
     
     if (this.props.banModeEnabled) {
       console.log('Banning at ' + pixelX + ', ' + pixelY)
