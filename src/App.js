@@ -29,11 +29,20 @@ var message_handler = function (e) {
 	}
 }
 
+const bin = {
+	RES_TILE_UPDATE: 3,
+};
+
 var binary_handler = function (e) {
 	const data = e.data;
 	// For now, the *only* binary message in this protocol is the
 	// full canvas, zlib compressed.
 	let array = new Uint8Array(e.data);
+	switch (array[0]) {
+		case bin.RES_TILE_UPDATE:
+			console.log('Happy days! Binary tile update received, and promptly ignored.');
+			return;
+	}
 	actions.drawCanvasBin(array);
     actions.loadingScreenVisible(false)
     actions.setMessageBoxVisibility(false)
