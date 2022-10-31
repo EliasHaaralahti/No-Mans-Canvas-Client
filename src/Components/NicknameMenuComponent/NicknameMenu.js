@@ -37,9 +37,6 @@ class NicknameMenu extends React.Component {
     return (
       <div className="overlay">
         <div className="menu">
-          <style>
-            @import url('https://fonts.googleapis.com/css?family=Open+Sans');
-        </style>
           <label for="nick">Set your nickname to appear in the highscores!</label>
           <form>
             <input type="text" name="nick" defaultValue="" onChange={this.onNickChanged} />

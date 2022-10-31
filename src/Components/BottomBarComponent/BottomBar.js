@@ -42,9 +42,6 @@ class BottomBar extends React.Component {
     if (!this.props.visible) return null;
     return (
       <div className="bottomBar">
-        <style>
-          @import url('https://fonts.googleapis.com/css?family=Open+Sans');
-        </style>
         <button type="button" onClick={this.onOpenPicker} className="setNickButton">
           Set Nickname
         </button>
