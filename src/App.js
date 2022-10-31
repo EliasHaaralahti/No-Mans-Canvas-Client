@@ -13,6 +13,7 @@ import LoadingScreen from './Components/LoadingScreenComponent/LoadingScreen';
 import CreditsMenu from './Components/CreditsMenuComponent/CreditsMenu';
 import AdminMenu from './Components/AdminMenuComponent/AdminMenu'
 import { rgbToHex } from './utils';
+import struct from '@aksel/structjs';
 
 export const store = createStore(AppReducer);
 
@@ -30,22 +31,59 @@ var message_handler = function (e) {
 }
 
 const bin = {
+	RES_AUTH_SUCCESS: 0,
+	RES_CANVAS: 1,
+	RES_TILE_INFO: 2,
 	RES_TILE_UPDATE: 3,
+	RES_COLOR_LIST: 4,
+	RES_USERNAME_SET_SUCCESS: 5,
+	RES_TILE_INCREMENT: 6,
+	RES_LEVEL_UP: 7,
+	ERR_INVALID_UUID: 128,
 };
 
 var binary_handler = function (e) {
-	const data = e.data;
-	// For now, the *only* binary message in this protocol is the
-	// full canvas, zlib compressed.
-	let array = new Uint8Array(e.data);
-	switch (array[0]) {
+	const data = new Uint8Array(e.data);
+	switch (data[0]) {
+		case bin.RES_AUTH_SUCCESS:
+			console.log('RES_AUTH_SUCCESS');
+			return;
+		case bin.RES_CANVAS:
+			actions.drawCanvasBin(data.slice(1));
+			actions.loadingScreenVisible(false);
+			actions.setMessageBoxVisibility(false);
+			return;
+		case bin.RES_TILE_INFO:
+			console.log('RES_TILE_INFO');
+			return;
 		case bin.RES_TILE_UPDATE:
-			console.log('Happy days! Binary tile update received, and promptly ignored.');
+			let s = struct('BBxxI');
+			let [_, c, i] = s.unpack(e.data);
+			const thing = {
+				c: c,
+				i: i,
+			};
+			actions.setPixel(thing);
+			return;
+		case bin.RES_COLOR_LIST:
+			console.log('RES_COLOR_LIST');
+			return;
+		case bin.RES_USERNAME_SET_SUCCESS:
+			console.log('USERNAME_SET_SUCCESS');
+			return;
+		case bin.RES_TILE_INCREMENT:
+			console.log('RES_TILE_INCREMENT');
+			return;
+		case bin.RES_LEVEL_UP:
+			console.log('RES_LEVEL_UP');
+			return;
+		case bin.ERR_INVALID_UUID:
+			console.log('ERR_INVALID_UUID');
+			return;
+		default:
+			console.log("Received unknown binary message with id " + data[0]);
 			return;
 	}
-	actions.drawCanvasBin(array);
-    actions.loadingScreenVisible(false)
-    actions.setMessageBoxVisibility(false)
 }
 
 var text_handler = function (e) {
@@ -88,11 +126,7 @@ var text_handler = function (e) {
     case "colorList":
       actions.setColors(data.colors)
       // The response to this request is handled in binary_handler above.
-      g_socket.send(JSON.stringify({ "requestType": "getCanvas", "userID": store.getState().get("userID").toString() }))
-      break;
-
-    case "tu": // tileUpdate
-      actions.setPixel(data)
+	  sendGetCanvas();
       break;
 
     case "userCount":
@@ -267,16 +301,29 @@ App = connect(state => ({
   {},
 )(App);
 
+const req = {
+  INITIAL_AUTH: 0,
+  AUTH: 1,
+  GET_CANVAS: 2,
+  GET_TILE_INFO: 3,
+  POST_TILE: 4,
+  GET_COLORS: 5,
+  SET_USERNAME: 6,
+};
+
 export const sendNick = (nick) => {
   console.log("sending nick " + nick)
   g_socket.send(JSON.stringify({ "requestType": "setUsername", "userID": store.getState().get("userID").toString(), "name": nick }))
 }
 
 export const sendTile = (x, y, colorID) => {
-  g_socket.send(JSON.stringify({
-    "requestType": "postTile", "userID": store.getState().get("userID").toString(),
-    "X": x, "Y": y, "colorID": colorID
-  }))
+  let uuid = store.getState().get("userID").toString();
+  g_socket.send(struct('B37sHHH').pack(req.POST_TILE, uuid, x, y, colorID));
+}
+
+export const sendGetCanvas = () => {
+  let uuid = store.getState().get("userID").toString();
+  g_socket.send(struct('B37s').pack(req.GET_CANVAS, uuid));
 }
 
 export const sendBan = (x, y) => {
