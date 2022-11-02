@@ -30,6 +30,16 @@ var message_handler = function (e) {
 	}
 }
 
+const req = {
+  INITIAL_AUTH: 0,
+  AUTH: 1,
+  GET_CANVAS: 2,
+  GET_TILE_INFO: 3,
+  POST_TILE: 4,
+  GET_COLORS: 5,
+  SET_USERNAME: 6,
+};
+
 const bin = {
 	RES_AUTH_SUCCESS: 0,
 	RES_CANVAS: 1,
@@ -39,6 +49,7 @@ const bin = {
 	RES_USERNAME_SET_SUCCESS: 5,
 	RES_TILE_INCREMENT: 6,
 	RES_LEVEL_UP: 7,
+	RES_USER_COUNT: 8,
 	ERR_INVALID_UUID: 128,
 };
 
@@ -57,6 +68,7 @@ var binary_handler = function (e) {
 			console.log('RES_TILE_INFO');
 			return;
 		case bin.RES_TILE_UPDATE:
+		{
 			let s = struct('BBxxI');
 			let [_, c, i] = s.unpack(e.data);
 			const thing = {
@@ -65,6 +77,7 @@ var binary_handler = function (e) {
 			};
 			actions.setPixel(thing);
 			return;
+		}
 		case bin.RES_COLOR_LIST:
 			console.log('RES_COLOR_LIST');
 			return;
@@ -72,11 +85,22 @@ var binary_handler = function (e) {
 			console.log('USERNAME_SET_SUCCESS');
 			return;
 		case bin.RES_TILE_INCREMENT:
-			console.log('RES_TILE_INCREMENT');
+		{
+			let i = struct('BB');
+			let [_, c] = i.unpack(e.data);
+			actions.addUserTiles(c);
 			return;
+		}
 		case bin.RES_LEVEL_UP:
 			console.log('RES_LEVEL_UP');
 			return;
+		case bin.RES_USER_COUNT:
+		{
+			let i = struct('BxH');
+			let [_, c] = i.unpack(e.data);
+			actions.setConnectedUsers(c);
+			return;
+		}
 		case bin.ERR_INVALID_UUID:
 			console.log('ERR_INVALID_UUID');
 			return;
@@ -131,10 +155,6 @@ var text_handler = function (e) {
 
     case "userCount":
       actions.setConnectedUsers(data.count)
-      break;
-
-    case "itc": //incrementTileCount
-      actions.addUserTiles(data.a)
       break;
 
     case "levelUp":
@@ -300,16 +320,6 @@ App = connect(state => ({
 }),
   {},
 )(App);
-
-const req = {
-  INITIAL_AUTH: 0,
-  AUTH: 1,
-  GET_CANVAS: 2,
-  GET_TILE_INFO: 3,
-  POST_TILE: 4,
-  GET_COLORS: 5,
-  SET_USERNAME: 6,
-};
 
 export const sendNick = (nick) => {
   console.log("sending nick " + nick)
