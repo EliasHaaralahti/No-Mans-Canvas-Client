@@ -1,7 +1,7 @@
 import React from 'react';
 import './Canvas.css';
 import { setPixel, setDrawCanvas, addUserExp, substractUserTiles } from '../../AppActions';
-import { sendTile, sendBan, sendBrushClick, getColor } from '../../App';
+import { sendTile, sendBan, sendBrushClick, getColor, getTileInfo } from '../../App';
 import { createCSSTransformBuilder } from "easy-css-transform-builder";
 import PixelInfo from './Components/PixelInfoComponent/PixelInfo';
 import { isMouseInsideCanvas } from './canvasUtils'
@@ -215,6 +215,10 @@ class Canvas extends React.Component {
   showPixelInfo(e) {
     var mouseX = (e.pageX - this.canvas.offsetLeft - this.state.canvasX) / this.state.scale;
     var mouseY = (e.pageY - this.canvas.offsetTop - this.state.canvasY) / this.state.scale;
+    var pixelX = Math.floor(mouseX);
+    var pixelY = Math.floor(mouseY);
+    if ( !isMouseInsideCanvas(pixelX, pixelY, this.props.columns-1, this.props.rows-1) ) return;
+	getTileInfo(pixelX, pixelY);
     this.setState({
       pixelInfoVisible: true,
       lastCalculatedMousePosX: mouseX,
@@ -288,7 +292,8 @@ class Canvas extends React.Component {
               mouseY={this.state.lastCalculatedMousePosY}
               pixelX={this.state.dimX}
               pixelY={this.state.dimY}
-			        canvasScale={this.state.scale}
+			  canvasScale={this.state.scale}
+			  placerInfo={this.props.placerInfo}
              />
           }
 

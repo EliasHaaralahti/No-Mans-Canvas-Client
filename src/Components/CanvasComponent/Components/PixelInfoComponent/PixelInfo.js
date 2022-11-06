@@ -3,7 +3,7 @@ import {createCSSTransformBuilder } from "easy-css-transform-builder";
 
 const builder = createCSSTransformBuilder();
 
-const PixelInfo = ({ mouseX, mouseY, pixelX, pixelY, canvasScale }) => {
+const PixelInfo = ({ mouseX, mouseY, pixelX, pixelY, canvasScale, placerInfo }) => {
   const pixelInfoXOffset = 2;
   const pixelInfoYOffset = -2;
 
@@ -18,7 +18,8 @@ const PixelInfo = ({ mouseX, mouseY, pixelX, pixelY, canvasScale }) => {
           scale: 1/canvasScale,
 		})
 	  }}>
-      X: {pixelX}, Y: {pixelY}
+      X: {pixelX}, Y: {pixelY}<br></br>
+	  {placerInfo}
     </div>
   )
 }

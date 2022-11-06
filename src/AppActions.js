@@ -98,6 +98,14 @@ export function setPixelInCanvas(data) {
   store.dispatch(action);
 }
 
+export function setPlacerInfo(data) {
+  const action = {
+    type: "SET_PLACER_INFO",
+	data,
+  }
+  store.dispatch(action);
+}
+
 export function drawCanvas(data) {
   var dimension = Math.sqrt(data.length - 1)
   setDimensions(dimension)

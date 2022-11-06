@@ -14,6 +14,7 @@ export const initialState = fromJS({
   columns: 0,
   colors: [],
   canvas: [],
+  placerInfo: "",
   updatePixel: null,
   activeColor: 0,
   showColorPicker: false,
@@ -81,6 +82,9 @@ export default(state = initialState, action) => {
       canvas[action.data.i] = action.data.c;
       return state.set('canvas', canvas);
     }
+	case 'SET_PLACER_INFO': {
+      return state.set('placerInfo', action.data)
+	}
     case 'DRAW_CANVAS': {
       return state.set('canvas', action.pixels).set('canvasDraw', true).set('showBottomBar', true)
     }

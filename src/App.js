@@ -173,6 +173,12 @@ var text_handler = function (e) {
       actions.setUserExp(data.levelProgress)
       break;
 
+    case "ti":
+      const date = new Date(data.pt * 1000);
+      let placer_info = data.un + ' on ' + date.toISOString();
+      actions.setPlacerInfo(placer_info);
+      break;
+
     case "error":
       if (data.msg === "Invalid userID") {
         g_socket.send(JSON.stringify({ "requestType": "initialAuth" }))
@@ -266,7 +272,8 @@ let App = props => {
         remainingTiles={props.remainingTiles}
         userExp={props.userExp} userExpLimit={props.userExpLimit}
 		banModeEnabled={props.banModeEnabled}
-		adminBrushEnabled={props.adminBrushEnabled} />
+		adminBrushEnabled={props.adminBrushEnabled}
+		placerInfo={props.placerInfo} />
 
       <BottomBar 
         visible={props.showBottomBar}
@@ -307,6 +314,7 @@ App = connect(state => ({
   rows: state.get('rows'),
   columns: state.get('columns'),
   canvas: state.get('canvas'),
+  placerInfo: state.get('placerInfo'),
   canvasDraw: state.get('canvasDraw'),
   userExp: state.get('userExp'),
   userExpLimit: state.get('userExpLimit'),
@@ -339,6 +347,10 @@ export const sendNick = (nick) => {
 export const sendTile = (x, y, colorID) => {
   let uuid = store.getState().get("userID").toString();
   g_socket.send(struct('B37sHHH').pack(req.POST_TILE, uuid, x, y, colorID));
+}
+
+export const getTileInfo = (x, y) => {
+  g_socket.send(JSON.stringify({ "requestType": "gti", "userID": store.getState().get("userID").toString(), "X": x, "Y": y }));
 }
 
 export const sendGetCanvas = () => {
