@@ -32,7 +32,7 @@
   font-weight: bold;
 
   animation-name: bottomBarAnimation;
-  animation-duration: 2s;
+  animation-duration: 0.5s;
   animation-timing-function: ease-out;
 }
 
