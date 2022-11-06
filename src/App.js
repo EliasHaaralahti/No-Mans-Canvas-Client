@@ -79,7 +79,20 @@ var binary_handler = function (e) {
 			return;
 		}
 		case bin.RES_COLOR_LIST:
-			console.log('RES_COLOR_LIST');
+		{
+			// (data_bytes - header_length) / sizeof(struct color)
+			const color_amount = (e.data.byteLength - 1) / 4;
+			var colors = [];
+			for (let i = 0; i < color_amount; ++i) {
+				let str = struct('BBBB');
+				let view = e.data.slice((i * 4) + 1, (i * 4) + 5);
+				let [r, g, b, id] = str.unpack(view);
+				colors[i] = { 'R': r, 'G': g, 'B': b, 'ID': id };
+			}
+			actions.setColors(colors);
+			sendGetCanvas();
+			return;
+		}
 			return;
 		case bin.RES_USERNAME_SET_SUCCESS:
 			console.log('USERNAME_SET_SUCCESS');
@@ -112,6 +125,7 @@ var binary_handler = function (e) {
 
 var text_handler = function (e) {
   const data = JSON.parse(e.data);
+  var uuid = store.getState().get("userID").toString();
   switch (data.rt) {
 
     case "nameSetSuccess":
@@ -144,13 +158,7 @@ var text_handler = function (e) {
       actions.setLevel(data.level)
       actions.setUserRequiredExp(data.tilesToNextLevel)
       actions.setUserExp(data.levelProgress)
-      g_socket.send(JSON.stringify({ "requestType": "getColors", "userID": store.getState().get("userID").toString() }))
-      break;
-
-    case "colorList":
-      actions.setColors(data.colors)
-      // The response to this request is handled in binary_handler above.
-	  sendGetCanvas();
+      g_socket.send(struct('B37s').pack(req.GET_COLORS, uuid));
       break;
 
     case "userCount":
@@ -173,7 +181,7 @@ var text_handler = function (e) {
       break;
 
     case "reAuthSuccessful":
-      g_socket.send(JSON.stringify({ "requestType": "getColors", "userID": store.getState().get("userID").toString() }))
+      g_socket.send(struct('B37s').pack(req.GET_COLORS, uuid));
       actions.setUserMaxTiles(data.maxTiles)
       actions.setUserTiles(data.remainingTiles)
       actions.setLevel(data.level)
