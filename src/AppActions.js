@@ -205,6 +205,14 @@ export function setShowBanBtn(show) {
   store.dispatch(action)
 }
 
+export function setTileInfoAvailable(available) {
+  const action = {
+    type: "SET_TILEINFO_AVAILABLE",
+    available
+  }
+  store.dispatch(action)
+}
+
 export function toggleAdminBrushMode() {
   const action = {
     type: "TOGGLE_ADMIN_BRUSH_MODE"

@@ -218,7 +218,7 @@ class Canvas extends React.Component {
     var pixelX = Math.floor(mouseX);
     var pixelY = Math.floor(mouseY);
     if ( !isMouseInsideCanvas(pixelX, pixelY, this.props.columns-1, this.props.rows-1) ) return;
-	getTileInfo(pixelX, pixelY);
+    if (this.props.tileInfoAvailable) getTileInfo(pixelX, pixelY);
     this.setState({
       pixelInfoVisible: true,
       lastCalculatedMousePosX: mouseX,

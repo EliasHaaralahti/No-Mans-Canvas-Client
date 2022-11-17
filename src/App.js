@@ -197,6 +197,7 @@ var text_handler = function (e) {
       actions.setUserExp(data.levelProgress)
       actions.setShowBanBtn(data.showBanBtn)
       actions.setShowCleanupBtn(data.showCleanupBtn)
+      actions.setTileInfoAvailable(data.tileInfoAvailable)
       break;
     case "ban_click_success":
       actions.toggleBanMode()
@@ -274,6 +275,7 @@ let App = props => {
         banModeEnabled={props.banModeEnabled}
         adminBrushEnabled={props.adminBrushEnabled}
         placerInfo={props.placerInfo}
+        tileInfoAvailable={props.tileInfoAvailable} />
 
       <BottomBar 
         visible={props.showBottomBar}
@@ -334,6 +336,7 @@ App = connect(state => ({
   showBanBtn: state.get('showBanBtn'),
   banModeEnabled: state.get('banModeEnabled'),
   adminBrushEnabled: state.get('adminBrushEnabled'),
+  tileInfoAvailable: state.get('tileInfoAvailable'),
   showBottomBar: state.get('showBottomBar'),
 }),
   {},

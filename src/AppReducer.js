@@ -31,6 +31,7 @@ export const initialState = fromJS({
   kickDialogButtonText: "Ok",
   showCleanupBtn: false,
   showBanBtn: false,
+  tileInfoAvailable: false,
   banModeEnabled: false,
   adminBrushEnabled: false,
   showBottomBar: false,
@@ -113,6 +114,9 @@ export default(state = initialState, action) => {
     }
     case 'SET_SHOW_BAN_BTN': {
       return state.set('showBanBtn', action.show)
+    }
+    case 'SET_TILEINFO_AVAILABLE': {
+      return state.set('tileInfoAvailable', action.available)
     }
     case 'TOGGLE_ADMIN_BRUSH_MODE': {
       console.log("Toggling admin brush mode to " + !state.get('adminBrushEnabled'))
