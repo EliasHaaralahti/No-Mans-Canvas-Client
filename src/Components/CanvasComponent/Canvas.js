@@ -292,8 +292,8 @@ class Canvas extends React.Component {
               mouseY={this.state.lastCalculatedMousePosY}
               pixelX={this.state.dimX}
               pixelY={this.state.dimY}
-			  canvasScale={this.state.scale}
-			  placerInfo={this.props.placerInfo}
+              canvasScale={this.state.scale}
+              placerInfo={this.props.placerInfo}
              />
           }
 

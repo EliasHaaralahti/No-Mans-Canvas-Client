@@ -184,8 +184,8 @@ var text_handler = function (e) {
         g_socket.send(JSON.stringify({ "requestType": "initialAuth" }))
       }
       console.log(JSON.stringify(data))
-	  actions.setMessageBoxText(data.msg);
-	  actions.setMessageBoxVisibility(true);
+      actions.setMessageBoxText(data.msg);
+      actions.setMessageBoxVisibility(true);
       break;
 
     case "reAuthSuccessful":
@@ -271,9 +271,9 @@ let App = props => {
         canvas={props.canvas} canvasDraw={props.canvasDraw}
         remainingTiles={props.remainingTiles}
         userExp={props.userExp} userExpLimit={props.userExpLimit}
-		banModeEnabled={props.banModeEnabled}
-		adminBrushEnabled={props.adminBrushEnabled}
-		placerInfo={props.placerInfo} />
+        banModeEnabled={props.banModeEnabled}
+        adminBrushEnabled={props.adminBrushEnabled}
+        placerInfo={props.placerInfo}
 
       <BottomBar 
         visible={props.showBottomBar}
