@@ -158,7 +158,7 @@ var text_handler = function (e) {
       actions.setLevel(data.level)
       actions.setUserRequiredExp(data.tilesToNextLevel)
       actions.setUserExp(data.levelProgress)
-      g_socket.send(struct('B37s').pack(req.GET_COLORS, uuid));
+      g_socket.send(struct('B37s').pack(req.GET_COLORS, data.uuid));
       break;
 
     case "userCount":
